@@ -13,6 +13,7 @@ document.onreadystatechange = () => {
         setTimeout(function(){ toast.removeAttribute('class'); }, 4000);
       }
         const signUpForm = document.getElementById('signUpForm');
+      if (signUpForm) {
         signUpForm.onsubmit = (e) => {
             
             e.preventDefault();
@@ -75,6 +76,29 @@ document.onreadystatechange = () => {
             setTimeout(function () { btnSignUp.innerHTML ='Sign Up'; }, 10000);
             
         };
+      }
+
+      const signInForm = document.getElementById('signInForm');
+      if (signInForm) {
+        signInForm.onsubmit = (e) => {
+          e.preventDefault();
+
+          const username = String(document.getElementById('username')).trim();
+          const password = String(document.getElementById('password')).trim();
+          const btnLogin = document.getElementById('btnSignIn');
+          if(username == "") {
+            makeToast("Username is required");
+            return false;
+          }
+          if(password == "") {
+            makeToast("Password is required");
+            return false;
+          }
+
+          btnLogin.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Authenticating';
+          setTimeout(function () { btnLogin.innerHTML ='<i class="fa fa-lock"></i>&nbsp;Sign In'; }, 10000);
+        }
+      }
 
     }
 };
