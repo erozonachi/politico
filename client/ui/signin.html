@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang = "en">
+   
+   <head>
+        <meta charset = "UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
+        <meta name="description" content="Politico Application">
+        <title>Welcome | Politico</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel = "stylesheet" type = "text/css" href = "css/style.css">
+   </head>
+   
+   <body class="">
+      <main>
+          <header>
+                <div class="nav" id="nav">
+                    <a href="index.html"><img src="images/logo.png" id="app-logo"/>
+                    <span id="app-name">Politico</span></a>          
+                    <a href="index.html">Home</a>
+                    <a href="javascript:void(0);" id="active">Sign In</a>
+                    <a href="javascript:void(0);" class="icon" onclick="toggleMenu(this)">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </a>
+                </div>
+          </header>
+          <section>
+              <form id="signInForm" >
+                    <div id="" class="form-container">
+                    <h1>Sign In</h1>
+                    <div id="toast"></div>
+                        <label for="name"><b>Username</b></label>
+                        <div class="tooltip">
+                            <input type="text" placeholder="Username" id="username" name="username" required>
+                        </div>
+                    
+                        <label for="password"><b>Password</b></label>
+                        <div class="tooltip">
+                            <input type="password" placeholder="Password" id="password" name="password" required>
+                        </div>
+                    
+                        <button type="submit" id="btnSignIn" class="big-btn" ><i class="fa fa-lock"></i>&nbsp;Sign In</button>
+                        <div><strong>Don't have an account? <a href="index.html">Sign up</a> | Forgot Password? <a href="javascript:void(0);">Click me</a></strong></div>
+                    </div>
+                    </form>
+          </section>
+      </main>
+      <script type="text/javascript" src="js/functions.js"></script>
+   </body>
+   
+</html>
