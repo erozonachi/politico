@@ -11,7 +11,7 @@
         <link rel = "stylesheet" type = "text/css" href = "css/style.css">
    </head>
    
-   <body class="">
+   <body class="bg-img">
       <main>
           <header>
                 <div class="nav" id="nav">
@@ -27,10 +27,10 @@
                 </div>
           </header>
           <section>
+                <div id="toast"></div>
               <form id="signInForm" >
                     <div id="" class="form-container">
                     <h1>Sign In</h1>
-                    <div id="toast"></div>
                         <label for="name"><b>Username</b></label>
                         <div class="tooltip">
                             <input type="text" placeholder="Username" id="username" name="username" required>
@@ -42,7 +42,45 @@
                         </div>
                     
                         <button type="submit" id="btnSignIn" class="big-btn" ><i class="fa fa-lock"></i>&nbsp;Sign In</button>
-                        <div><strong>Don't have an account? <a href="index.html">Sign up</a> | Forgot Password? <a href="javascript:void(0);">Click me</a></strong></div>
+                        <div><strong>Don't have an account? <a href="index.html">Sign up</a> | Forgot Password? <a href="javascript:void(0);" id="forgot">Click me</a></strong></div>
+                    </div>
+                    </form>
+
+                    <form id="resetForm" class="hidden">
+                    <div id="" class="form-container">
+                        <h1>Reset Password</h1><br/>
+                        <div id="otpGroup" class="">
+                            <label for="name"><b>Your Email</b></label>
+                            <div class="tooltip">
+                                <input type="text" placeholder="Your Email" name="email" id="email" required>
+                                <span class="tooltiptext">Your email</span>
+                            </div>
+                        </div>
+                        
+                        <div id="resetGroup" class="hidden">
+                            <label for="psw"><b>OTP</b></label>
+                            <div class="tooltip">
+                                <input type="password" placeholder="OTP" name="otp" id="otp" >
+                                <span class="tooltiptext">One time pass sent to your email</span>
+                            </div>
+
+                            <label for="psw"><b>New Password</b></label>
+                            <div class="tooltip">
+                                <input type="password" placeholder="New Password" name="newPassword" id="newPassword" >
+                                <span class="tooltiptext">Min character length of 10. Digit and letter mix</span>
+                            </div>
+
+                            <label for="psw"><b>Confirm Password</b></label>
+                            <div class="tooltip">
+                                <input type="password" placeholder="Confirm Password" name="confirm" id="confirm" >
+                                <span class="tooltiptext">Match new password</span>
+                            </div>
+                            
+                        </div>
+                    
+                        <button type="submit" id="btnReset" class="big-btn"><i id="resetSpin" class="fa fa-lock"></i>&nbsp;Request OTP</button>
+                        <div id="otpDisplay" class="hidden"><strong><em id="otpTimer"></em><a href="javascript:void(0);" id="resend">Resend OTP</a></strong></div>
+                        <div><strong>Don't have an account? <a href="index.html">Sign up</a> | Have an account? <a href="javascript:void(0);" id="loginLink">Sign in</a></strong></div>
                     </div>
                     </form>
           </section>
