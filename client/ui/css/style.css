@@ -121,11 +121,11 @@ a {
 }
 
 .bg-img {
-    background-image: url("../images/banner.png");
-    min-height: 657px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: url("../images/banner.png") no-repeat center center fixed; 
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
   }
 
 .desktop-content {
