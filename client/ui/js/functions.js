@@ -4,16 +4,7 @@
  */
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
-        
-      function makeToast (message) {
-        const toast = document.getElementById('toast');
-
-        toast.innerHTML = message;
-        toast.setAttribute('class', 'show');
-        console.log(message);
-        setTimeout(function(){ toast.removeAttribute('class'); }, 4000);
-      }
-
+      /**Index Page Functions... */
       const signUpForm = document.getElementById('signUpForm');
       if (signUpForm) {
         signUpForm.onsubmit = (e) => {
@@ -30,47 +21,47 @@ document.onreadystatechange = () => {
             const alphaNum = /^[a-zA-Z0-9]+$/i;
 
             if (fName == "") {
-              makeToast("First Name is required");
+              alert("First Name is required");
               return false;
             } else if (!nameFormat.test(fName)) {
-              makeToast("First Name can only contain letters");
+              alert("First Name can only contain letters");
               return false;
             }
             if (lName == "") {
-              makeToast("Last Name is required");
+              alert("Last Name is required");
               return false;
             } else if (!nameFormat.test(lName)) {
-              makeToast("Last Name can only contain letters");
+              alert("Last Name can only contain letters");
               return false;
             }
             if (username == "") {
-              makeToast("Username is required");
+              alert("Username is required");
               return false;
             } else if (!alphaNum.test(username)) {
-              makeToast("Username can only contain letters and digits");
+              alert("Username can only contain letters and digits");
               return false;
             } else if (!isNaN(username.charAt(0))) {
-              makeToast("Username cannot start with a number");
+              alert("Username cannot start with a number");
               return false;
             }
             
             const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if (email == "") {
-              makeToast("Email is required");
+              alert("Email is required");
               return false;
             } else if (!emailRegEx.test(email)) {
-              makeToast("Invalid email format");
+              alert("Invalid email format");
               return false;
             }
             
             if (password.length < 10) {
-              makeToast("Password not up to 10 characters");
+              alert("Password not up to 10 characters");
               return false;
             } else if (/^[a-zA-Z]+$/i.test(password) || /^[0-9]+$/i.test(password)) {
-              makeToast("Weak password: mix letters, numbers, and special characters");
+              alert("Weak password: mix letters, numbers, and special characters");
               return false;
             } else if (confirm != password) {
-              makeToast("Password and confirm password not match");
+              alert("Password and confirm password not match");
               return false;
             }
             const btnSignUp = document.getElementById('btnSignUp');
@@ -80,6 +71,8 @@ document.onreadystatechange = () => {
         };
       }
 
+      /***Signin Page Functions... */
+
       const signInForm = document.getElementById('signInForm');
       if (signInForm) {
         signInForm.onsubmit = (e) => {
@@ -87,15 +80,18 @@ document.onreadystatechange = () => {
 
           const btnLogin = document.getElementById('btnSignIn');
           btnLogin.setAttribute('disabled', 'disabled');
-          const username = String(document.getElementById('username')).trim();
-          const password = String(document.getElementById('password')).trim();
+          const username = String(document.getElementById('username').value).trim();
+          const password = String(document.getElementById('password').value).trim();
           
-          if(username == "") {
-            makeToast("Username is required");
+          if (username === '') {
+            alert("Username is required");
+            btnLogin.removeAttribute('disabled');
             return false;
           }
-          if(password == "") {
-            makeToast("Password is required");
+
+          if (password === '') {
+            alert("Password is required");
+            btnLogin.removeAttribute('disabled');
             return false;
           }
 
@@ -103,6 +99,7 @@ document.onreadystatechange = () => {
           setTimeout(function () { 
             btnLogin.removeAttribute('disabled');
             btnLogin.innerHTML ='<i class="fa fa-lock"></i>&nbsp;Sign In';
+            window.location.replace("dashboard.html");
           }, 10000);
         }
       }
@@ -151,35 +148,57 @@ document.onreadystatechange = () => {
           const password = document.getElementById('newPassword');
           const confirm = document.getElementById('confirm');
 
+          let period = null;
+
           const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           if (String(email.value).trim() == "") {
-            makeToast("Email is required");
+            alert("Email is required");
             btnReset.removeAttribute('disabled');
             return false;
           } else if (!emailRegEx.test(String(email.value).trim())) {
-            makeToast("Invalid email format");
+            alert("Invalid email format");
             btnReset.removeAttribute('disabled');
             return false;
           }
 
           if (otp.getAttribute('required') && password.getAttribute('required') && confirm.getAttribute('required')) {
 
+            if (period) {
+              clearInterval(period);
+            }
+
+            if (!otpTimer.getAttribute('class')) {
+              otpTimer.setAttribute('class', 'hidden');
+            }
+            if (!otpDisplay.getAttribute('class')) {
+              otpDisplay.setAttribute('class', 'hidden');
+            }
+            if (!resend.getAttribute('class')) {
+              resend.setAttribute('class', 'hidden');
+            }
+
             if (String(otp.value).trim() == "") {
-              makeToast("OTP is required");
+              alert("OTP is required");
               btnReset.removeAttribute('disabled');
               return false;
             }
             
             if (String(password.value).length < 10) {
-              makeToast("Password not up to 10 characters");
+              alert("Password not up to 10 characters");
+              btnReset.removeAttribute('disabled');
+              return false;
+            } else if (String(password.value).trim() === '') {
+              alert("New password field cannot be empty");
               btnReset.removeAttribute('disabled');
               return false;
             } else if (/^[a-zA-Z]+$/i.test(String(password.value)) || /^[0-9]+$/i.test(String(password.value))) {
-              makeToast("Weak password: mix letters, numbers, and special characters");
+              alert("Weak password: mix letters, numbers, and special characters");
               btnReset.removeAttribute('disabled');
               return false;
-            } else if (String(confirm.value) !== String(password.value)) {
-              makeToast("Password and confirm password not match");
+            }
+            
+            if (String(confirm.value) !== String(password.value)) {
+              alert("Password and confirm password not match");
               btnReset.removeAttribute('disabled');
               return false;
             }
@@ -188,7 +207,7 @@ document.onreadystatechange = () => {
             setTimeout(function () {
               btnReset.removeAttribute('disabled');
               btnReset.innerHTML ='<i id="resetSpin" class="fa fa-lock"></i>&nbsp;Request OTP';
-              makeToast('Password reset successful!');
+              alert('Password reset successful!');
 
               resetForm.setAttribute('class', 'hidden');
               signInForm.removeAttribute('class');
@@ -210,7 +229,7 @@ document.onreadystatechange = () => {
             setTimeout(function () {
               btnReset.removeAttribute('disabled');
               btnReset.innerHTML ='Reset Password';
-              makeToast('Success! Check your email for an OTP!');
+              alert('Success! Check your email for an OTP!');
 
               otp.setAttribute('required', 'required');
               password.setAttribute('required', 'required');
@@ -259,15 +278,53 @@ document.onreadystatechange = () => {
         }
       }
 
+      /**Dashboard Page Functions... */
+
+      const addPartyForm = document.getElementById('addPartyForm');
+      if (addPartyForm) {
+        addPartyForm.onsubmit = (e) => {
+          e.preventDefault();
+
+          const partyName = document.getElementById('partyName');
+          const partyAddress = document.getElementById('partyAddress');
+          const partyLogo = document.getElementById('partyLogo');
+
+          if (String(partyName.value).trim() === '') {
+            alert('Party Name cannot be empty');
+            return;
+          }
+
+          if (String(partyAddress.value).trim() === '') {
+            alert('Party Address cannot be empty');
+            return;
+          }
+
+          if (String(partyLogo).trim() === '') {
+            alert('Party Logo file cannot be empty');
+            return;
+          }
+
+          const btnAddParty = document.getElementById('btnAddParty');
+          btnAddParty.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Creating...';
+          setTimeout(function () {
+            partyName.value = '';
+            partyAddress.value = '';
+            partyLogo.value = '';
+            btnAddParty.innerHTML ='Add Party';
+          }, 10000);
+
+        }
+      }
+
     }
 };
 
 function toggleMenu(X) {
   X.classList.toggle("change");
   const x = document.getElementById("nav");
-  if (x.className === "nav") {
+  if (x.className === "custom nav") {
       x.className += " responsive";
   } else {
-      x.className = "nav";
+      x.className = "custom nav";
   }
 }

@@ -14,16 +14,16 @@
    <body class="bg-img">
       <main>
           <header>
-            <div class="nav" id="nav">
+            <div class="custom nav" id="nav">
                 <a href="javascript:void(0);"><img src="images/logo.png" id="app-logo"/>
                 <span id="app-name">Politico</span></a>          
                 <a href="javascript:void(0);" id="active">Home</a>
                 <a href="signin.html">Sign In</a>
                 <a href="javascript:void(0);" class="icon" onclick="toggleMenu(this)">
                     <!--i class="fa fa-bars"></i-->
-                    <div class="bar1"></div>
-                    <div class="bar2"></div>
-                    <div class="bar3"></div>
+                    <div class="custom bar1"></div>
+                    <div class="custom bar2"></div>
+                    <div class="custom bar3"></div>
                 </a>
             </div>
           </header>
@@ -39,36 +39,35 @@
                     </p>
                 </article>
                 <form id="signUpForm" >
-                <div class="container">
+                <div class="custom container">
                         <h1>Sign Up</h1><br/>
-                        <div id="toast"></div>
                         <label for="fName"><b>First Name</b></label>
-                        <div class="tooltip">
+                        <div class="custom tooltip">
                             <input type="text" placeholder="Enter Your First Name" name="fName" id="fName" required>
                         </div>
 
                         <label for="lName"><b>Last Name</b></label>
-                        <div class="tooltip">
+                        <div class="custom tooltip">
                             <input type="text" placeholder="Enter Your Last Name" name="lName" id="lName" required>
                         </div>
 
                         <label for="username"><b>Username</b></label>
-                        <div class="tooltip">
+                        <div class="custom tooltip">
                             <input type="text" placeholder="Choose a Username" name="username" id="username" required>
                         </div>
 
                         <label for="email"><b>Email</b></label>
-                        <div class="tooltip">
+                        <div class="custom tooltip">
                             <input type="email" placeholder="Enter Your Email" id="email" name="email" required>
                         </div>
                     
-                        <label for="psw"><b>Password</b></label>
-                        <div class="tooltip">
+                        <label for="password"><b>Password</b></label>
+                        <div class="custom tooltip">
                             <input type="password" placeholder="Choose Password" id="password" name="password" required>
                         </div>
                     
                         <label for="psw"><b>Confirm Password</b></label>
-                        <div class="tooltip">
+                        <div class="custom tooltip">
                             <input type="password" placeholder="Confirm Password" id="confirm" name="confirm" required>
                         </div>
                     
@@ -82,7 +81,7 @@
                         </label>
                     
                         <button type="submit" id="btnSignUp" class="big-btn"><i id="processing" class=""></i>&nbsp;Sign Up</button>
-                        <div><strong>Have an account? <a href="signin.html">Sign in</a></strong></div>
+                        <div class="custom"><strong>Have an account? <a href="signin.html">Sign in</a></strong></div>
                 </div>
             </form>
           </section>

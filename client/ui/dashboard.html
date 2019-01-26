@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang = "en">
+   
+   <head>
+        <meta charset = "UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
+        <meta name="description" content="Politico Application">
+        <title>Welcome | Politico</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+   </head>
+   
+   <body>
+        <div class="s-layout">
+            <!-- Sidebar -->
+            <div class="s-layout__sidebar">
+              <a class="s-sidebar__trigger" href="javascript:void(0);">
+                 <i class="fa fa-bars" ><em id="bars"><strong>&nbsp;Politico</strong></em></i>
+              </a>
+            
+              <nav class="s-sidebar__nav">
+                 <ul>
+                    <li>
+                       <a class="s-sidebar__nav-link" href="javascript:void(0);">
+                          <i class="fa fa-home"></i><em>Welcome James</em>
+                       </a>
+                    </li>
+                    <li>
+                       <a class="s-sidebar__nav-link" href="javascript:void(0);">
+                         <i class="fa fa-user"></i><em>My Profile</em>
+                       </a>
+                    </li>
+                    <li>
+                       <a class="s-sidebar__nav-link" href="javascript:void(0);">
+                          <i class="fa fa-camera"></i><em>Political Parties</em>
+                       </a>
+                    </li>
+                    <li>
+                       <a class="s-sidebar__nav-link" href="javascript:void(0);">
+                          <i class="fa fa-building"></i><em>Government Offices</em>
+                       </a>
+                    </li>
+                    <li>
+                       <a class="s-sidebar__nav-link" href="javascript:void(0);">
+                          <i class="fa fa-poll"></i><em>Polls</em>
+                       </a>
+                    </li>
+                    <li>
+                       <a class="s-sidebar__nav-link" href="index.html">
+                          <i class="fa fa-logout"></i><em>Logout</em>
+                       </a>
+                    </li>
+                 </ul>
+              </nav>
+            </div>
+            
+            <!-- Content -->
+            <main class="s-layout__content">
+               <form id="addPartyForm" class="">
+                  <div id="" class="custom d-form-container">
+                      <h1>New Party</h1><br/>
+                      <div>
+                          <label for="partyName"><b>Name</b></label>
+                          <div class="custom tooltip">
+                              <input type="text" placeholder="Party Name" name="partyName" id="partyName" required>
+                              <span class="tooltiptext">Party Name</span>
+                          </div>
+                          <label for="partyAddress"><b>HQtr Address</b></label>
+                          <div class="custom tooltip">
+                              <input type="text" placeholder="HQtr Address" name="partyAddress" id="partyAddress" required>
+                              <span class="tooltiptext">HQtr Address</span>
+                          </div>
+                          <label for="partyLogo"><b>Party Logo</b></label>
+                          <div class="custom tooltip">
+                              <input type="file" placeholder="Upload Logo" name="partyLogo" id="partyLogo" accept="image/x-png,image/gif,image/jpeg" required>
+                              <span class="tooltiptext">Upload Party Logo</span>
+                          </div>
+                      </div>
+                  
+                      <button type="submit" id="btnAddParty" class="big-btn">&nbsp;Add Party</button>
+                  </div>
+                  </form>
+            </main>
+            </div>
+      <script type="text/javascript" src="js/functions.js"></script>
+   </body>
+   
+</html>

@@ -14,44 +14,43 @@
    <body class="bg-img">
       <main>
           <header>
-                <div class="nav" id="nav">
+                <div class="custom nav" id="nav">
                     <a href="index.html"><img src="images/logo.png" id="app-logo"/>
                     <span id="app-name">Politico</span></a>          
                     <a href="index.html">Home</a>
                     <a href="javascript:void(0);" id="active">Sign In</a>
                     <a href="javascript:void(0);" class="icon" onclick="toggleMenu(this)">
-                        <div class="bar1"></div>
-                        <div class="bar2"></div>
-                        <div class="bar3"></div>
+                        <div class="custom bar1"></div>
+                        <div class="custom bar2"></div>
+                        <div class="custom bar3"></div>
                     </a>
                 </div>
           </header>
           <section>
-                <div id="toast"></div>
               <form id="signInForm" >
-                    <div id="" class="form-container">
+                    <div id="" class="custom form-container">
                     <h1>Sign In</h1>
                         <label for="name"><b>Username</b></label>
-                        <div class="tooltip">
+                        <div class="custom tooltip">
                             <input type="text" placeholder="Username" id="username" name="username" required>
                         </div>
                     
                         <label for="password"><b>Password</b></label>
-                        <div class="tooltip">
+                        <div class="custom tooltip">
                             <input type="password" placeholder="Password" id="password" name="password" required>
                         </div>
                     
                         <button type="submit" id="btnSignIn" class="big-btn" ><i class="fa fa-lock"></i>&nbsp;Sign In</button>
-                        <div><strong>Don't have an account? <a href="index.html">Sign up</a> | Forgot Password? <a href="javascript:void(0);" id="forgot">Click me</a></strong></div>
+                        <div class="custom"><strong>Don't have an account? <a href="index.html">Sign up</a> | Forgot Password? <a href="javascript:void(0);" id="forgot">Click me</a></strong></div>
                     </div>
                     </form>
 
                     <form id="resetForm" class="hidden">
-                    <div id="" class="form-container">
+                    <div id="" class="custom form-container">
                         <h1>Reset Password</h1><br/>
                         <div id="otpGroup" class="">
                             <label for="name"><b>Your Email</b></label>
-                            <div class="tooltip">
+                            <div class="custom tooltip">
                                 <input type="text" placeholder="Your Email" name="email" id="email" required>
                                 <span class="tooltiptext">Your email</span>
                             </div>
@@ -59,19 +58,19 @@
                         
                         <div id="resetGroup" class="hidden">
                             <label for="psw"><b>OTP</b></label>
-                            <div class="tooltip">
+                            <div class="custom tooltip">
                                 <input type="password" placeholder="OTP" name="otp" id="otp" >
                                 <span class="tooltiptext">One time pass sent to your email</span>
                             </div>
 
-                            <label for="psw"><b>New Password</b></label>
-                            <div class="tooltip">
+                            <label for="newPassword"><b>New Password</b></label>
+                            <div class="custom tooltip">
                                 <input type="password" placeholder="New Password" name="newPassword" id="newPassword" >
                                 <span class="tooltiptext">Min character length of 10. Digit and letter mix</span>
                             </div>
 
                             <label for="psw"><b>Confirm Password</b></label>
-                            <div class="tooltip">
+                            <div class="custom tooltip">
                                 <input type="password" placeholder="Confirm Password" name="confirm" id="confirm" >
                                 <span class="tooltiptext">Match new password</span>
                             </div>
@@ -80,7 +79,7 @@
                     
                         <button type="submit" id="btnReset" class="big-btn"><i id="resetSpin" class="fa fa-lock"></i>&nbsp;Request OTP</button>
                         <div id="otpDisplay" class="hidden"><strong><em id="otpTimer"></em><a href="javascript:void(0);" id="resend">Resend OTP</a></strong></div>
-                        <div><strong>Don't have an account? <a href="index.html">Sign up</a> | Have an account? <a href="javascript:void(0);" id="loginLink">Sign in</a></strong></div>
+                        <div class="custom"><strong>Don't have an account? <a href="index.html">Sign up</a> | Have an account? <a href="javascript:void(0);" id="loginLink">Sign in</a></strong></div>
                     </div>
                     </form>
           </section>
