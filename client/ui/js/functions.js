@@ -392,3 +392,9 @@ function editParty() {
 
   document.getElementById('editPartyForm').removeAttribute('class');
 }
+
+function removeParty() {
+  if (confirm("Are you sure, you want to delete the party?\nClick 'OK' to continue")) {
+    alert('Party deletion successful');
+  }
+}
