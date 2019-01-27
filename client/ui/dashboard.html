@@ -26,7 +26,7 @@
                           <i class="fa fa-home"></i><em>Welcome James</em>
                        </a>
                     </li>
-                    <li>
+                    <li id="linkProfile">
                        <a class="s-sidebar__nav-link" href="javascript:void(0);">
                          <i class="fa fa-user"></i><em>My Profile</em>
                        </a>
@@ -156,7 +156,7 @@
                   </form>
 
                   <!--Political party list-->
-                  <table id="partyList">
+                  <table id="partyList" class="hidden">
                      <caption>Political Parties<button class="btn" onclick="newParty();">New Party</button></caption>
                      <thead>
                        <tr>
@@ -225,6 +225,35 @@
                          <td data-label="Office">President</td>
                          <td data-label="Candidate">Ibrahim Musa</td>
                          <td data-label=""><button class="btn edit" onclick="vote();">Vote</button></td>
+                       </tr>
+                     </tbody>
+                  </table>
+
+                  <!--Voted candidate list-->
+                  <table id="votedCandidates" >
+                     <caption>Candidates you voted for</caption>
+                     <thead>
+                       <tr>
+                         <th scope="col">Party Logo</th>
+                         <th scope="col">Office</th>
+                         <th scope="col">Candidate</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <tr>
+                         <td data-label="Party Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Office">President</td>
+                         <td data-label="Candidate">Eneh, James</td>
+                       </tr>
+                       <tr>
+                         <td data-label="Party Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Office">Senate Member</td>
+                         <td data-label="Candidate">Ifeoluwa Kayode</td>
+                       </tr>
+                       <tr>
+                         <td data-label="Party Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Office">Representative Member</td>
+                         <td data-label="Candidate">Ibrahim Musa</td>
                        </tr>
                      </tbody>
                   </table>
