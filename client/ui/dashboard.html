@@ -41,7 +41,7 @@
                           <i class="fa fa-building"></i><em>Government Offices</em>
                        </a>
                     </li>
-                    <li>
+                    <li id="linkPolls">
                        <a class="s-sidebar__nav-link" href="javascript:void(0);">
                           <i class="fa fa-poll"></i><em>Polls</em>
                        </a>
@@ -124,6 +124,34 @@
                         </div>
                      
                         <button type="submit" id="btnAddOffice" class="big-btn">&nbsp;Add Office</button>
+                     </div>
+                  </form>
+
+                  <form id="contestForm" class="hidden">
+                     <div id="" class="custom d-form-container">
+                        <h1>Contest for Position</h1><br/>
+                        <div>
+                           <label for="contestOffice"><b>Position</b></label>
+                           <div class="custom tooltip">
+                                 <select name="contestOffice" id="contestOffice" required>
+                                    <option value="">Select Position</option>
+                                    <option value="1">President</option>
+                                    <option value="2">Senate Member</option>
+                                 </select>
+                                 <span class="tooltiptext">Position</span>
+                           </div>
+                           <label for="contestParty"><b>Party</b></label>
+                           <div class="custom tooltip">
+                                 <select name="contestParty" id="contestParty" required>
+                                    <option value="">Select Party</option>
+                                    <option value="1">Action Peoples Congress</option>
+                                    <option value="2">Peoples Democratic Party</option>
+                                 </select>
+                                 <span class="tooltiptext">Party</span>
+                           </div>
+                        </div>
+                     
+                        <button type="submit" id="btnContest" class="big-btn">&nbsp;Contest</button>
                      </div>
                   </form>
 
