@@ -296,6 +296,9 @@ document.onreadystatechange = () => {
           if (!document.getElementById('contestForm').getAttribute('class')) {
             document.getElementById('contestForm').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('candidateList').getAttribute('class')) {
+            document.getElementById('candidateList').setAttribute('class', 'hidden');
+          }
         
           if (document.getElementById('partyList').getAttribute('class')) {
             document.getElementById('partyList').removeAttribute('class');
@@ -318,6 +321,9 @@ document.onreadystatechange = () => {
           }
           if (!document.getElementById('contestForm').getAttribute('class')) {
             document.getElementById('contestForm').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('candidateList').getAttribute('class')) {
+            document.getElementById('candidateList').setAttribute('class', 'hidden');
           }
         
           if (document.getElementById('addOfficeForm').getAttribute('class')) {
@@ -342,9 +348,12 @@ document.onreadystatechange = () => {
           if (!document.getElementById('addOfficeForm').getAttribute('class')) {
             document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('contestForm').getAttribute('class')) {
+            document.getElementById('contestForm').setAttribute('class', 'hidden');
+          }
         
-          if (document.getElementById('contestForm').getAttribute('class')) {
-            document.getElementById('contestForm').removeAttribute('class');
+          if (document.getElementById('candidateList').getAttribute('class')) {
+            document.getElementById('candidateList').removeAttribute('class');
           }
         }
       }
@@ -492,6 +501,9 @@ function newParty() {
   if (!document.getElementById('contestForm').getAttribute('class')) {
     document.getElementById('contestForm').setAttribute('class', 'hidden');
   }
+  if (!document.getElementById('candidateList').getAttribute('class')) {
+    document.getElementById('candidateList').setAttribute('class', 'hidden');
+  }
 
   document.getElementById('addPartyForm').removeAttribute('class');
 }
@@ -510,8 +522,32 @@ function editParty() {
   if (!document.getElementById('contestForm').getAttribute('class')) {
     document.getElementById('contestForm').setAttribute('class', 'hidden');
   }
+  if (!document.getElementById('candidateList').getAttribute('class')) {
+    document.getElementById('candidateList').setAttribute('class', 'hidden');
+  }
 
   document.getElementById('editPartyForm').removeAttribute('class');
+}
+
+function contest() {
+  if (!document.getElementById('addPartyForm').getAttribute('class')) {
+    document.getElementById('addPartyForm').setAttribute('class', 'hidden');
+  }
+  if (!document.getElementById('editPartyForm').getAttribute('class')) {
+    document.getElementById('editPartyForm').setAttribute('class', 'hidden');
+  }
+  if (!document.getElementById('partyList').getAttribute('class')) {
+    document.getElementById('partyList').setAttribute('class', 'hidden');
+  }
+  if (!document.getElementById('addOfficeForm').getAttribute('class')) {
+    document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
+  }
+  if (!document.getElementById('candidateList').getAttribute('class')) {
+    document.getElementById('candidateList').setAttribute('class', 'hidden');
+  }
+
+  document.getElementById('contestForm').removeAttribute('class');
+
 }
 
 function removeParty() {

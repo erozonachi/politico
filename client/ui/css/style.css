@@ -323,7 +323,9 @@ a {
   }
 
 select, input[type=text], input[type=password], input[type=email], input[type=tel], input[type=hidden] {
+    clear: both;
     width: 100%;
+    margin-top: 5px;
     padding: 12px 20px;
     display: inline-block;
     border: 1px solid #ccc;
