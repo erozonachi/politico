@@ -280,6 +280,24 @@ document.onreadystatechange = () => {
 
       /**Dashboard Page Functions... */
 
+      //Political parties link click...
+      const linkParties = document.getElementById('linkParties');
+      if (linkParties) {
+        linkParties.onclick = (e) => {
+          if (!document.getElementById('addPartyForm').getAttribute('class')) {
+            document.getElementById('addPartyForm').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('editPartyForm').getAttribute('class')) {
+            document.getElementById('editPartyForm').setAttribute('class', 'hidden');
+          }
+        
+          if (document.getElementById('partyList').getAttribute('class')) {
+            document.getElementById('partyList').removeAttribute('class');
+          }
+        }
+      }
+
+      //Add party form submission
       const addPartyForm = document.getElementById('addPartyForm');
       if (addPartyForm) {
         addPartyForm.onsubmit = (e) => {
@@ -316,6 +334,28 @@ document.onreadystatechange = () => {
         }
       }
 
+      //Edit party form submission
+      const editPartyForm = document.getElementById('editPartyForm');
+      if(editPartyForm) {
+        editPartyForm.onsubmit = (e) => {
+          e.preventDefault();
+
+          const partyName = document.getElementById('editPartyName');
+          if (String(partyName.value).trim() === '') {
+            alert('Party Name cannot be empty');
+            return;
+          }
+
+          const btnEditParty = document.getElementById('btnEditParty');
+          btnEditParty.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Updating...';
+          setTimeout(function () {
+            partyName.value = '';
+            btnEditParty.innerHTML ='Edit Party';
+          }, 10000);
+
+        }
+      }
+
     }
 };
 
@@ -327,4 +367,28 @@ function toggleMenu(X) {
   } else {
       x.className = "custom nav";
   }
+}
+
+function newParty() {
+  if (!document.getElementById('editPartyForm').getAttribute('class')) {
+    document.getElementById('editPartyForm').setAttribute('class', 'hidden');
+  }
+
+  if (!document.getElementById('partyList').getAttribute('class')) {
+    document.getElementById('partyList').setAttribute('class', 'hidden');
+  }
+
+  document.getElementById('addPartyForm').removeAttribute('class');
+}
+
+function editParty() {
+  if (!document.getElementById('addPartyForm').getAttribute('class')) {
+    document.getElementById('addPartyForm').setAttribute('class', 'hidden');
+  }
+
+  if (!document.getElementById('partyList').getAttribute('class')) {
+    document.getElementById('partyList').setAttribute('class', 'hidden');
+  }
+
+  document.getElementById('editPartyForm').removeAttribute('class');
 }
