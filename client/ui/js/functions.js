@@ -290,9 +290,32 @@ document.onreadystatechange = () => {
           if (!document.getElementById('editPartyForm').getAttribute('class')) {
             document.getElementById('editPartyForm').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('addOfficeForm').getAttribute('class')) {
+            document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
+          }
         
           if (document.getElementById('partyList').getAttribute('class')) {
             document.getElementById('partyList').removeAttribute('class');
+          }
+        }
+      }
+
+      //Government offices link click...
+      const linkOffices = document.getElementById('linkOffices');
+      if (linkOffices) {
+        linkOffices.onclick = (e) => {
+          if (!document.getElementById('addPartyForm').getAttribute('class')) {
+            document.getElementById('addPartyForm').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('editPartyForm').getAttribute('class')) {
+            document.getElementById('editPartyForm').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('partyList').getAttribute('class')) {
+            document.getElementById('partyList').setAttribute('class', 'hidden');
+          }
+        
+          if (document.getElementById('addOfficeForm').getAttribute('class')) {
+            document.getElementById('addOfficeForm').removeAttribute('class');
           }
         }
       }
@@ -356,6 +379,34 @@ document.onreadystatechange = () => {
         }
       }
 
+      //Add office form submission
+      const addOfficeForm = document.getElementById('addOfficeForm');
+      if(addOfficeForm) {
+        addOfficeForm.onsubmit = (e) => {
+          e.preventDefault();
+
+          const officeType = document.getElementById('officeType');
+          const officeName = document.getElementById('officeName');
+          if (String(officeType.value).trim() === '') {
+            alert('Office type cannot be empty');
+            return;
+          }
+          if (String(officeName.value).trim() === '') {
+            alert('Office name cannot be empty');
+            return;
+          }
+
+          const btnAddOffice = document.getElementById('btnAddOffice');
+          btnAddOffice.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Creating...';
+          setTimeout(function () {
+            officeType.selectedIndex = 0;
+            officeName.value = '';
+            btnAddOffice.innerHTML ='Add Office';
+          }, 10000);
+
+        }
+      }
+
     }
 };
 
@@ -377,6 +428,9 @@ function newParty() {
   if (!document.getElementById('partyList').getAttribute('class')) {
     document.getElementById('partyList').setAttribute('class', 'hidden');
   }
+  if (!document.getElementById('addOfficeForm').getAttribute('class')) {
+    document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
+  }
 
   document.getElementById('addPartyForm').removeAttribute('class');
 }
@@ -388,6 +442,9 @@ function editParty() {
 
   if (!document.getElementById('partyList').getAttribute('class')) {
     document.getElementById('partyList').setAttribute('class', 'hidden');
+  }
+  if (!document.getElementById('addOfficeForm').getAttribute('class')) {
+    document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
   }
 
   document.getElementById('editPartyForm').removeAttribute('class');

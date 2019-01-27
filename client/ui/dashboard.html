@@ -36,7 +36,7 @@
                           <i class="fa fa-camera"></i><em>Political Parties</em>
                        </a>
                     </li>
-                    <li>
+                    <li id="linkOffices">
                        <a class="s-sidebar__nav-link" href="javascript:void(0);">
                           <i class="fa fa-building"></i><em>Government Offices</em>
                        </a>
@@ -98,6 +98,32 @@
                         </div>
                      
                         <button type="submit" id="btnEditParty" class="big-btn">&nbsp;Edit Party</button>
+                     </div>
+                  </form>
+
+                  <form id="addOfficeForm" class="hidden">
+                     <div id="" class="custom d-form-container">
+                        <h1>Add Office</h1><br/>
+                        <div>
+                           <label for="officeType"><b>Type</b></label>
+                           <div class="custom tooltip">
+                                 <select name="officeType" id="officeType" required>
+                                    <option value="">Select Office Type</option>
+                                    <option value="federal">Federal</option>
+                                    <option value="legislative">Legislative</option>
+                                    <option value="state">State</option>
+                                    <option value="local">Local Government</option>
+                                 </select>
+                                 <span class="tooltiptext">Office Type</span>
+                           </div>
+                           <label for="officeName"><b>Name</b></label>
+                           <div class="custom tooltip">
+                                 <input type="text" placeholder="Office Name" name="officeName" id="officeName" required>
+                                 <span class="tooltiptext">Office Name</span>
+                           </div>
+                        </div>
+                     
+                        <button type="submit" id="btnAddOffice" class="big-btn">&nbsp;Add Office</button>
                      </div>
                   </form>
 
