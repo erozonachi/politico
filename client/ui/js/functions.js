@@ -293,6 +293,9 @@ document.onreadystatechange = () => {
           if (!document.getElementById('addOfficeForm').getAttribute('class')) {
             document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('contestForm').getAttribute('class')) {
+            document.getElementById('contestForm').setAttribute('class', 'hidden');
+          }
         
           if (document.getElementById('partyList').getAttribute('class')) {
             document.getElementById('partyList').removeAttribute('class');
@@ -313,9 +316,35 @@ document.onreadystatechange = () => {
           if (!document.getElementById('partyList').getAttribute('class')) {
             document.getElementById('partyList').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('contestForm').getAttribute('class')) {
+            document.getElementById('contestForm').setAttribute('class', 'hidden');
+          }
         
           if (document.getElementById('addOfficeForm').getAttribute('class')) {
             document.getElementById('addOfficeForm').removeAttribute('class');
+          }
+        }
+      }
+
+      //Polls link click...
+      const linkPolls = document.getElementById('linkPolls');
+      if (linkPolls) {
+        linkPolls.onclick = (e) => {
+          if (!document.getElementById('addPartyForm').getAttribute('class')) {
+            document.getElementById('addPartyForm').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('editPartyForm').getAttribute('class')) {
+            document.getElementById('editPartyForm').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('partyList').getAttribute('class')) {
+            document.getElementById('partyList').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('addOfficeForm').getAttribute('class')) {
+            document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
+          }
+        
+          if (document.getElementById('contestForm').getAttribute('class')) {
+            document.getElementById('contestForm').removeAttribute('class');
           }
         }
       }
@@ -407,6 +436,35 @@ document.onreadystatechange = () => {
         }
       }
 
+      //Contest form submission
+      const contestForm = document.getElementById('contestForm');
+      if(contestForm) {
+        contestForm.onsubmit = (e) => {
+          e.preventDefault();
+
+          const office = document.getElementById('contestOffice');
+          const party = document.getElementById('contestParty');
+          if (String(office.value).trim() === '') {
+            alert('Office type cannot be empty');
+            return;
+          }
+          if (String(party.value).trim() === '') {
+            alert('Party cannot be empty');
+            return;
+          }
+
+          const btnContest = document.getElementById('btnContest');
+          btnContest.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Creating...';
+          setTimeout(function () {
+            office.selectedIndex = 0;
+            party.selectedIndex = 0;
+            alert('Submission Successful')
+            btnContest.innerHTML ='Contest';
+          }, 10000);
+
+        }
+      }
+
     }
 };
 
@@ -431,6 +489,9 @@ function newParty() {
   if (!document.getElementById('addOfficeForm').getAttribute('class')) {
     document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
   }
+  if (!document.getElementById('contestForm').getAttribute('class')) {
+    document.getElementById('contestForm').setAttribute('class', 'hidden');
+  }
 
   document.getElementById('addPartyForm').removeAttribute('class');
 }
@@ -445,6 +506,9 @@ function editParty() {
   }
   if (!document.getElementById('addOfficeForm').getAttribute('class')) {
     document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
+  }
+  if (!document.getElementById('contestForm').getAttribute('class')) {
+    document.getElementById('contestForm').setAttribute('class', 'hidden');
   }
 
   document.getElementById('editPartyForm').removeAttribute('class');
