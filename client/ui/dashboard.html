@@ -185,14 +185,45 @@
                          <td data-label="HQ Address">Plot 10 Maitama, Abuja FCT</td>
                          <td data-label="Actions"><button class="btn edit" onclick="editParty();">Edit</button><button class="btn del" onclick="removeParty();">Remove</button></td>
                        </tr>
+                     </tbody>
+                  </table>
+
+                  <!--Candidate list for specific government office-->
+                  <table id="candidateList" class="hidden">
+                     <caption>Candidate List<button class="btn" onclick="contest();">Run for an Office</button>
+                        <div class="custom">
+                              <select name="candidateOffice" id="candidateOffice" required>
+                                 <option value="">Select Office</option>
+                                 <option value="1">President</option>
+                                 <option value="2">Senate Member</option>
+                              </select>
+                        </div>
+                     </caption>
+                     <thead>
                        <tr>
-                         <td scope="row" data-label="Logo"><img class="avatar" src="images/avatar.jpg" /></td>
-                         <td data-label="Name">Peoples Republic</td>
-                         <td data-label="HQ Address">Plot 7 Maitama, Abuja FCT</td>
-                         <td data-label="Actions"><button class="btn edit" onclick="editParty();">Edit</button><button class="btn del" onclick="removeParty();">Remove</button></td>
+                         <th scope="col">Party Logo</th>
+                         <th scope="col">Office</th>
+                         <th scope="col">Candidate</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <tr>
+                         <td data-label="Party Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Office">President</td>
+                         <td data-label="Candidate">Eneh, James</td>
+                       </tr>
+                       <tr>
+                         <td data-label="Party Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Office">President</td>
+                         <td data-label="Candidate">Ifeoluwa Kayode</td>
+                       </tr>
+                       <tr>
+                         <td data-label="Party Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Office">President</td>
+                         <td data-label="Candidate">Ibrahim Musa</td>
                        </tr>
                      </tbody>
-                   </table>
+                  </table>
             </main>
             </div>
       <script type="text/javascript" src="js/functions.js"></script>
