@@ -322,7 +322,7 @@ a {
     background-color: #fff;
   }
 
-input[type=text], input[type=password], input[type=email], input[type=tel], input[type=hidden] {
+select, input[type=text], input[type=password], input[type=email], input[type=tel], input[type=hidden] {
     width: 100%;
     padding: 12px 20px;
     display: inline-block;
