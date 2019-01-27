@@ -17,7 +17,8 @@
 
 
  body {
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
+    line-height: 1.25;
     font-size: 1em;
     color: #333;
  }
@@ -292,8 +293,8 @@ a {
    /*  overflow-y: scroll; */
 }
 .form-container {
-    width: 80%;
-    margin: 100px 10%;
+    width: 50%;
+    margin: 100px 25%;
 }
 
 .d-form-container {
@@ -321,7 +322,7 @@ a {
     background-color: #fff;
   }
 
-input[type=text], input[type=password], input[type=email] {
+input[type=text], input[type=password], input[type=email], input[type=tel], input[type=hidden] {
     width: 100%;
     padding: 12px 20px;
     display: inline-block;
@@ -456,17 +457,33 @@ button:hover {
   .btn {
     display: inline-block;
     padding: 13px 25px;
-    max-width: 100%;
-    color: #000;
+    margin-left: 15px;
     text-align: center;
-    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    color: #fff;
+    background-color: #333;
     transition: 0.3s;
     border: none;
     box-sizing: border-box;
     outline: none;
-    border-bottom-right-radius: 4px;
-    border-top-right-radius: 4px;
+    border-radius: 4px;
+  }
+
+  .clear-left {
+    clear: left;
+  }
+
+  .del {
+    background-color: rgba(212, 14, 14, 1);
+    max-width: 50%;
+    margin: 0 2.5%;
+  }
+
+  .edit {
+    background-color: rgba(14, 212, 14, 1);
+    max-width: 40%;
+    margin: 0 2.5%;
   }
   
   .addBtn:hover {
@@ -475,8 +492,8 @@ button:hover {
   
   .avatar {
       vertical-align: middle;
-      width: 150px;
-      height: 150px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       border: 1px solid #ddd;
       padding: 5px;
@@ -495,32 +512,92 @@ button:hover {
       resize: none;
   }
   
-  .submit {
-      background-color: #ddd;
-      color: #333;
-      max-width: 150px;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-  }
-
-#toast {
-    display: none;
-    background-color: #333;
-    color: #fff;
-    width: 100%;
-    text-align: center;
-    border-radius: 5px;
-    padding: 16px;
-    font-size: 17px;
-    margin-bottom: 5px;
+.submit {
+    background-color: #ddd;
+    color: #333;
+    max-width: 150px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-#toast.show {
-    display: block;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+/**Source: https://codepen.io/AllThingsSmitty/pen/MyqmdM?editors=1000 by  Matt Smith*/
+table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0 5%;
+    padding: 0;
+    width: 90%;
+    table-layout: fixed;
+}
+
+table caption {
+    font-size: 1.5em;
+    margin: 4.5em 0 .75em;
+}
+
+table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
+}
+
+table th,
+table td {
+    padding: .625em;
+    text-align: center;
+}
+
+table th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+    table {
+        border: 0;
+    }
+
+    table caption {
+        font-size: 1.3em;
+    }
+
+    table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
+
+    table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    table td:last-child {
+        border-bottom: 0;
+    }
 }
 
 @-webkit-keyframes aboutMove {

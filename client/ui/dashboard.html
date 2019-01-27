@@ -31,7 +31,7 @@
                          <i class="fa fa-user"></i><em>My Profile</em>
                        </a>
                     </li>
-                    <li>
+                    <li id="linkParties">
                        <a class="s-sidebar__nav-link" href="javascript:void(0);">
                           <i class="fa fa-camera"></i><em>Political Parties</em>
                        </a>
@@ -57,7 +57,7 @@
             
             <!-- Content -->
             <main class="s-layout__content">
-               <form id="addPartyForm" class="">
+               <form id="addPartyForm" class="hidden">
                   <div id="" class="custom d-form-container">
                       <h1>New Party</h1><br/>
                       <div>
@@ -81,6 +81,64 @@
                       <button type="submit" id="btnAddParty" class="big-btn">&nbsp;Add Party</button>
                   </div>
                   </form>
+
+                  <form id="editPartyForm" class="hidden">
+                     <div id="" class="custom d-form-container">
+                        <h1>Edit Party</h1><br/>
+                        <div>
+                           <label for="editPartyName"><b>Name</b></label>
+                           <div class="custom tooltip">
+                                 <input type="text" placeholder="Party Name" name="editPartyName" id="editPartyName" required>
+                                 <span class="tooltiptext">Party Name</span>
+                           </div>
+                           <div class="custom tooltip">
+                                 <input type="hidden" name="partyID" id="partyID" >
+                                 <span class="tooltiptext"></span>
+                           </div>
+                        </div>
+                     
+                        <button type="submit" id="btnEditParty" class="big-btn">&nbsp;Edit Party</button>
+                     </div>
+                  </form>
+
+                  <!--Political party list-->
+                  <table id="partyList">
+                     <caption>Political Parties<button class="btn" onclick="newParty();">New Party</button></caption>
+                     <thead>
+                       <tr>
+                         <th scope="col">Logo</th>
+                         <th scope="col">Name</th>
+                         <th scope="col">HQ Address</th>
+                         <th scope="col">Actions</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <tr>
+                         <td data-label="Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Name">Action Peoples Congress</td>
+                         <td data-label="HQ Address">Plot 1 Maitama, Abuja FCT</td>
+                         <td data-label="Actions"><button class="btn edit" onclick="editParty();">Edit</button></td>
+                       </tr>
+                       <tr>
+                         <td scope="row" data-label="Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Name">Peoples Democratic Party</td>
+                         <td data-label="HQ Address">Plot 50 Maitama, Abuja FCT</td>
+                         <td data-label="Actions"><button class="btn edit" onclick="editParty();">Edit</button></td>
+                       </tr>
+                       <tr>
+                         <td scope="row" data-label="Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Name">All Progressive Alliance</td>
+                         <td data-label="HQ Address">Plot 10 Maitama, Abuja FCT</td>
+                         <td data-label="Actions"><button class="btn edit" onclick="editParty();">Edit</button></td>
+                       </tr>
+                       <tr>
+                         <td scope="row" data-label="Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Name">Peoples Republic</td>
+                         <td data-label="HQ Address">Plot 7 Maitama, Abuja FCT</td>
+                         <td data-label="Actions"><button class="btn edit" onclick="editParty();">Edit</button></td>
+                       </tr>
+                     </tbody>
+                   </table>
             </main>
             </div>
       <script type="text/javascript" src="js/functions.js"></script>
