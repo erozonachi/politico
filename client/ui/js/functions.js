@@ -555,3 +555,9 @@ function removeParty() {
     alert('Party deletion successful');
   }
 }
+
+function vote() {
+  if (confirm("Confirm you want to vote Eneh for President!\nClick 'OK' to continue")) {
+    alert('Vote successful');
+  }
+}
