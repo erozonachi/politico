@@ -11,14 +11,13 @@ document.onreadystatechange = () => {
             
             e.preventDefault();
 
-            const username = String(document.getElementById('username').value).trim();
+            const phone = String(document.getElementById('phone').value).trim();
             const fName = String(document.getElementById('fName').value).trim();
             const lName = String(document.getElementById('lName').value).trim();
             const email = String(document.getElementById('email').value).trim();
             const password = String(document.getElementById('password').value).trim();
             const confirm = String(document.getElementById('confirm').value).trim();
             const nameFormat = /^[a-zA-Z]+$/i;
-            const alphaNum = /^[a-zA-Z0-9]+$/i;
 
             if (fName == "") {
               alert("First Name is required");
@@ -34,14 +33,8 @@ document.onreadystatechange = () => {
               alert("Last Name can only contain letters");
               return false;
             }
-            if (username == "") {
-              alert("Username is required");
-              return false;
-            } else if (!alphaNum.test(username)) {
-              alert("Username can only contain letters and digits");
-              return false;
-            } else if (!isNaN(username.charAt(0))) {
-              alert("Username cannot start with a number");
+            if (phone == "") {
+              alert("Phone number is required");
               return false;
             }
             
