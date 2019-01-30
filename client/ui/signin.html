@@ -7,8 +7,7 @@
         <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
         <meta name="description" content="Politico Application">
         <title>Welcome | Politico</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel = "stylesheet" type = "text/css" href = "css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
    </head>
    
    <body class="bg-img">
@@ -27,8 +26,13 @@
                 </div>
           </header>
           <section>
+                <article class="desktop-content">
+                    <h1>Politico&trade;</h1>
+                    <p>Remember Nigeria is the only country we can call ours', Naija belongs to all of us<br/><br/><b>Vote wisely, for a better Naija... <br/><br/></b>
+                    </p>
+                </article>
               <form id="signInForm" >
-                    <div id="" class="custom form-container">
+                    <div id="" class="custom login-container">
                     <h1>Sign In</h1>
                         <label for="name"><b>Username</b></label>
                         <div class="custom tooltip">
@@ -46,7 +50,7 @@
                     </form>
 
                     <form id="resetForm" class="hidden">
-                    <div id="" class="custom form-container">
+                    <div id="" class="custom login-container">
                         <h1>Reset Password</h1><br/>
                         <div id="otpGroup" class="">
                             <label for="name"><b>Your Email</b></label>
@@ -77,12 +81,18 @@
                             
                         </div>
                     
-                        <button type="submit" id="btnReset" class="big-btn"><i id="resetSpin" class="fa fa-lock"></i>&nbsp;Request OTP</button>
+                        <button type="submit" id="btnReset" class="big-btn"><i id="resetSpin" class="lock"></i>&nbsp;Request OTP</button>
                         <div id="otpDisplay" class="hidden"><strong><em id="otpTimer"></em><a href="javascript:void(0);" id="resend">Resend OTP</a></strong></div>
                         <div class="custom"><strong>Don't have an account? <a href="index.html">Sign up</a> | Have an account? <a href="javascript:void(0);" id="loginLink">Sign in</a></strong></div>
                     </div>
                     </form>
+                    <article class="mobile-content">
+                        <h1>Politico&trade;</h1>
+                        <p>Remember Nigeria is the only country we can call ours', Naija belongs to all of us<br/><br/><h3>Vote wisely, for a better Naija... <br/><br/></h3>
+                        </p>
+                    </article>
           </section>
+          <section><article id="footer">All rights reserved, <strong>Politico</strong> &copy; 2019</article></section>
       </main>
       <script type="text/javascript" src="js/functions.js"></script>
    </body>

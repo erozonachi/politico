@@ -7,7 +7,6 @@
         <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
         <meta name="description" content="Politico Application">
         <title>Welcome | Politico</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel = "stylesheet" type = "text/css" href = "css/style.css">
    </head>
    
@@ -28,72 +27,69 @@
             </div>
           </header>
           <section class="">
-                <article class="mobile-content">
-                    <h1>Politico&trade;</h1>
-                    <p>It's your right to vote candidates of your choice at all level of political positions this coming general election, and that's what <em>Politico</em> stands for; Transparent and makes sure your vote count. Stand up, proudly Nigerians lets make history one more time. Remember Nigeria is the only country we can call ours', Naija belongs to all of us<br/><br/><h3>Vote wisely, for a better Naija... <br/><br/></h3>
-                    </p>
-                </article>
                 <article class="desktop-content">
                     <h1>Politico&trade;</h1>
-                    <p>It's your right to vote candidates of your choice at all level of political positions this coming general election, and that's what <em>Politico</em> stands for; Transparency and makes sure your vote count. Stand up, proudly Nigerians lets make history one more time. Remember Nigeria is the only country we can call ours', Naija belongs to all of us<br/><br/><h3>Vote wisely, for a better Naija... <br/><br/></h3>
+                    <p>Remember Nigeria is the only country we can call ours', Naija belongs to all of us<br/><br/><b>Vote wisely, for a better Naija... <br/><br/></b>
                     </p>
                 </article>
                 <form id="signUpForm" >
                 <div class="custom container">
                         <h1>Sign Up</h1><br/>
-                        <label for="fName"><b>First Name<sup>*</sup></b></label>
-                        <div class="custom tooltip">
-                            <input type="text" placeholder="Enter Your First Name" name="fName" id="fName" required>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label for="fName"><b>First Name<sup>*</sup></b></label>
+                                <input type="text" placeholder="Enter Your First Name" name="fName" id="fName" required>
+                            </div>
+    
+                            <div class="form-col">
+                                <label for="lName"><b>Last Name<sup>*</sup></b></label>
+                                <input type="text" placeholder="Enter Your Last Name" name="lName" id="lName" required>
+                            </div>
                         </div>
 
-                        <label for="lName"><b>Last Name<sup>*</sup></b></label>
-                        <div class="custom tooltip">
-                            <input type="text" placeholder="Enter Your Last Name" name="lName" id="lName" required>
-                        </div>
-
-                        <label for="oName"><b>Other Name</b></label>
-                        <div class="custom tooltip">
-                            <input type="text" placeholder="Enter Your Other Name" name="oName" id="oName" >
-                        </div>
-
-                        <label for="phone"><b>Phone Number<sup>*</sup></b></label>
-                        <div class="custom tooltip">
-                            <input type="tel" placeholder="Enter Your Phone Number" name="phone" id="phone" required>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label for="oName"><b>Other Name</b></label>
+                                <input type="text" placeholder="Enter Your Other Name" name="oName" id="oName" >
+                            </div>
+    
+                            <div class="form-col">
+                                <label for="phone"><b>Phone Number<sup>*</sup></b></label>
+                                <input type="tel" placeholder="Enter Your Phone Number" name="phone" id="phone" required>
+                            </div>
                         </div>
 
                         <label for="email"><b>Email<sup>*</sup></b></label>
-                        <div class="custom tooltip">
+                        <div class="custom">
                             <input type="email" placeholder="Enter Your Email" id="email" name="email" required>
                         </div>
 
                         <label for="passport"><b>Passport<sup>*</sup></b></label>
-                        <div class="custom tooltip">
+                        <div class="custom">
                             <input type="file" title="Upload Your Passport" id="passport" name="passport" accept="image/x-png,image/gif,image/jpeg" required>
                         </div>
                     
-                        <label for="password"><b>Password<sup>*</sup></b></label>
-                        <div class="custom tooltip">
-                            <input type="password" placeholder="Choose Password" id="password" name="password" required>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label for="password"><b>Password<sup>*</sup></b></label>
+                                <input type="password" placeholder="Choose Password" id="password" name="password" required>
+                            </div>
+                        
+                            <div class="form-col">
+                                <label for="psw"><b>Confirm Password<sup>*</sup></b></label>
+                                <input type="password" placeholder="Confirm Password" id="confirm" name="confirm" required>
+                            </div>
                         </div>
-                    
-                        <label for="psw"><b>Confirm Password<sup>*</sup></b></label>
-                        <div class="custom tooltip">
-                            <input type="password" placeholder="Confirm Password" id="confirm" name="confirm" required>
-                        </div>
-                    
-                        <label class="check-container">I'm below 18
-                            <input type="radio" name="age" value="" required>
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="check-container">I'm 18+
-                            <input type="radio" name="age" value="" required>
-                            <span class="checkmark"></span>
-                        </label>
                     
                         <button type="submit" id="btnSignUp" class="big-btn"><i id="processing" class=""></i>&nbsp;Sign Up</button>
                         <div class="custom"><strong>Have an account? <a href="signin.html">Sign in</a></strong></div>
                 </div>
             </form>
+            <article class="mobile-content">
+                <h1>Politico&trade;</h1>
+                <p>Remember Nigeria is the only country we can call ours', Naija belongs to all of us<br/><br/><h3>Vote wisely, for a better Naija... <br/><br/></h3>
+                </p>
+            </article>
           </section>
           <section><article id="footer">All rights reserved, <strong>Politico</strong> &copy; 2019</article></section>
       </main>
