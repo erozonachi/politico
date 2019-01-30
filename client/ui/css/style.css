@@ -116,6 +116,10 @@
  .s-sidebar__nav-link:hover {
     background: #4d6276;
  }
+
+ .active {
+    background: #4d6276;
+ }
  
  .s-sidebar__nav-link > i {
     position: absolute;
@@ -133,7 +137,7 @@
     transform: translate(-50%, -50%);
  }
  
-main, header, article, .custom, input {
+main, header, article, .custom, .form-row, input {
 
     clear : left;
     display : block;
@@ -143,6 +147,21 @@ main, header, article, .custom, input {
     -moz-box-sizing : border-box;
     -webkit-box-sizing : border-box;
 
+}
+
+.form-row {
+    margin: 15px auto;
+}
+
+.form-col {
+    float: left;
+    display: block;
+    width: 48%;
+    max-width: 48%;
+    margin: 0 1%;
+    box-sizing : border-box;
+    -moz-box-sizing : border-box;
+    -webkit-box-sizing : border-box;
 }
 
 main {
@@ -241,7 +260,7 @@ a {
 .desktop-content {
    
     position: absolute;
-    top: 50%;
+    top: 260px;
     left: 30%;
     transform: translate(-50%, -50%);
     margin: 20px;
@@ -249,24 +268,24 @@ a {
     padding: 16px;
     background: rgba(0, 0, 0, 0.5);
     color: #f1f1f1;
-    -webkit-animation: aboutMove 10s infinite; 
-    animation: aboutMove 10s infinite;
-    animation-delay: 20s;
-    -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in;
 }
 
 .mobile-content {
     clear: left;
     display: none;
-    margin: 5px 2.5%;
+    margin: 0 5px 2.5% 2.5%;
     width: 95%;
     padding: 10px;
     background: rgba(0, 0, 0, 0.5);
     color: #f1f1f1;
 }
 
-.form-container, .d-form-container, .container {
+.desktop-content p, .mobile-content p {
+    font-size: 1.5em;
+    text-align: justify;
+}
+
+.form-container, .d-form-container, .container, .login-container {
     box-shadow: #333 1px 2px;
     border: 1px solid rgba(147, 184, 189,0.8);
 	-webkit-box-shadow: 0pt 2px 5px rgba(105, 108, 109,  0.7),	0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
@@ -313,8 +332,20 @@ a {
   .container {
     position: absolute;
     right: 20%;
-    margin-top: 0;
-    margin-bottom: 70px;
+    margin-top: 30px;
+    margin-bottom: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    max-width: 400px;
+    padding: 16px;
+    background-color: #fff;
+  }
+
+  .login-container {
+    position: absolute;
+    right: 20%;
+    margin-top: 100px;
+    margin-bottom: 0;
     margin-left: 20px;
     margin-right: 20px;
     max-width: 400px;
@@ -602,23 +633,13 @@ table th {
     }
 }
 
-@-webkit-keyframes aboutMove {
-    from {left: 0px;}
-    to {left: 30%;}
-}
-
-@keyframes aboutMove {
-    from {left: 0px;}
-    to {left: 30%;}
-}
-
 @media screen and (max-width: 1536px) {
     .desktop-content {
         left: 30%;
         transform: translate(-50%, -50%);
     }
       
-    .container {
+    .container, .login-container {
     right: 10%;
     }
 }
@@ -629,7 +650,7 @@ table th {
         max-width: 300px;
     }
       
-    .container {
+    .container, .login-container {
     right: 3%;
     max-width: 400px;
     }
@@ -653,14 +674,14 @@ table th {
         display: inline-block;
         margin-top: 50px;
     }
-    .container {
+    .container, .login-container {
         clear: left;
         float: left;
         position: relative;
         right: 0;
         max-width: 80%;
         margin-top: 0;
-        margin-bottom: 70px;
+        margin-bottom: 5px;
         margin-left: 10%;
         margin-right: 10%;
         padding: 16px;
@@ -707,14 +728,14 @@ table th {
         margin-top: 10px;
     }
 
-    .container {
+    .container, .login-container {
         clear: left;
         float: left;
         position: relative;
         right: 0;
         max-width: 95%;
         margin-top: 0;
-        margin-bottom: 70px;
+        margin-bottom: 5px;
         margin-left: 2.5%;
         margin-right: 2.5%;
         padding: 5px;

@@ -58,7 +58,7 @@ document.onreadystatechange = () => {
               return false;
             }
             const btnSignUp = document.getElementById('btnSignUp');
-            btnSignUp.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Wait';
+            btnSignUp.innerHTML = '<i class="spinner spin"></i> Wait...';
             setTimeout(function () { btnSignUp.innerHTML ='Sign Up'; }, 10000);
             
         };
@@ -88,10 +88,10 @@ document.onreadystatechange = () => {
             return false;
           }
 
-          btnLogin.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Authenticating';
+          btnLogin.innerHTML = '<i class="spinner spin"></i> Authenticating...';
           setTimeout(function () { 
             btnLogin.removeAttribute('disabled');
-            btnLogin.innerHTML ='<i class="fa fa-lock"></i>&nbsp;Sign In';
+            btnLogin.innerHTML ='<i class="lock"></i>&nbsp;Sign In';
             window.location.replace("dashboard.html");
           }, 10000);
         }
@@ -196,10 +196,10 @@ document.onreadystatechange = () => {
               return false;
             }
             
-            btnReset.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Resetting Password...';
+            btnReset.innerHTML = '<i class="spinner spin"></i> Resetting Password...';
             setTimeout(function () {
               btnReset.removeAttribute('disabled');
-              btnReset.innerHTML ='<i id="resetSpin" class="fa fa-lock"></i>&nbsp;Request OTP';
+              btnReset.innerHTML ='<i id="resetSpin" class="lock"></i>&nbsp;Request OTP';
               alert('Password reset successful!');
 
               resetForm.setAttribute('class', 'hidden');
@@ -218,7 +218,7 @@ document.onreadystatechange = () => {
               otpGroup.removeAttribute('class');
             }, 10000);
           } else {
-            btnReset.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Requesting OTP...';
+            btnReset.innerHTML = '<i class="spinner spin"></i> Requesting OTP...';
             setTimeout(function () {
               btnReset.removeAttribute('disabled');
               btnReset.innerHTML ='Reset Password';
@@ -299,6 +299,13 @@ document.onreadystatechange = () => {
           if (document.getElementById('partyList').getAttribute('class')) {
             document.getElementById('partyList').removeAttribute('class');
           }
+
+          if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
+          if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
+          if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
+          if (linkContest.getAttribute('class')) linkContest.removeAttribute('class');
+
+          if (!linkParties.getAttribute('class')) linkParties.setAttribute('class', 'active');
         }
       }
 
@@ -328,6 +335,13 @@ document.onreadystatechange = () => {
           if (document.getElementById('addOfficeForm').getAttribute('class')) {
             document.getElementById('addOfficeForm').removeAttribute('class');
           }
+
+          if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
+          if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
+          if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
+          if (linkContest.getAttribute('class')) linkContest.removeAttribute('class');
+
+          if (!linkOffices.getAttribute('class')) linkOffices.setAttribute('class', 'active');
         }
       }
 
@@ -357,6 +371,13 @@ document.onreadystatechange = () => {
           if (document.getElementById('candidateList').getAttribute('class')) {
             document.getElementById('candidateList').removeAttribute('class');
           }
+
+          if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
+          if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
+          if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
+          if (linkContest.getAttribute('class')) linkContest.removeAttribute('class');
+
+          if (!linkPolls.getAttribute('class')) linkPolls.setAttribute('class', 'active');
         }
       }
 
@@ -386,7 +407,51 @@ document.onreadystatechange = () => {
           if (document.getElementById('votedCandidates').getAttribute('class')) {
             document.getElementById('votedCandidates').removeAttribute('class');
           }
+
+          if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
+          if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
+          if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
+          if (linkContest.getAttribute('class')) linkContest.removeAttribute('class');
+
+          if (!linkProfile.getAttribute('class')) linkProfile.setAttribute('class', 'active');
         }
+      }
+
+      //Contest link click
+      const linkContest = document.getElementById('linkContest');
+      if (linkContest) {
+        linkContest.onclick = (e) => {
+          if (!document.getElementById('addPartyForm').getAttribute('class')) {
+            document.getElementById('addPartyForm').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('editPartyForm').getAttribute('class')) {
+            document.getElementById('editPartyForm').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('partyList').getAttribute('class')) {
+            document.getElementById('partyList').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('addOfficeForm').getAttribute('class')) {
+            document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('candidateList').getAttribute('class')) {
+            document.getElementById('candidateList').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('votedCandidates').getAttribute('class')) {
+            document.getElementById('votedCandidates').setAttribute('class', 'hidden');
+          }
+  
+          if (document.getElementById('contestForm').getAttribute('class')) {
+            document.getElementById('contestForm').removeAttribute('class');
+          }
+  
+          if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
+          if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
+          if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
+          if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
+  
+          if (!linkContest.getAttribute('class')) linkContest.setAttribute('class', 'active');
+        }
+      
       }
 
       //Add party form submission
@@ -415,7 +480,7 @@ document.onreadystatechange = () => {
           }
 
           const btnAddParty = document.getElementById('btnAddParty');
-          btnAddParty.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Creating...';
+          btnAddParty.innerHTML = '<i class="spinner spin"></i> Creating...';
           setTimeout(function () {
             partyName.value = '';
             partyAddress.value = '';
@@ -439,7 +504,7 @@ document.onreadystatechange = () => {
           }
 
           const btnEditParty = document.getElementById('btnEditParty');
-          btnEditParty.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Updating...';
+          btnEditParty.innerHTML = '<i class="spinner spin"></i> Updating...';
           setTimeout(function () {
             partyName.value = '';
             btnEditParty.innerHTML ='Edit Party';
@@ -466,7 +531,7 @@ document.onreadystatechange = () => {
           }
 
           const btnAddOffice = document.getElementById('btnAddOffice');
-          btnAddOffice.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Creating...';
+          btnAddOffice.innerHTML = '<i class="spinner spin"></i> Creating...';
           setTimeout(function () {
             officeType.selectedIndex = 0;
             officeName.value = '';
@@ -494,7 +559,7 @@ document.onreadystatechange = () => {
           }
 
           const btnContest = document.getElementById('btnContest');
-          btnContest.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Creating...';
+          btnContest.innerHTML = '<i class="spinner spin"></i> Creating...';
           setTimeout(function () {
             office.selectedIndex = 0;
             party.selectedIndex = 0;
@@ -564,30 +629,6 @@ function editParty() {
   }
 
   document.getElementById('editPartyForm').removeAttribute('class');
-}
-
-function contest() {
-  if (!document.getElementById('addPartyForm').getAttribute('class')) {
-    document.getElementById('addPartyForm').setAttribute('class', 'hidden');
-  }
-  if (!document.getElementById('editPartyForm').getAttribute('class')) {
-    document.getElementById('editPartyForm').setAttribute('class', 'hidden');
-  }
-  if (!document.getElementById('partyList').getAttribute('class')) {
-    document.getElementById('partyList').setAttribute('class', 'hidden');
-  }
-  if (!document.getElementById('addOfficeForm').getAttribute('class')) {
-    document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
-  }
-  if (!document.getElementById('candidateList').getAttribute('class')) {
-    document.getElementById('candidateList').setAttribute('class', 'hidden');
-  }
-  if (!document.getElementById('votedCandidates').getAttribute('class')) {
-    document.getElementById('votedCandidates').setAttribute('class', 'hidden');
-  }
-
-  document.getElementById('contestForm').removeAttribute('class');
-
 }
 
 function removeParty() {

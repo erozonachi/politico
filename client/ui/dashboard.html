@@ -7,7 +7,6 @@
         <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
         <meta name="description" content="Politico Application">
         <title>Welcome | Politico</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
    </head>
    
@@ -23,32 +22,37 @@
                  <ul>
                     <li>
                        <a class="s-sidebar__nav-link" href="javascript:void(0);">
-                          <i class="fa fa-home"></i><em>Welcome James</em>
+                          <i class="home"></i><em>Welcome James</em>
                        </a>
                     </li>
-                    <li id="linkProfile">
+                    <li id="linkProfile" class="active">
                        <a class="s-sidebar__nav-link" href="javascript:void(0);">
-                         <i class="fa fa-user"></i><em>My Profile</em>
+                         <i class="user"></i><em>My Profile</em>
                        </a>
                     </li>
                     <li id="linkParties">
                        <a class="s-sidebar__nav-link" href="javascript:void(0);">
-                          <i class="fa fa-camera"></i><em>Political Parties</em>
+                          <i class="camera"></i><em>Political Parties</em>
                        </a>
                     </li>
                     <li id="linkOffices">
                        <a class="s-sidebar__nav-link" href="javascript:void(0);">
-                          <i class="fa fa-building"></i><em>Government Offices</em>
+                          <i class="building"></i><em>Government Offices</em>
+                       </a>
+                    </li>
+                    <li id="linkContest">
+                       <a class="s-sidebar__nav-link" href="javascript:void(0);">
+                          <i class="office"></i><em>Contest</em>
                        </a>
                     </li>
                     <li id="linkPolls">
                        <a class="s-sidebar__nav-link" href="javascript:void(0);">
-                          <i class="fa fa-poll"></i><em>Polls</em>
+                          <i class="poll"></i><em>Polls</em>
                        </a>
                     </li>
                     <li>
                        <a class="s-sidebar__nav-link" href="index.html">
-                          <i class="fa fa-logout"></i><em>Logout</em>
+                          <i class="logout"></i><em>Logout</em>
                        </a>
                     </li>
                  </ul>
@@ -168,19 +172,19 @@
                      </thead>
                      <tbody>
                        <tr>
-                         <td data-label="Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Logo"><img class="avatar" src="images/org-avatar.png" /></td>
                          <td data-label="Name">Action Peoples Congress</td>
                          <td data-label="HQ Address">Plot 1 Maitama, Abuja FCT</td>
                          <td data-label="Actions"><button class="btn edit" onclick="editParty();">Edit</button><button class="btn del" onclick="removeParty();">Remove</button></td>
                        </tr>
                        <tr>
-                         <td scope="row" data-label="Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td scope="row" data-label="Logo"><img class="avatar" src="images/org-avatar.png" /></td>
                          <td data-label="Name">Peoples Democratic Party</td>
                          <td data-label="HQ Address">Plot 50 Maitama, Abuja FCT</td>
                          <td data-label="Actions"><button class="btn edit" onclick="editParty();">Edit</button><button class="btn del" onclick="removeParty();">Remove</button></td>
                        </tr>
                        <tr>
-                         <td scope="row" data-label="Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td scope="row" data-label="Logo"><img class="avatar" src="images/org-avatar.png" /></td>
                          <td data-label="Name">All Progressive Alliance</td>
                          <td data-label="HQ Address">Plot 10 Maitama, Abuja FCT</td>
                          <td data-label="Actions"><button class="btn edit" onclick="editParty();">Edit</button><button class="btn del" onclick="removeParty();">Remove</button></td>
@@ -190,7 +194,7 @@
 
                   <!--Candidate list for specific government office-->
                   <table id="candidateList" class="hidden">
-                     <caption>Candidate List<button class="btn" onclick="contest();">Run for an Office</button>
+                     <caption>Candidate List
                         <div class="custom">
                               <select name="candidateOffice" id="candidateOffice" required>
                                  <option value="">Select Office</option>
@@ -209,19 +213,19 @@
                      </thead>
                      <tbody>
                        <tr>
-                         <td data-label="Party Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
                          <td data-label="Office">President</td>
                          <td data-label="Candidate">Eneh, James</td>
                          <td data-label=""><button class="btn edit" onclick="vote();">Vote</button></td>
                        </tr>
                        <tr>
-                         <td data-label="Party Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
                          <td data-label="Office">President</td>
                          <td data-label="Candidate">Ifeoluwa Kayode</td>
                          <td data-label=""><button class="btn edit" onclick="vote();">Vote</button></td>
                        </tr>
                        <tr>
-                         <td data-label="Party Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
                          <td data-label="Office">President</td>
                          <td data-label="Candidate">Ibrahim Musa</td>
                          <td data-label=""><button class="btn edit" onclick="vote();">Vote</button></td>
@@ -241,17 +245,17 @@
                      </thead>
                      <tbody>
                        <tr>
-                         <td data-label="Party Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
                          <td data-label="Office">President</td>
                          <td data-label="Candidate">Eneh, James</td>
                        </tr>
                        <tr>
-                         <td data-label="Party Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
                          <td data-label="Office">Senate Member</td>
                          <td data-label="Candidate">Ifeoluwa Kayode</td>
                        </tr>
                        <tr>
-                         <td data-label="Party Logo"><img class="avatar" src="images/avatar.jpg" /></td>
+                         <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
                          <td data-label="Office">Representative Member</td>
                          <td data-label="Candidate">Ibrahim Musa</td>
                        </tr>
