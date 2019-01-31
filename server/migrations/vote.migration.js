@@ -4,6 +4,7 @@
 * @description Spins up database tables
 *
 * */
+'use strict';
 
 import pg from 'pg';
 import * as Constants from '../helpers/Constants';

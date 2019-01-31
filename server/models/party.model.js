@@ -16,8 +16,8 @@ export default {
       const connector = new pg.Client(Constants.connectionString);
       connector.connect();
 
-      const result = connector.query('INSERT INTO party(name, hqAddress, logoUrl, createdOn) values($1, $2, $3, $4)',
-        [newParty.name, newParty.hqAddress, newParty.logoUrl, 'CURRENT_DATE']);
+      const result = connector.query('INSERT INTO party(name, hqAddress, logoUrl, createdOn) values($1, $2, $3, DEFAULT) RETURNING id, name',
+        [newParty.name, newParty.hqAddress, newParty.logoUrl]);
 
       result.then((result) => {
         resolve(result);
