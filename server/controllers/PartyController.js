@@ -29,4 +29,43 @@ export default {
     }
   },
 
+  read(req, res) {
+    try {
+      
+      const readParty = Party.read();
+      readParty.then((result) => {
+        if (result.rowCount <= 0) {
+          return res.status(500).json({ status: 500, error: Constants.systemError});
+        } else {
+          return res.status(200).json({ status: 200, data: result.rows});
+        }
+      }, (error) => {
+        return res.status(500).json({ status: 500, error: Constants.systemError});
+      });
+      
+    } catch (error) {
+      return res.status(500).json({ status: 500, error: Constants.systemError});
+    }
+  },
+
+  readById(req, res) {
+    try {
+      
+      const { id } = req.params;
+      const readParty = Party.readById(id);
+      readParty.then((result) => {
+        if (result.rowCount <= 0) {
+          return res.status(500).json({ status: 500, error: Constants.systemError});
+        } else {
+          return res.status(200).json({ status: 200, data: result.rows});
+        }
+      }, (error) => {
+        return res.status(500).json({ status: 500, error: Constants.systemError});
+      });
+
+    } catch (error) {
+      return res.status(500).json({ status: 500, error: Constants.systemError});
+    }
+  },
+
 }

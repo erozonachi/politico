@@ -23,4 +23,13 @@ export default {
       return res.status(400).json({status: 400, error: 'Bad request payload'});
     }
   },
+
+  read(req, res, next) {
+    
+    if (!FieldValidator.isNumeric(req.params.id)) {
+      return res.status(400).json({status: 400, error: 'Party Id is not a number'});
+    }
+
+    next();
+  },
 }

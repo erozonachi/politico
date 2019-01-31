@@ -60,7 +60,7 @@ export default {
       const connector = new pg.Client(Constants.connectionString);
       connector.connect();
   
-      const result = connector.query('SELECT name, hqAddress, logoUrl, createdOn, updatedOn FROM party WHERE deleted=false ORDER BY name ASC');
+      const result = connector.query('SELECT id, name, hqAddress, logoUrl, createdOn, updatedOn FROM party WHERE deleted=false ORDER BY name ASC');
   
       result.then((result) => {
         resolve(result);
@@ -81,7 +81,7 @@ export default {
       const connector = new pg.Client(Constants.connectionString);
       connector.connect();
   
-      const result = connector.query('SELECT name, hqAddress, logoUrl, createdOn, updatedOn FROM party WHERE id=($1) AND deleted=false ORDER BY name ASC', [id]);
+      const result = connector.query('SELECT id, name, hqAddress, logoUrl, createdOn, updatedOn FROM party WHERE id=($1) AND deleted=false ORDER BY name ASC', [id]);
   
       result.then((result) => {
         resolve(result);
