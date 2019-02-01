@@ -5,7 +5,6 @@
 *
 * */
 export const API_BASE_URL = '/api/v1';
-export const SYSTEM_ERROR = 'Internal server error';
 export const HASH_SALT_ROUNDS = 10;
 
 export const CONNECTION_STRING = process.env.DATABASE_URL? {connectionString: process.env.DATABASE_URL, ssl: true} : 'postgres://postgres:root@localhost:5432/politicodb';
