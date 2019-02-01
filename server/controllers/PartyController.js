@@ -5,12 +5,11 @@
 *
 * */
 import Party from '../models/party.model';
-import * as Constants from '../helpers/Constants';
 
 export default {
   
   create(req, res) {
-    try {
+    
       const data = req.body;
       
       const lookUp = Party.search(data.name, data.logoUrl);
@@ -36,14 +35,10 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
 
-    } catch (error) {
-      return res.status(500).json({ status: 500, error: Constants.SYSTEM_ERROR});
-    }
   },
 
   read(req, res) {
-    try {
-      
+     
       const readParty = Party.read();
       readParty.then((result) => {
         if (result.rowCount <= 0) {
@@ -54,15 +49,11 @@ export default {
       }, (error) => {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
-      
-    } catch (error) {
-      return res.status(500).json({ status: 500, error: Constants.SYSTEM_ERROR});
-    }
+    
   },
 
   readById(req, res) {
-    try {
-      
+     
       const { id } = req.params;
       const readParty = Party.readById(id);
       readParty.then((result) => {
@@ -75,13 +66,9 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
 
-    } catch (error) {
-      return res.status(500).json({ status: 500, error: Constants.SYSTEM_ERROR});
-    }
   },
 
   update(req, res) {
-    try {
       
       const data = req.body;
       const updateParty = Party.update(data);
@@ -95,14 +82,10 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
 
-    } catch (error) {
-      return res.status(500).json({ status: 500, error: Constants.SYSTEM_ERROR});
-    }
   },
 
   delete(req, res) {
-    try {
-      
+    
       const { id } = req.params;
       const deleteParty = Party.delete(id);
       deleteParty.then((result) => {
@@ -115,9 +98,6 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
 
-    } catch (error) {
-      return res.status(500).json({ status: 500, error: Constants.SYSTEM_ERROR});
-    }
   },
 
 }

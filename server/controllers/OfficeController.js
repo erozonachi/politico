@@ -5,12 +5,11 @@
 *
 * */
 import Office from '../models/office.model';
-import * as Constants from '../helpers/Constants';
 
 export default {
   
   create(req, res) {
-    try {
+    
       const data = req.body;
       
       const lookUp = Office.search(data);
@@ -33,13 +32,9 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
 
-    } catch (error) {
-      return res.status(500).json({ status: 500, error: Constants.SYSTEM_ERROR});
-    }
   },
 
   read(req, res) {
-    try {
       
       const readOffice = Office.read();
       readOffice.then((result) => {
@@ -51,15 +46,11 @@ export default {
       }, (error) => {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
-      
-    } catch (error) {
-      return res.status(500).json({ status: 500, error: Constants.SYSTEM_ERROR});
-    }
+    
   },
 
   readById(req, res) {
-    try {
-      
+     
       const { id } = req.params;
       const readOffice = Office.readById(id);
       readOffice.then((result) => {
@@ -72,9 +63,6 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
 
-    } catch (error) {
-      return res.status(500).json({ status: 500, error: Constants.SYSTEM_ERROR});
-    }
   },
 
 }

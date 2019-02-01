@@ -33,7 +33,7 @@
     "rimraf": "^2.6.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --compilers js:babel-core/register server/tests/test.js",
     "server": "nodemon server/index.js --exec babel-node",
     "heroku-postbuild": "npm install",
     "start": "babel-node server/index.js",
