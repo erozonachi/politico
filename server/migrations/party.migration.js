@@ -9,10 +9,10 @@
 import pg from 'pg';
 import * as Constants from '../helpers/Constants';
 
-const connector = new pg.Client('postgres://postgres:root@localhost:5432/politicodb');
+const connector = new pg.Client(Constants.CONNECTION_STRING);
 connector.connect();
 
-const query = connector.query('CREATE TABLE party(id SERIAL PRIMARY KEY, name VARCHAR(100) NOT NULL, hqAddress VARCHAR(150) NOT NULL, logoUrl VARCHAR(250) NOT NULL, createdOn DATE NOT NULL DEFAULT CURRENT_DATE, updatedOn DATE NULL, deleted BOOLEAN DEFAULT(false) NULL)');
+const query = connector.query('CREATE TABLE party(id SERIAL PRIMARY KEY, name VARCHAR(100) UNIQUE NOT NULL, hqAddress VARCHAR(150) NOT NULL, logoUrl VARCHAR(250) UNIQUE NOT NULL, createdOn DATE NOT NULL DEFAULT CURRENT_DATE, updatedOn DATE NULL, deleted BOOLEAN DEFAULT(false) NULL)');
 
 query.then(() => {
   connector.end();

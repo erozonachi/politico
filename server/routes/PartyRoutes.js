@@ -6,18 +6,23 @@
 *
 * */
 import * as Constants from '../helpers/Constants';
-import * as Uploader from '../helpers/Uploader';
 import PartyValidator from '../helpers/validationlib/PartyValidator';
 import PartyController from '../controllers/PartyController';
 
 export default function entryRoutes(app) {
   
   // POST /api/v1/parties
-  app.post(`${Constants.apiBaseURL}/parties`, Uploader.upload.single('logo'), PartyValidator.create, PartyController.create);
+  app.post(`${Constants.API_BASE_URL}/parties`, PartyValidator.create, PartyController.create);
+
+  // PATCH /api/v1/parties
+  app.patch(`${Constants.API_BASE_URL}/parties`,  PartyValidator.update, PartyController.update);
 
   // GET /api/v1/parties
-  app.get(`${Constants.apiBaseURL}/parties`, PartyController.read);
+  app.get(`${Constants.API_BASE_URL}/parties`, PartyController.read);
 
   // GET api/v1/parties/:id
-  app.get(`${Constants.apiBaseURL}/parties/:id`, PartyValidator.read, PartyController.readById);
+  app.get(`${Constants.API_BASE_URL}/parties/:id`, PartyValidator.checkID, PartyController.readById);
+
+  // DELETE api/v1/parties/:id
+  app.delete(`${Constants.API_BASE_URL}/parties/:id`, PartyValidator.checkID, PartyController.delete);
 }

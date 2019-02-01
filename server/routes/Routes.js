@@ -5,9 +5,14 @@
 *
 * */
 import PartyRoutes from './PartyRoutes';
+import OfficeRoutes from './OfficeRoutes';
 
 export default function routes(app) {
 
   // routes to Parties resources
   PartyRoutes(app);
+
+  // routes to Offices resources
+  OfficeRoutes(app);
+
 }

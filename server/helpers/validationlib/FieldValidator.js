@@ -7,7 +7,7 @@
 
 export default {
   isEmpty(field) {
-    if (String(field).trim() === '') {
+    if (String(field).trim() === '' || field === null || field === undefined) {
       return true;
     }
 
@@ -60,6 +60,17 @@ export default {
     }
 
     return false;
-  }
+  },
+
+  isvalidURL(field) {
+    const pattern = new RegExp('^(https?:\\/\\/)?'+ 
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ 
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ 
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ 
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ 
+    '(\\#[-a-z\\d_]*)?$','i');
+
+    return pattern.test(field);
+ },
 
 }
