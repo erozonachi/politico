@@ -196,3 +196,94 @@ describe('Parties', () => {
   });
 
 });
+
+describe('Offices', () => {
+  describe('POST /offices', () => {
+
+    it('it should return status 400 and message: type is required', (done) => {
+      const office = {
+        type: '',
+        name: 'Chairman',
+      };
+      chai.request(server)
+        .post('/api/v1/offices')
+        .send(office)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+    it('it should return status 400 and message: type cannot be numbers', (done) => {
+      const office = {
+        type: '63673676',
+        name: 'Chairman',
+      };
+      chai.request(server)
+        .post('/api/v1/offices')
+        .send(office)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+    it('it should return status 400 and message: Unknown type', (done) => {
+      const office = {
+        type: 'National',
+        name: 'Chairman',
+      };
+      chai.request(server)
+        .post('/api/v1/offices')
+        .send(office)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+    it('it should return status 400 and message: name is required', (done) => {
+      const office = {
+        type: 'Local',
+        name: '',
+      };
+      chai.request(server)
+        .post('/api/v1/offices')
+        .send(office)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+    it('it should return status 400 and message: name cannot be numbers', (done) => {
+      const office = {
+        type: 'Local',
+        name: '7587484',
+      };
+      chai.request(server)
+        .post('/api/v1/offices')
+        .send(office)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+  });
+
+  describe('GET /offices', () => {
+
+    it('it should return status 400 and message: id is not a number', (done) => {
+      
+      chai.request(server)
+        .get('/api/v1/offices/1sd')
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+  });
+
+});
