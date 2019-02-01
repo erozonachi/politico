@@ -169,31 +169,12 @@ describe('Parties', () => {
 
   describe('GET /parties', () => {
 
-    it('it should return status 200 and an array of party objects', (done) => {
-      
-      chai.request(server)
-        .get('/api/v1/parties')
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          done();
-        });
-    });
-
     it('it should return status 400 and message: id is not a number', (done) => {
       
       chai.request(server)
         .get('/api/v1/parties/1sd')
         .end((err, res) => {
           expect(res).to.have.status(400);
-          done();
-        });
-    });
-
-    it('it should return status 404 and message: data not found', (done) => {
-      chai.request(server)
-        .get('/api/v1/parties/89')
-        .end((err, res) => {
-          expect(res).to.have.status(404);
           done();
         });
     });
@@ -208,15 +189,6 @@ describe('Parties', () => {
         .delete('/api/v1/parties/1sd')
         .end((err, res) => {
           expect(res).to.have.status(400);
-          done();
-        });
-    });
-
-    it('it should return status 404 and message: Party not found', (done) => {
-      chai.request(server)
-        .delete('/api/v1/parties/89')
-        .end((err, res) => {
-          expect(res).to.have.status(404);
           done();
         });
     });
