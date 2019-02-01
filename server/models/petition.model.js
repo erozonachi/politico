@@ -13,7 +13,7 @@ export default {
     
     const createPetition = new Promise((resolve, reject) => {
 
-      const connector = new pg.Client(Constants.connectionString);
+      const connector = new pg.Client(Constants.CONNECTION_STRING);
       connector.connect();
 
       const result = connector.query('INSERT INTO petition(office, body, createdBy, createdOn) values($1, $2, $3, $4)',

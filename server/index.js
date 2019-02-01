@@ -14,7 +14,6 @@ const app = express();
 
 const port = process.env.PORT || 8000;
 
-app.use('/uploads', express.static('server/uploads'));
 app.use(bodyParser.json({ extended: true }));
 app.use((req, res, next) => { // https://enable-cors.org/server_expressjs.html
   res.header("Access-Control-Allow-Origin", "*");

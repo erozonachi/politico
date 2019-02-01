@@ -13,7 +13,7 @@ export default {
     
     const createCandidate = new Promise((resolve, reject) => {
 
-      const connector = new pg.Client(Constants.connectionString);
+      const connector = new pg.Client(Constants.CONNECTION_STRING);
       connector.connect();
 
       const result = connector.query('INSERT INTO candidate(office, party, createdBy, createdOn) values($1, $2, $3, $4)',

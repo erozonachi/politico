@@ -9,7 +9,7 @@
 import pg from 'pg';
 import * as Constants from '../helpers/Constants';
 
-const connector = new pg.Client('postgres://postgres:root@localhost:5432/politicodb');
+const connector = new pg.Client(Constants.CONNECTION_STRING);
 connector.connect();
 
 const query = connector.query("SET timezone = 'Africa/Lagos';");

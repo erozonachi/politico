@@ -4,9 +4,8 @@
 * @description A module that holds Application constant values
 *
 * */
-export const apiBaseURL = '/api/v1';
-export const notFound = 'Resource not found';
-export const systemError = 'Unable to process request at this time';
-export const hashSaltRounds = 10;
+export const API_BASE_URL = '/api/v1';
+export const SYSTEM_ERROR = 'Internal server error';
+export const HASH_SALT_ROUNDS = 10;
 
-export const connectionString = process.env.DATABASE_URL || 'postgres://postgres:root@localhost:5432/politicodb';
+export const CONNECTION_STRING = process.env.DATABASE_URL? {connectionString: process.env.DATABASE_URL, ssl: true} : 'postgres://postgres:root@localhost:5432/politicodb';
