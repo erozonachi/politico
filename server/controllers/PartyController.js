@@ -6,7 +6,7 @@
 * */
 import Party from '../models/party.model';
 
-export default {
+class PartyController {
   
   create(req, res) {
     
@@ -35,14 +35,14 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
 
-  },
+  }
 
   read(req, res) {
      
       const readParty = Party.read();
       readParty.then((result) => {
         if (result.rowCount <= 0) {
-          return res.status(200).json({ status: 200, data: result.rows});
+          return res.status(200).json({ status: 200, data: []});
         } else {
           return res.status(200).json({ status: 200, data: result.rows});
         }
@@ -50,7 +50,7 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
     
-  },
+  }
 
   readById(req, res) {
      
@@ -66,7 +66,7 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
 
-  },
+  }
 
   update(req, res) {
       
@@ -82,7 +82,7 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
 
-  },
+  }
 
   delete(req, res) {
     
@@ -98,6 +98,8 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
 
-  },
+  }
 
 }
+
+export default PartyController;
