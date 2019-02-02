@@ -6,7 +6,7 @@
 * */
 import Office from '../models/office.model';
 
-export default {
+class OfficeController {
   
   create(req, res) {
     
@@ -32,14 +32,14 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
 
-  },
+  }
 
   read(req, res) {
       
       const readOffice = Office.read();
       readOffice.then((result) => {
         if (result.rowCount <= 0) {
-          return res.status(200).json({ status: 200, data: result.rows});
+          return res.status(200).json({ status: 200, data: []});
         } else {
           return res.status(200).json({ status: 200, data: result.rows});
         }
@@ -47,7 +47,7 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
     
-  },
+  }
 
   readById(req, res) {
      
@@ -63,6 +63,8 @@ export default {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
       });
 
-  },
+  }
 
 }
+
+export default OfficeController;
