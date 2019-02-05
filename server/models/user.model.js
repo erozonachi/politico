@@ -16,8 +16,8 @@ export default {
       const connector = new pg.Client(Constants.CONNECTION_STRING);
       connector.connect();
 
-      const result = connector.query('INSERT INTO account(firstName, lastName, otherName, email, phoneNumber, password, passportUrl, isAdmin, createdOn) values($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-        [newUser.firstName, newUser.lastName, newUser.otherName, newUser.email, newUser.phoneNumber, newUser.password, newUser.passportUrl, newUser.isAdmin, 'CURRENT_DATE']);
+      const result = connector.query('INSERT INTO account(firstName, lastName, otheName, email, phoneNumber, password, passportUrl, createdOn) values($1, $2, $3, $4, $5, $6, $7, CURRENT_DATE) RETURNING *',
+        [String(newUser.firstName).trim(), String(newUser.lastName).trim(), String(newUser.otherName).trim(), String(newUser.email).trim().toLowerCase(), String(newUser.phoneNumber).trim(), newUser.password, newUser.passportUrl.trim()]);
 
       result.then((result) => {
         resolve(result);
@@ -28,6 +28,27 @@ export default {
     });
 
     return createUser;
+
+  },
+
+  search(data) {
+    
+    const search = new Promise((resolve, reject) => {
+
+      const connector = new pg.Client(Constants.CONNECTION_STRING);
+      connector.connect();
+  
+      const result = connector.query('SELECT * FROM account WHERE (email=($1) OR phoneNumber=($2) OR passportUrl=($3)) AND deleted=false', [data.email.trim().toLowerCase(), data.phoneNumber.trim(), data.passportUrl.trim()]);
+  
+      result.then((result) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      });
+  
+    });
+    
+    return search;
 
   },
 
