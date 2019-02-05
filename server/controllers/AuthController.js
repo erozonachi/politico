@@ -51,7 +51,17 @@ class AuthController {
       if (result.rowCount <= 0) {
         return res.status(503).json({ status: 503, error: 'Database connection failed'});
       } else {
-        const output = result.rows.map(info => ({id: info.id, firstName: info.firstname, lastName: info.lastname, email: info.email, phoneNumber: info.phonenumber, passportUrl: info.passporturl, isAdmin: info.isadmin}));
+        const output = result.rows.map(info => (
+          {
+            id: info.id,
+            firstName: info.firstname,
+            lastName: info.lastname,
+            email: info.email,
+            phoneNumber: info.phonenumber,
+            passportUrl: info.passporturl,
+            isAdmin: info.isadmin
+          }
+        ));
         const token = jwt.sign({id: output[0].id, email: output[0].email, isAdmin: output[0].isAdmin}, process.env.SECRET_KEY, {expiresIn: '1d'});
         return res.status(201).json({ status: 201, data: [{token: token, user: output[0]}] });
       }
@@ -60,6 +70,59 @@ class AuthController {
         return res.status(400).json(error);
       }
       return res.status(503).json({ status: 503, error: 'Database connection failed'});
+    });
+
+  }
+
+  static signIn(req, res) {
+
+    const { username, password } = req.body;
+    
+    const result = User.fetchByUsername(username);
+    result.then((result) => {
+      if (result.rowCount <= 0){
+        return res.status(400).json({ status: 400, error: 'Incorrect username or password' });
+      } else {
+        const user = result.rows[0];
+        const userInfo = {
+          id: user.id,
+          firstName: user.firstname,
+          lastName: user.lastname,
+          email: user.email,
+          phoneNumber: user.phonenumber,
+          passportUrl: user.passporturl,
+          isAdmin: user.isadmin
+        };
+        bcrypt.compare(password, user.password)
+        .then((result) => {
+          if (!result) {
+            return res.status(400).json({ status: 400, error: 'Incorrect username or password' });
+          }
+          const tokenPaylod = {
+            id: user.id,
+            email: user.email,
+            isAdmin: user.isadmin,
+          }
+          const token = jwt.sign(tokenPaylod, process.env.SECRET_KEY, {expiresIn: '1d'});
+          if (!token) {
+            return res.status(503).json({ status: 503, message: 'Token generation unavailable'});
+          } else {
+            const authResult = {
+              token: token,
+              user: userInfo,
+            };
+            
+            return res.status(200).json({ status: 200, data: [authResult] });
+          }
+        }, (error) => {
+          return res.status(400).json({ status: 400, message: 'Incorrect username or password'});
+        })
+      }
+    }, (error) => {
+      return res.status(503).json({ status: 503, message: 'Database connection failed'});
+    })
+    .catch((error) => {
+      return res.status(503).json({ status: 503, message: 'Database connection failed'});
     });
 
   }
