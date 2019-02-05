@@ -6,6 +6,7 @@
 * */
 import PartyRoutes from './PartyRoutes';
 import OfficeRoutes from './OfficeRoutes';
+import AuthRoutes from './AuthRoutes';
 
 export default function routes(app) {
 
@@ -14,5 +15,8 @@ export default function routes(app) {
 
   // routes to Offices resources
   OfficeRoutes(app);
+
+  // routes to auth resources
+  AuthRoutes(app);
 
 }
