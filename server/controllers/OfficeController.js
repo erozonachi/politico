@@ -8,7 +8,7 @@ import Office from '../models/office.model';
 
 class OfficeController {
   
-  create(req, res) {
+  static create(req, res) {
     
       const data = req.body;
       
@@ -34,7 +34,7 @@ class OfficeController {
 
   }
 
-  read(req, res) {
+  static read(req, res) {
       
       const readOffice = Office.read();
       readOffice.then((result) => {
@@ -49,7 +49,7 @@ class OfficeController {
     
   }
 
-  readById(req, res) {
+  static readById(req, res) {
      
       const { id } = req.params;
       const readOffice = Office.readById(id);

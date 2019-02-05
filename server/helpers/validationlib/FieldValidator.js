@@ -54,6 +54,10 @@ export default {
     return false;
   },
 
+  isPhone(field) {
+    return RegExp(/^([0]{1}|[234]{3})([7-9]{1})([0|1]{1})([0|1|2|3|4|5|6|7|8|9]{1})([\d]{7})$/).test(field);
+  },
+
   isEmail(field) {
     if(RegExp(/^([A-Za-z0-9_\-.+])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/).test(field)) {
       return true;

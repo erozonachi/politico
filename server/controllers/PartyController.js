@@ -8,7 +8,7 @@ import Party from '../models/party.model';
 
 class PartyController {
   
-  create(req, res) {
+  static create(req, res) {
     
       const data = req.body;
       
@@ -25,7 +25,8 @@ class PartyController {
             if (result.rowCount <= 0) {
               return res.status(400).json({ status: 400, error: 'logoUrl or record already exist'});
             } else {
-              return res.status(201).json({ status: 201, data: result.rows[0]});
+              const output = result.rows.map(info => ({id: info.id, name: info.name,}));
+              return res.status(201).json({ status: 201, data: output[0]});
             }
           }, (error) => {
             return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
@@ -37,14 +38,16 @@ class PartyController {
 
   }
 
-  read(req, res) {
+  static read(req, res) {
      
       const readParty = Party.read();
       readParty.then((result) => {
         if (result.rowCount <= 0) {
           return res.status(200).json({ status: 200, data: []});
         } else {
-          return res.status(200).json({ status: 200, data: result.rows});
+          const output = result.rows.map(info => (
+            {id: info.id, name: info.name, hqAddress: info.hqaddress, logoUrl: info.logourl, createdOn: info.createdon}));
+          return res.status(200).json({ status: 200, data: output});
         }
       }, (error) => {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
@@ -52,7 +55,7 @@ class PartyController {
     
   }
 
-  readById(req, res) {
+  static readById(req, res) {
      
       const { id } = req.params;
       const readParty = Party.readById(id);
@@ -60,7 +63,9 @@ class PartyController {
         if (result.rowCount <= 0) {
           return res.status(404).json({ status: 404, error: 'No data found for id: '+id});
         } else {
-          return res.status(200).json({ status: 200, data: result.rows[0]});
+          const output = result.rows.map(info => (
+            {id: info.id, name: info.name, hqAddress: info.hqaddress, logoUrl: info.logourl, createdOn: info.createdon}));
+          return res.status(200).json({ status: 200, data: output[0]});
         }
       }, (error) => {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
@@ -68,7 +73,7 @@ class PartyController {
 
   }
 
-  update(req, res) {
+  static update(req, res) {
       
       const data = req.body;
       const updateParty = Party.update(data);
@@ -76,7 +81,8 @@ class PartyController {
         if (result.rowCount <= 0) {
           return res.status(404).json({ status: 404, error: 'Party not found'});
         } else {
-          return res.status(200).json({ status: 200, data: result.rows[0]});
+          const output = result.rows.map(info => ({id: info.id, name: info.name,}));
+          return res.status(200).json({ status: 200, data: output[0]});
         }
       }, (error) => {
         return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
@@ -84,7 +90,7 @@ class PartyController {
 
   }
 
-  delete(req, res) {
+  static delete(req, res) {
     
       const { id } = req.params;
       const deleteParty = Party.delete(id);
