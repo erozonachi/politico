@@ -116,7 +116,7 @@ class AuthController {
           }
         }, (error) => {
           return res.status(400).json({ status: 400, error: 'Incorrect username or password'});
-        }).catch(err => console.error('Error', err.stack));
+        }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
       }
     }, (error) => {
       return res.status(508).json({ status: 508, error: 'Database connection failed, try again'});

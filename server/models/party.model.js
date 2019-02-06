@@ -22,7 +22,7 @@ export default {
         resolve(result);
       }, (error) => {
         reject(error);
-      }).catch(err => console.error('Error executing query', err.stack));
+      }).catch(err => reject(err));
 
     });
 
@@ -43,7 +43,7 @@ export default {
         resolve(result);
       }, (error) => {
         reject(error);
-      }).catch(err => console.error('Error executing query', err.stack));
+      }).catch(err => reject(err));
 
     });
   
@@ -63,7 +63,7 @@ export default {
         resolve(result);
       }, (error) => {
         reject(error);
-      }).catch(err => console.error('Error executing query', err.stack));
+      }).catch(err => reject(err));
   
     });
     
@@ -83,7 +83,7 @@ export default {
         resolve(result);
       }, (error) => {
         reject(error);
-      }).catch(err => console.error('Error executing query', err.stack));
+      }).catch(err => reject(err));
   
     });
     
@@ -103,7 +103,7 @@ export default {
         resolve(result);
       }, (error) => {
         reject(error);
-      }).catch(err => console.error('Error executing query', err.stack));
+      }).catch(err => reject(err));
   
     });
     
@@ -123,7 +123,7 @@ export default {
         resolve(result);
       }, (error) => {
         reject(error);
-      }).catch(err => console.error('Error executing query', err.stack));
+      }).catch(err => reject(err));
   
     });
     

@@ -45,12 +45,12 @@ class VoteController {
 
           return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
 
-        }).catch(err => console.error('Error', err.stack));
+        }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
       }
     }, (error) => {
       return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
 
-    }).catch(err => console.error('Error', err.stack));
+    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
   }
 
 }
