@@ -49,11 +49,11 @@ class AuthController {
     });
     createUser.then((result) => {
       if (result.rowCount <= 0) {
-        return res.status(503).json({ status: 503, error: 'Database connection failed'});
+        return res.status(508).json({ status: 508, error: 'Database connection failed'});
       } else {
         const output = result.rows.map(info => (
           {
-            id: info.id,
+            id: info.acct_id,
             firstName: info.firstname,
             lastName: info.lastname,
             email: info.email,
@@ -69,7 +69,7 @@ class AuthController {
       if (error.status === 400) {
         return res.status(400).json(error);
       }
-      return res.status(503).json({ status: 503, error: 'Database connection failed'});
+      return res.status(508).json({ status: 508, error: 'Database connection failed, try again'});
     });
 
   }
@@ -85,7 +85,7 @@ class AuthController {
       } else {
         const user = result.rows[0];
         const userInfo = {
-          id: user.id,
+          id: user.acct_id,
           firstName: user.firstname,
           lastName: user.lastname,
           email: user.email,
@@ -99,13 +99,13 @@ class AuthController {
             return res.status(400).json({ status: 400, error: 'Incorrect username or password' });
           }
           const tokenPaylod = {
-            id: user.id,
+            id: user.acct_id,
             email: user.email,
             isAdmin: user.isadmin,
           }
           const token = jwt.sign(tokenPaylod, process.env.SECRET_KEY, {expiresIn: '1d'});
           if (!token) {
-            return res.status(503).json({ status: 503, message: 'Token generation unavailable'});
+            return res.status(508).json({ status: 508, error: 'Token generation failed'});
           } else {
             const authResult = {
               token: token,
@@ -115,14 +115,14 @@ class AuthController {
             return res.status(200).json({ status: 200, data: [authResult] });
           }
         }, (error) => {
-          return res.status(400).json({ status: 400, message: 'Incorrect username or password'});
-        })
+          return res.status(400).json({ status: 400, error: 'Incorrect username or password'});
+        }).catch(err => console.error('Error', err.stack));
       }
     }, (error) => {
-      return res.status(503).json({ status: 503, message: 'Database connection failed'});
+      return res.status(508).json({ status: 508, error: 'Database connection failed, try again'});
     })
     .catch((error) => {
-      return res.status(503).json({ status: 503, message: 'Database connection failed'});
+      return res.status(508).json({ status: 508, error: 'Database connection failed, try again'});
     });
 
   }

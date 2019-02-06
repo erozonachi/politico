@@ -13,8 +13,7 @@ export default {
     
     const createVote = new Promise((resolve, reject) => {
 
-      const connector = new pg.Client(Constants.CONNECTION_STRING);
-      connector.connect();
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
 
       const result = connector.query('INSERT INTO vote(office, candidate, createdBy, createdOn) values($1, $2, $3, $4)',
         [newVote.office, newVote.body, newVote.createdBy, 'CURRENT_DATE']);
@@ -23,7 +22,7 @@ export default {
         resolve(result);
       }, (error) => {
         reject(error);
-      });
+      }).catch(err => console.error('Error executing query', err.stack));
 
     });
 
