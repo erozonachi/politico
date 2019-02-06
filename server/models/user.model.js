@@ -13,8 +13,7 @@ export default {
     
     const createUser = new Promise((resolve, reject) => {
 
-      const connector = new pg.Client(Constants.CONNECTION_STRING);
-      connector.connect();
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
 
       const result = connector.query('INSERT INTO account(firstName, lastName, otheName, email, phoneNumber, password, passportUrl, createdOn) values($1, $2, $3, $4, $5, $6, $7, CURRENT_DATE) RETURNING *',
         [String(newUser.firstName).trim(), String(newUser.lastName).trim(), String(newUser.otherName).trim(), String(newUser.email).trim().toLowerCase(), String(newUser.phoneNumber).trim(), newUser.password, newUser.passportUrl.trim()]);
@@ -23,7 +22,7 @@ export default {
         resolve(result);
       }, (error) => {
         reject(error);
-      });
+      }).catch(err => reject(err));
 
     });
 
@@ -35,8 +34,7 @@ export default {
     
     const search = new Promise((resolve, reject) => {
 
-      const connector = new pg.Client(Constants.CONNECTION_STRING);
-      connector.connect();
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
       const result = connector.query('SELECT * FROM account WHERE (email=($1) OR phoneNumber=($2) OR passportUrl=($3)) AND deleted=false', [data.email.trim().toLowerCase(), data.phoneNumber.trim(), data.passportUrl.trim()]);
   
@@ -44,7 +42,7 @@ export default {
         resolve(result);
       }, (error) => {
         reject(error);
-      });
+      }).catch(err => reject(err));
   
     });
     
@@ -56,8 +54,7 @@ export default {
     
     const info = new Promise((resolve, reject) => {
 
-      const connector = new pg.Client(Constants.CONNECTION_STRING);
-      connector.connect();
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
       const result = connector.query('SELECT * FROM account WHERE email=($1) OR phoneNumber=($1)', [username.toLowerCase()]);
   
@@ -65,7 +62,7 @@ export default {
         resolve(result);
       }, (error) => {
         reject(error);
-      });
+      }).catch(err => reject(err));
   
     });
     

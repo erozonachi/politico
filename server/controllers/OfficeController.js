@@ -26,12 +26,12 @@ class OfficeController {
               return res.status(201).json({ status: 201, data: result.rows[0]});
             }
           }, (error) => {
-            return res.status(503).json({ status: 503, error: error});
-          });
+            return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
+          }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
         }
       }, (error) => {
-        return res.status(503).json({ status: 503, error: error});
-      });
+        return res.status(508).json({ status: 508, error: error});
+      }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
 
   }
 
@@ -45,8 +45,8 @@ class OfficeController {
           return res.status(200).json({ status: 200, data: result.rows});
         }
       }, (error) => {
-        return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
-      });
+        return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
+      }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
     
   }
 
@@ -61,8 +61,10 @@ class OfficeController {
           return res.status(200).json({ status: 200, data: result.rows[0]});
         }
       }, (error) => {
-        return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
-      });
+
+        return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
+
+      }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
 
   }
 
@@ -102,12 +104,15 @@ class OfficeController {
           if (error.code === '23505') {
             return res.status(400).json({status: 400, error: `office already has a candidate under the same party`});
           }
-          return res.status(503).json({ status: 503, error: `Connection failed, try again!`});
-        });
+
+          return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
+
+        }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
       }
     }, (error) => {
-      return res.status(503).json({ status: 503, error: error});
-    });
+      return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
+
+    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
   }
 
 }
