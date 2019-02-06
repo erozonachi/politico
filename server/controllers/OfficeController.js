@@ -13,25 +13,24 @@ class OfficeController {
     
       const data = req.body;
       
-      const lookUp = Office.search(data);
-      lookUp.then((result) => {
-        if (result.rowCount > 0) {
-          return res.status(400).json({status: 400, error: 'Office already exist'});
+      const createOffice = Office.create(data);
+      createOffice.then((result) => {
+        if (result.rowCount <= 0) {
+          return res.status(400).json({ status: 400, error: 'Office already exist'});
         } else {
-          const createOffice = Office.create(data);
-          createOffice.then((result) => {
-            if (result.rowCount <= 0) {
-              return res.status(400).json({ status: 400, error: 'Office already exist'});
-            } else {
-              return res.status(201).json({ status: 201, data: result.rows[0]});
-            }
-          }, (error) => {
-            return res.status(503).json({ status: 503, error: error});
-          });
+          const output = result.rows.map(info => ({id: info.officeId, type: info.type, name: info.name, createdOn: info.createdOn}));
+          return res.status(201).json({ status: 201, data: output[0]});
         }
       }, (error) => {
-        return res.status(503).json({ status: 503, error: error});
-      });
+        
+        if (error.code === '23505') {
+
+          return res.status(400).json({status: 400, error: `office already exists`,});
+          
+        }
+        return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
+
+      }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
 
   }
 
@@ -42,11 +41,12 @@ class OfficeController {
         if (result.rowCount <= 0) {
           return res.status(200).json({ status: 200, data: []});
         } else {
-          return res.status(200).json({ status: 200, data: result.rows});
+          const output = result.rows.map(info => ({id: info.officeId, type: info.type, name: info.name, createdOn: info.createdOn}));
+          return res.status(200).json({ status: 200, data: output});
         }
       }, (error) => {
-        return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
-      });
+        return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
+      }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
     
   }
 
@@ -58,11 +58,14 @@ class OfficeController {
         if (result.rowCount <= 0) {
           return res.status(404).json({ status: 404, error: 'No data found for id: '+id});
         } else {
-          return res.status(200).json({ status: 200, data: result.rows[0]});
+          const output = result.rows.map(info => ({id: info.officeId, type: info.type, name: info.name, createdOn: info.createdOn}));
+          return res.status(200).json({ status: 200, data: output[0]});
         }
       }, (error) => {
-        return res.status(503).json({ status: 503, error: 'Oops! Database error, try again'});
-      });
+
+        return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
+
+      }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
 
   }
 
@@ -70,7 +73,7 @@ class OfficeController {
 
     const { id } = req.params;
     const data = req.body;
-    data.createdBy = id;
+    data.candidate = id;
       
     const checkUser = Candidate.checkUser(id);
     checkUser.then((result) => {
@@ -87,13 +90,13 @@ class OfficeController {
         }, (error) => {
           if (error.code === '23503') {
 
-            if (error.detail.includes('office_id')) {
+            if (error.detail.includes('officeId')) {
               return res.status(404).json({status: 404, error: `office not found`,});
             }
-            if (error.detail.includes('party_id')) {
+            if (error.detail.includes('partyId')) {
               return res.status(404).json({status: 404, error: `party not found`,});
             }
-            if (error.detail.includes('acct_id')) {
+            if (error.detail.includes('accountId')) {
               return res.status(404).json({status: 404, error: `user not found`,});
             }
 
@@ -102,12 +105,15 @@ class OfficeController {
           if (error.code === '23505') {
             return res.status(400).json({status: 400, error: `office already has a candidate under the same party`});
           }
-          return res.status(503).json({ status: 503, error: `Connection failed, try again!`});
-        });
+
+          return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
+
+        }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
       }
     }, (error) => {
-      return res.status(503).json({ status: 503, error: error});
-    });
+      return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
+
+    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
   }
 
 }

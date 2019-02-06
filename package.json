@@ -45,6 +45,7 @@
     "m-petition": "babel-node server/migrations/petition.migration.js",
     "m-vote": "babel-node server/migrations/vote.migration.js",
     "m-setting": "babel-node server/migrations/set_timezone.js",
+    "drop-tables": "babel-node server/migrations/drop_tables.js",
     "migration": "npm run m-party && npm run m-office && npm run m-user && npm run m-candidate &&  npm run m-petition && npm run m-vote && npm run m-setting"
   },
   "repository": {
