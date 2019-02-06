@@ -17,7 +17,7 @@ export default {
       connector.connect();
 
       const result = connector.query('INSERT INTO office(type, name, createdOn) values($1, $2, DEFAULT) RETURNING id, type, name, createdOn',
-        [String(newOffice.type).trim().toLowerCase(), String(newOffice.name).trim().toLowerCase()]);
+        [newOffice.type.trim().toLowerCase(), newOffice.name.trim().toLowerCase()]);
 
       result.then((result) => {
         resolve(result);
@@ -38,7 +38,7 @@ export default {
       const connector = new pg.Client(Constants.CONNECTION_STRING);
       connector.connect();
   
-      const result = connector.query('SELECT * FROM office WHERE type=($1) AND name=($2) AND deleted=false', [String(data.type).trim().toLowerCase(), String(data.name).trim().toLowerCase()]);
+      const result = connector.query('SELECT * FROM office WHERE type=($1) AND name=($2) AND deleted=false', [data.type.trim().toLowerCase(), data.name.trim().toLowerCase()]);
   
       result.then((result) => {
         resolve(result);

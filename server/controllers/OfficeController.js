@@ -34,10 +34,10 @@ class OfficeController {
 
   }
 
-  static read(req, res) {
+  static getOffice(req, res) {
       
-      const readOffice = Office.read();
-      readOffice.then((result) => {
+      const getOffice = Office.read();
+      getOffice.then((result) => {
         if (result.rowCount <= 0) {
           return res.status(200).json({ status: 200, data: []});
         } else {
@@ -49,11 +49,11 @@ class OfficeController {
     
   }
 
-  static readById(req, res) {
+  static getOfficeById(req, res) {
      
       const { id } = req.params;
-      const readOffice = Office.readById(id);
-      readOffice.then((result) => {
+      const getOffice = Office.readById(id.trim());
+      getOffice.then((result) => {
         if (result.rowCount <= 0) {
           return res.status(404).json({ status: 404, error: 'No data found for id: '+id});
         } else {

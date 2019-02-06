@@ -38,10 +38,10 @@ class PartyController {
 
   }
 
-  static read(req, res) {
+  static getParty(req, res) {
      
-      const readParty = Party.read();
-      readParty.then((result) => {
+      const getParty = Party.read();
+      getParty.then((result) => {
         if (result.rowCount <= 0) {
           return res.status(200).json({ status: 200, data: []});
         } else {
@@ -55,11 +55,11 @@ class PartyController {
     
   }
 
-  static readById(req, res) {
+  static getPartyById(req, res) {
      
       const { id } = req.params;
-      const readParty = Party.readById(id);
-      readParty.then((result) => {
+      const getParty = Party.readById(id.trim());
+      getParty.then((result) => {
         if (result.rowCount <= 0) {
           return res.status(404).json({ status: 404, error: 'No data found for id: '+id});
         } else {
