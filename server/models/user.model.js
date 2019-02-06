@@ -52,4 +52,25 @@ export default {
 
   },
 
+  fetchByUsername(username) {
+    
+    const info = new Promise((resolve, reject) => {
+
+      const connector = new pg.Client(Constants.CONNECTION_STRING);
+      connector.connect();
+  
+      const result = connector.query('SELECT * FROM account WHERE email=($1) OR phoneNumber=($1)', [username.toLowerCase()]);
+  
+      result.then((result) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      });
+  
+    });
+    
+    return info;
+
+  },
+
 }

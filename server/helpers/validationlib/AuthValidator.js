@@ -61,7 +61,23 @@ export default {
     }
 
     //Sanitize phone number
-    req.body.phoneNumber = '234' + String(req.body.phoneNumber).slice(-10);
+    req.body.phoneNumber = '234' + req.body.phoneNumber.slice(-10);
+
+    next();
+  },
+
+  signIn(req, res, next) {
+
+    if (FieldValidator.isEmpty(req.body.username)) {
+      return res.status(400).json({status: 400, error: 'username is required'});
+    }
+    if (FieldValidator.isEmpty(req.body.password)) {
+      return res.status(400).json({status: 400, error: 'Password is required'});
+    }
+
+    if (FieldValidator.isPhone(req.body.username)) {
+      req.body.username = '234' + req.body.username.slice(-10);
+    }
 
     next();
   },
