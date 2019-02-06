@@ -38,4 +38,28 @@ export default {
 
     next();
   },
+
+  registerCandidate(req, res, next) {
+    
+    if (FieldValidator.isEmpty(req.body.office)) {
+      return res.status(400).json({status: 400, error: 'office is required'});
+    }
+    if (!FieldValidator.isNumeric(req.body.office)) {
+      return res.status(400).json({status: 400, error: 'office is not a number'});
+    }
+
+    if (FieldValidator.isEmpty(req.body.party)) {
+      return res.status(400).json({status: 400, error: 'party is required'});
+    }
+    if (!FieldValidator.isNumeric(req.body.party)) {
+      return res.status(400).json({status: 400, error: 'party is not a number'});
+    }
+
+    if (!FieldValidator.isNumeric(req.params.id)) {
+      return res.status(400).json({status: 400, error: 'user Id is not a number'});
+    }
+
+    next();
+  },
+
 }
