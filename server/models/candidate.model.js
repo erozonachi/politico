@@ -15,8 +15,8 @@ export default {
 
       const connector = new pg.Pool(Constants.CONNECTION_STRING);
 
-      const result = connector.query('INSERT INTO candidate(office_id, party_id, acct_id, createdOn) values($1, $2, $3, DEFAULT)',
-        [newCandidate.office, newCandidate.party, newCandidate.createdBy]);
+      const result = connector.query('INSERT INTO candidate("officeId", "partyId", "accountId", "createdOn") values($1, $2, $3, DEFAULT)',
+        [newCandidate.office, newCandidate.party, newCandidate.candidate]);
 
       result.then((result) => {
         resolve(result);
@@ -36,7 +36,7 @@ export default {
 
       const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
-      const result = connector.query('SELECT * FROM candidate WHERE acct_id=($1)  AND deleted=false', [user,]);
+      const result = connector.query('SELECT * FROM candidate WHERE "accountId"=($1)  AND "deleted"=false', [user,]);
   
       result.then((result) => {
         resolve(result);

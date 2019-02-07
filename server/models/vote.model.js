@@ -15,8 +15,8 @@ export default {
 
       const connector = new pg.Pool(Constants.CONNECTION_STRING);
 
-      const result = connector.query('INSERT INTO vote(office_id, can_id, acct_id, createdOn) values($1, $2, $3, CURRENT_DATE)',
-        [newVote.office, newVote.candidate, newVote.voter,]);
+      const result = connector.query('INSERT INTO vote("officeId", "candidateId", "accountId", "createdOn") values($1, $2, $3, CURRENT_DATE)',
+        [newVote.office, newVote.body, newVote.createdBy,]);
 
       result.then((result) => {
         resolve(result);
