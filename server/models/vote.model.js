@@ -16,7 +16,7 @@ export default {
       const connector = new pg.Pool(Constants.CONNECTION_STRING);
 
       const result = connector.query('INSERT INTO vote("officeId", "candidateId", "accountId", "createdOn") values($1, $2, $3, CURRENT_DATE)',
-        [newVote.office, newVote.body, newVote.createdBy,]);
+        [newVote.office, newVote.candidate, newVote.voter,]);
 
       result.then((result) => {
         resolve(result);
@@ -36,7 +36,7 @@ export default {
 
       const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
-      const result = connector.query('SELECT * FROM candidate WHERE can_id=($1)  AND office_id=($2)', [info.candidate, info.office,]);
+      const result = connector.query('SELECT * FROM candidate WHERE "candidateId"=($1)  AND "officeId"=($2)', [info.candidate, info.office,]);
   
       result.then((result) => {
         resolve(result);
@@ -56,7 +56,7 @@ export default {
 
       const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
-      const result = connector.query('SELECT o.office_id AS office, ca.can_id AS candidate, COUNT(v.acct_id) AS result FROM office o, candidate ca, vote v WHERE o.office_id=($1) AND ca.office_id=($1) AND v.office_id=($1) AND v.can_id=ca.can_id GROUP BY o.office_id, ca.can_id', [id,]);
+      const result = connector.query('SELECT o."officeId" AS office, ca."candidateId" AS candidate, COUNT(v."accountId") AS result FROM office o, candidate ca, vote v WHERE o."officeId"=($1) AND ca."officeId"=($1) AND v."officeId"=($1) AND v."candidateId"=ca."candidateId" GROUP BY o."officeId", ca."candidateId"', [id,]);
   
       result.then((result) => {
         resolve(result);

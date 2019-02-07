@@ -50,4 +50,24 @@ export default {
 
   },
 
+  getCandidates(id) {
+    
+    const candidates = new Promise((resolve, reject) => {
+
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
+  
+      const result = connector.query('SELECT * FROM candidate WHERE "officeId"=($1)', [id,]);
+  
+      result.then((result) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      }).catch(err => reject(err));
+  
+    });
+    
+    return candidates;
+
+  },
+
 }

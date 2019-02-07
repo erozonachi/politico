@@ -125,6 +125,68 @@ class AuthController {
 
   }
 
+  static isAuthenticated(req, res, next) {
+    const token = req.headers['x-access-token'];
+
+    if (token) {
+      jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
+        if (error) {
+          return res.status(401).json({ status: 401, error: 'Authentication failed' });
+        } else {
+          req.params.userId = parseInt(decoded.id, 10);
+          next();
+        }
+      });
+    } else {
+      return res.status(401).send({ 
+        status: 401, 
+        error: 'User not authenticated',
+      });
+    }
+  }
+
+  static isAdmin(req, res, next) {
+    const token = req.headers['x-access-token'];
+
+    if (token) {
+      jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
+        if (error) {
+          return res.status(401).json({ status: 401, error: 'Authentication failed' });
+        } else {
+          if (decoded.isAdmin === true) {
+            req.params.userId = parseInt(decoded.id, 10);
+            next();
+          } else {
+            return res.status(403).json({status: 403, error: 'Not authorized'});
+          }
+        }
+      });
+    } else {
+      return res.status(401).send({ 
+        status: 401, 
+        error: 'User not authenticated',
+      });
+    }
+  }
+
+  static makeUserAdmin(req, res) {
+      
+    const id = req.params.id;
+    const makeAdmin = User.updateToAdmin(id);
+    makeAdmin.then((result) => {
+      if (result.rowCount <= 0) {
+        return res.status(404).json({ status: 404, error: 'User not found'});
+      } else {
+        return res.status(200).json({ status: 200, data: [{message: `success`}]});
+      }
+    }, (error) => {
+
+      return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
+
+    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+
+}
+
 }
 
 export default AuthController;

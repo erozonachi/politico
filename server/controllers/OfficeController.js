@@ -74,7 +74,7 @@ class OfficeController {
 
     const { id } = req.params;
     const data = req.body;
-    data.candidate = id;
+    data.candidate = Number.parseInt(id);
       
     const checkUser = Candidate.checkUser(id);
     checkUser.then((result) => {
@@ -127,6 +127,25 @@ class OfficeController {
           return res.status(404).json({ status: 404, error: 'No result found for office id: '+id});
         } else {
           const output = result.rows.map(info => ({office: info.office, candidate: info.candidate, result: Number.parseInt(info.result),}));
+          return res.status(200).json({ status: 200, data: output});
+        }
+      }, (error) => {
+
+        return res.status(508).json({ status: 508, error: error});
+
+      }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+
+  }
+
+  static getCandidates(req, res) {
+    
+    const { id } = req.params;
+      const candidates = Candidate.getCandidates(id.trim());
+      candidates.then((result) => {
+        if (result.rowCount <= 0) {
+          return res.status(404).json({ status: 404, error: 'No candidate found for office id: '+id});
+        } else {
+          const output = result.rows.map(info => ({id: info.candidateId, office: info.officeId, party: info.partyId, user: info.accountId,}));
           return res.status(200).json({ status: 200, data: output});
         }
       }, (error) => {

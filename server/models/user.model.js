@@ -8,7 +8,7 @@ import pg from 'pg';
 import * as Constants from '../helpers/Constants';
 
 export default {
- 
+
   create(newUser) {
     
     const createUser = new Promise((resolve, reject) => {
@@ -56,7 +56,7 @@ export default {
 
       const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
-      const result = connector.query('SELECT * FROM account WHERE "email"=($1) OR "phoneNumber"=($1)', [username.toLowerCase()]);
+      const result = connector.query('SELECT * FROM account WHERE "email"=($1)', [username.toLowerCase()]);
   
       result.then((result) => {
         resolve(result);
@@ -67,6 +67,27 @@ export default {
     });
     
     return info;
+
+  },
+
+  updateToAdmin(id) {
+
+    const makeAdmin = new Promise((resolve, reject) => {
+
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
+
+      const result = connector.query('UPDATE account SET "isAdmin"=TRUE WHERE "accountId"=($1)',
+        [id.trim(),]);
+
+      result.then((result) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      }).catch(err => reject(err));
+
+    });
+  
+    return makeAdmin;
 
   },
 

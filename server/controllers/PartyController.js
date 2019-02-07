@@ -77,7 +77,10 @@ class PartyController {
 
   static update(req, res) {
       
-      const data = req.body;
+      const data = {
+        id: req.params.id,
+        name: req.params.name
+      };
       const updateParty = Party.update(data);
       updateParty.then((result) => {
         if (result.rowCount <= 0) {

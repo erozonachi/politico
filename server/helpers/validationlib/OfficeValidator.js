@@ -21,11 +21,16 @@ export default {
     if (FieldValidator.isNumeric(req.body.name)) {
       return res.status(400).json({status: 400, error: 'name cannot be numbers'});
     }
+    if (!FieldValidator.isSapcedAlpha(req.body.name)) {
+      return res.status(400).json({status: 400, error: 'name can only be  combination of words and spaces'});
+    }
 
     const type = String(req.body.type).trim().toLowerCase();
     if (type != 'federal' && type != 'legislative' && type != 'state' && type != 'local') {
       return res.status(400).json({status: 400, error: 'Unknown office type'});
     }
+
+    req.body.name = req.body.name.replace(/ +(?= )/g,'');
 
     next();
   },
