@@ -8,7 +8,7 @@ import pg from 'pg';
 import * as Constants from '../helpers/Constants';
 
 export default {
- 
+
   create(newUser) {
     
     const createUser = new Promise((resolve, reject) => {

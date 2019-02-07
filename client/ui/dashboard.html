@@ -15,7 +15,7 @@
             <!-- Sidebar -->
             <div class="s-layout__sidebar">
               <a class="s-sidebar__trigger" href="javascript:void(0);">
-                 <i class="fa fa-bars" ><em id="bars"><strong>&nbsp;Politico</strong></em></i>
+                 <i class="fa fa-bars" ><em id="bars"><img src="images/bars-solid.svg" width="15px"/><strong>&nbsp;Politico</strong></em></i>
               </a>
             
               <nav class="s-sidebar__nav">
@@ -61,9 +61,29 @@
             
             <!-- Content -->
             <main class="s-layout__content">
+               <section>
+                  <form id="editPartyForm" class="hidden">
+                        <div id="" class="custom d-form-container">
+                           <center><h1>Edit Party</h1></center><br/>
+                           <div>
+                              <label for="editPartyName"><b>Name</b></label>
+                              <div class="custom tooltip">
+                                    <input type="text" placeholder="Party Name" name="editPartyName" id="editPartyName" required>
+                                    <span class="tooltiptext">Party Name</span>
+                              </div>
+                              <div class="custom tooltip">
+                                    <input type="hidden" name="partyID" id="partyID" >
+                                    <span class="tooltiptext"></span>
+                              </div>
+                           </div>
+                        
+                           <button type="submit" id="btnEditParty" class="big-btn">&nbsp;Edit Party</button>
+                        </div>
+                     </form>
+                     
                <form id="addPartyForm" class="hidden">
                   <div id="" class="custom d-form-container">
-                      <h1>New Party</h1><br/>
+                      <center><h1>New Party</h1></center><br/>
                       <div>
                           <label for="partyName"><b>Name</b></label>
                           <div class="custom tooltip">
@@ -73,12 +93,12 @@
                           <label for="partyAddress"><b>HQtr Address</b></label>
                           <div class="custom tooltip">
                               <input type="text" placeholder="HQtr Address" name="partyAddress" id="partyAddress" required>
-                              <span class="tooltiptext">HQtr Address</span>
+                              <span class="tooltiptext">HQ Address</span>
                           </div>
                           <label for="partyLogo"><b>Party Logo</b></label>
                           <div class="custom tooltip">
                               <input type="file" placeholder="Upload Logo" name="partyLogo" id="partyLogo" accept="image/x-png,image/gif,image/jpeg" required>
-                              <span class="tooltiptext">Upload Party Logo</span>
+                              <span class="tooltiptext">Upload Logo</span>
                           </div>
                       </div>
                   
@@ -86,28 +106,9 @@
                   </div>
                   </form>
 
-                  <form id="editPartyForm" class="hidden">
-                     <div id="" class="custom d-form-container">
-                        <h1>Edit Party</h1><br/>
-                        <div>
-                           <label for="editPartyName"><b>Name</b></label>
-                           <div class="custom tooltip">
-                                 <input type="text" placeholder="Party Name" name="editPartyName" id="editPartyName" required>
-                                 <span class="tooltiptext">Party Name</span>
-                           </div>
-                           <div class="custom tooltip">
-                                 <input type="hidden" name="partyID" id="partyID" >
-                                 <span class="tooltiptext"></span>
-                           </div>
-                        </div>
-                     
-                        <button type="submit" id="btnEditParty" class="big-btn">&nbsp;Edit Party</button>
-                     </div>
-                  </form>
-
                   <form id="addOfficeForm" class="hidden">
                      <div id="" class="custom d-form-container">
-                        <h1>Add Office</h1><br/>
+                        <center><h1>Add Office</h1></center><br/>
                         <div>
                            <label for="officeType"><b>Type</b></label>
                            <div class="custom tooltip">
@@ -133,7 +134,7 @@
 
                   <form id="contestForm" class="hidden">
                      <div id="" class="custom d-form-container">
-                        <h1>Contest for Position</h1><br/>
+                        <center><h1>Contest for Position</h1></center><br/>
                         <div>
                            <label for="contestOffice"><b>Position</b></label>
                            <div class="custom tooltip">
@@ -158,6 +159,7 @@
                         <button type="submit" id="btnContest" class="big-btn">&nbsp;Contest</button>
                      </div>
                   </form>
+               </section>
 
                   <!--Political party list-->
                   <table id="partyList" class="hidden">

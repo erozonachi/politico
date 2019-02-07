@@ -93,7 +93,7 @@ document.onreadystatechange = () => {
             btnLogin.removeAttribute('disabled');
             btnLogin.innerHTML ='<i class="lock"></i>&nbsp;Sign In';
             window.location.replace("dashboard.html");
-          }, 10000);
+          }, 1000);
         }
       }
 
