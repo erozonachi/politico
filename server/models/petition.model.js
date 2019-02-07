@@ -15,8 +15,8 @@ export default {
 
       const connector = new pg.Pool(Constants.CONNECTION_STRING);
 
-      const result = connector.query('INSERT INTO petition(office, body, createdBy, createdOn) values($1, $2, $3, $4)',
-        [newPetition.office, newPetition.body, newPetition.createdBy, 'CURRENT_DATE']);
+      const result = connector.query('INSERT INTO petition("officeId", "body", "accountId", "evidence", "createdOn") values($1, $2, $3, CURRENT_DATE)',
+        [newPetition.office, newPetition.body, newPetition.createdBy,]);
 
       result.then((result) => {
         resolve(result);

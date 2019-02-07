@@ -12,7 +12,7 @@ import * as Constants from '../helpers/Constants';
 const connector = new pg.Client(Constants.CONNECTION_STRING);
 connector.connect();
 
-const query = connector.query('CREATE TABLE vote(vote_id SERIAL PRIMARY KEY, acct_id INT NOT NULL REFERENCES account, office_id INT NOT NULL REFERENCES office, can_id INT NOT NULL REFERENCES candidate, createdOn DATE NOT NULL DEFAULT CURRENT_DATE, deleted BOOLEAN DEFAULT(false) NULL, UNIQUE(acct_id, office_id))');
+const query = connector.query('CREATE TABLE vote("voteId" SERIAL PRIMARY KEY, "accountId" INT NOT NULL REFERENCES account, "officeId" INT NOT NULL REFERENCES office, "candidateId" INT NOT NULL REFERENCES candidate, "createdOn" DATE NOT NULL DEFAULT CURRENT_DATE, "deleted" BOOLEAN DEFAULT(false) NULL, UNIQUE("accountId", "officeId"))');
 
 query.then(() => {
   connector.end();

@@ -11,6 +11,7 @@ class VoteController {
   static voteCandidate(req, res) {
 
     const data = req.body;
+    data.voter = req.params.userId
       
     const checkCandidate = Vote.checkCandidate(data);
     checkCandidate.then((result) => {
@@ -43,14 +44,14 @@ class VoteController {
             return res.status(400).json({status: 400, error: `You cannot vote more than once for the same office`});
           }
 
-          return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
+          return res.status(508).json({ status: 508, error: `Database connection error, try again`});
 
-        }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+        }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`,}));
       }
     }, (error) => {
-      return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
+      return res.status(508).json({ status: 508, error: `Database connection error, try again`,});
 
-    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`,}));
   }
 
 }

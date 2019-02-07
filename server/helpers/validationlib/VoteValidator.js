@@ -24,13 +24,6 @@ export default {
       return res.status(400).json({status: 400, error: 'candidate is not a number'});
     }
 
-    if (FieldValidator.isEmpty(req.body.voter)) {
-      return res.status(400).json({status: 400, error: 'voter is required'});
-    }
-    if (!FieldValidator.isNumeric(req.body.candidate)) {
-      return res.status(400).json({status: 400, error: 'voter is not a number'});
-    }
-
     next();
   },
 

@@ -45,6 +45,22 @@ export default {
 
     return false;
   },
+
+  isSapcedAlpha(field) {
+    if (RegExp(/^[a-zA-Z\s]*$/, 'g').test(field)) {
+      return true;
+    }
+
+    return false;
+  },
+
+  isSapcedDigitAlpha(field) {
+    if (RegExp(/^[A-Za-z0-9\, _]*[A-Za-z0-9\,][A-Za-z0-9\, _]*$/, 'g').test(field)) {
+      return true;
+    }
+
+    return false;
+  },
   
   isNumeric(field) {
     if(RegExp(/^[0-9.]+$/).test(field)) {

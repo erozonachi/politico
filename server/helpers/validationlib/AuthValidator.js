@@ -75,8 +75,13 @@ export default {
       return res.status(400).json({status: 400, error: 'Password is required'});
     }
 
-    if (FieldValidator.isPhone(req.body.username)) {
-      req.body.username = '234' + req.body.username.slice(-10);
+    next();
+  },
+
+  checkID(req, res, next) {
+    
+    if (!FieldValidator.isNumeric(req.params.id)) {
+      return res.status(400).json({status: 400, error: 'User Id is not a number'});
     }
 
     next();
