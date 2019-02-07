@@ -18,48 +18,46 @@ class AuthController {
     const createUser = new Promise((resolve, reject) => {
       bcrypt.hash(user.password, Constants.HASH_SALT_ROUNDS).then((hash) => {
         
-        const checkUniqueness = User.search(user);
-        checkUniqueness.then(result => {
-          if (result.rowCount > 0) {
-            if (result.rows[0].phonenumber === user.phoneNumber) {
-              const error = {status: 400, error: 'Phone number already in use'};
-              reject(error);
-            } else if (result.rows[0].passporturl === user.passportUrl) {
-              const error = {status: 400, error: 'Passport already exists'};
-              reject(error);
-            } else {
-              const error = {status: 400, error: 'Email already in use'};
+        user.password = hash;
+        const result = User.create(user);
+        result.then((result) => {
+          resolve(result);
+        }, (error) => {
+          if (error.code === '23505') {
+
+            if (error.detail.includes('email')) {
+              const error = {status: 400, error: `email already in use`,};
               reject(error);
             }
-          } else {
-            user.password = hash;
-            const result = User.create(user);
-            result.then((result) => {
-              resolve(result);
-            }, (error) => {
+            if (error.detail.includes('phoneNumber')) {
+              const error = {status: 400, error: `phoneNumber already in use`,};
               reject(error);
-            });
+            }
+            if (error.detail.includes('passportUrl')) {
+              const error = {status: 400, error: `passportUrl already exists`,};
+              reject(error);
+            }
+
           }
-        }, error => {
-          reject(error);
-        })
+        });
+
       }, (error) => {
         reject(error);
       });
     });
     createUser.then((result) => {
       if (result.rowCount <= 0) {
-        return res.status(508).json({ status: 508, error: 'Database connection failed'});
+        return res.status(400).json({ status: 400, error: 'User already exists'});
       } else {
         const output = result.rows.map(info => (
           {
-            id: info.acct_id,
-            firstName: info.firstname,
-            lastName: info.lastname,
+            id: info.accountId,
+            firstName: info.firstName,
+            lastName: info.lastName,
             email: info.email,
-            phoneNumber: info.phonenumber,
-            passportUrl: info.passporturl,
-            isAdmin: info.isadmin
+            phoneNumber: info.phoneNumber,
+            passportUrl: info.passportUrl,
+            isAdmin: info.isAdmin
           }
         ));
         const token = jwt.sign({id: output[0].id, email: output[0].email, isAdmin: output[0].isAdmin}, process.env.SECRET_KEY, {expiresIn: '1d'});
@@ -85,13 +83,13 @@ class AuthController {
       } else {
         const user = result.rows[0];
         const userInfo = {
-          id: user.acct_id,
-          firstName: user.firstname,
-          lastName: user.lastname,
+          id: user.accountId,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
-          phoneNumber: user.phonenumber,
-          passportUrl: user.passporturl,
-          isAdmin: user.isadmin
+          phoneNumber: user.phoneNumber,
+          passportUrl: user.passportUrl,
+          isAdmin: user.isAdmin
         };
         bcrypt.compare(password, user.password)
         .then((result) => {
@@ -99,9 +97,9 @@ class AuthController {
             return res.status(400).json({ status: 400, error: 'Incorrect username or password' });
           }
           const tokenPaylod = {
-            id: user.acct_id,
+            id: user.accountId,
             email: user.email,
-            isAdmin: user.isadmin,
+            isAdmin: user.isAdmin,
           }
           const token = jwt.sign(tokenPaylod, process.env.SECRET_KEY, {expiresIn: '1d'});
           if (!token) {
