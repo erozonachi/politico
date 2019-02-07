@@ -6,6 +6,7 @@
 * */
 import Office from '../models/office.model';
 import Candidate from '../models/candidate.model';
+import Vote from '../models/vote.model';
 
 class OfficeController {
   
@@ -113,6 +114,26 @@ class OfficeController {
       return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
 
     }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+
+  }
+
+  static getOfficeVoteResult(req, res) {
+    
+    const { id } = req.params;
+      const getResult = Vote.getOfficeVoteResult(id.trim());
+      getResult.then((result) => {
+        if (result.rowCount <= 0) {
+          return res.status(404).json({ status: 404, error: 'No result found for office id: '+id});
+        } else {
+          const output = result.rows.map(info => ({office: info.office, candidate: info.candidate, result: Number.parseInt(info.result),}));
+          return res.status(200).json({ status: 200, data: output});
+        }
+      }, (error) => {
+
+        return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
+
+      }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+
   }
 
 }
