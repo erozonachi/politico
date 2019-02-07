@@ -97,7 +97,7 @@ class AuthController {
             return res.status(400).json({ status: 400, error: 'Incorrect username or password' });
           }
           const tokenPaylod = {
-            id: user.accountDd,
+            id: user.accountId,
             email: user.email,
             isAdmin: user.isAdmin,
           }

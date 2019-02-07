@@ -25,7 +25,7 @@ export default {
       }).catch(err => reject(err));
 
     });
-
+    
     return createOffice;
 
   },

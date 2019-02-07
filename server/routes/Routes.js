@@ -6,6 +6,7 @@
 * */
 import PartyRoutes from './PartyRoutes';
 import OfficeRoutes from './OfficeRoutes';
+import VoteRoutes from './VoteRoutes';
 import AuthRoutes from './AuthRoutes';
 
 export default function routes(app) {
@@ -15,6 +16,9 @@ export default function routes(app) {
 
   // routes to Offices resources
   OfficeRoutes(app);
+
+  // routes to Votes resources
+  VoteRoutes(app);
 
   // routes to auth resources
   AuthRoutes(app);

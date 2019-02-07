@@ -30,4 +30,24 @@ export default {
 
   },
 
+  checkCandidate(info) {
+    
+    const candidateInfo = new Promise((resolve, reject) => {
+
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
+  
+      const result = connector.query('SELECT * FROM candidate WHERE can_id=($1)  AND office_id=($2)', [info.candidate, info.office,]);
+  
+      result.then((result) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      }).catch(err => reject(err));
+  
+    });
+    
+    return candidateInfo;
+
+  },
+
 }
