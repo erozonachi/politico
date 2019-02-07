@@ -13,17 +13,16 @@ export default {
     
     const createParty = new Promise((resolve, reject) => {
 
-      const connector = new pg.Client(Constants.CONNECTION_STRING);
-      connector.connect();
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
 
-      const result = connector.query('INSERT INTO party(name, hqAddress, logoUrl, createdOn) values($1, $2, $3, DEFAULT) RETURNING id, name',
+      const result = connector.query('INSERT INTO party("name", "hqAddress", "logoUrl", "createdOn") values($1, $2, $3, DEFAULT) RETURNING "partyId", "name"',
         [String(newParty.name).trim().toLowerCase(), String(newParty.hqAddress).trim(), String(newParty.logoUrl).trim()]);
 
       result.then((result) => {
         resolve(result);
       }, (error) => {
         reject(error);
-      });
+      }).catch(err => reject(err));
 
     });
 
@@ -35,17 +34,16 @@ export default {
 
     const updateParty = new Promise((resolve, reject) => {
 
-      const connector = new pg.Client(Constants.CONNECTION_STRING);
-      connector.connect();
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
 
-      const result = connector.query('UPDATE party SET name=($1), updatedOn=CURRENT_DATE WHERE id=($2) AND deleted=false RETURNING id, name',
+      const result = connector.query('UPDATE party SET "name"=($1), "updatedOn"=CURRENT_DATE WHERE "partyId"=($2) AND "deleted"=false RETURNING "partyId", "name"',
         [String(partyInfo.name).trim().toLowerCase(), partyInfo.id]);
 
       result.then((result) => {
         resolve(result);
       }, (error) => {
         reject(error);
-      });
+      }).catch(err => reject(err));
 
     });
   
@@ -57,16 +55,15 @@ export default {
     
     const readParty = new Promise((resolve, reject) => {
 
-      const connector = new pg.Client(Constants.CONNECTION_STRING);
-      connector.connect();
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
-      const result = connector.query('SELECT id, name, hqAddress, logoUrl, createdOn, updatedOn FROM party WHERE deleted=false ORDER BY name ASC');
+      const result = connector.query('SELECT "partyId", "name", "hqAddress", "logoUrl", "createdOn", "updatedOn" FROM party WHERE "deleted"=false ORDER BY "name" ASC');
   
       result.then((result) => {
         resolve(result);
       }, (error) => {
         reject(error);
-      });
+      }).catch(err => reject(err));
   
     });
     
@@ -78,16 +75,15 @@ export default {
     
     const readParty = new Promise((resolve, reject) => {
 
-      const connector = new pg.Client(Constants.CONNECTION_STRING);
-      connector.connect();
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
-      const result = connector.query('SELECT id, name, hqAddress, logoUrl, createdOn, updatedOn FROM party WHERE id=($1) AND deleted=false', [id]);
+      const result = connector.query('SELECT "partyId", "name", "hqAddress", "logoUrl", "createdOn", "updatedOn" FROM party WHERE "partyId"=($1) AND "deleted"=false', [id]);
   
       result.then((result) => {
         resolve(result);
       }, (error) => {
         reject(error);
-      });
+      }).catch(err => reject(err));
   
     });
     
@@ -99,16 +95,15 @@ export default {
     
     const search = new Promise((resolve, reject) => {
 
-      const connector = new pg.Client(Constants.CONNECTION_STRING);
-      connector.connect();
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
-      const result = connector.query('SELECT * FROM party WHERE (name=($1) OR logoUrl=($2)) AND deleted=false', [String(name).trim().toLowerCase(), String(url).trim()]);
+      const result = connector.query('SELECT * FROM party WHERE ("name"=($1) OR "logoUrl"=($2)) AND "deleted"=false', [String(name).trim().toLowerCase(), String(url).trim()]);
   
       result.then((result) => {
         resolve(result);
       }, (error) => {
         reject(error);
-      });
+      }).catch(err => reject(err));
   
     });
     
@@ -120,16 +115,15 @@ export default {
     
     const deleteParty = new Promise((resolve, reject) => {
 
-      const connector = new pg.Client(Constants.CONNECTION_STRING);
-      connector.connect();
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
-      const result = connector.query('UPDATE party SET deleted=true WHERE id=($1)', [id]);
+      const result = connector.query('DELETE FROM party WHERE "partyId"=($1)', [id]);
   
       result.then((result) => {
         resolve(result);
       }, (error) => {
         reject(error);
-      });
+      }).catch(err => reject(err));
   
     });
     
