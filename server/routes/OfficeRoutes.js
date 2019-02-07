@@ -15,12 +15,15 @@ export default function officeRoutes(app) {
   app.post(`${Constants.API_BASE_URL}/offices`, OfficeValidator.create, OfficeController.create);
 
   // POST /api/v1/office/:id/register
-  app.post(`${Constants.API_BASE_URL}/office/:id/register`, OfficeValidator.registerCandidate, OfficeController.registerCandidate);
+  app.post(`${Constants.API_BASE_URL}/offices/:id/register`, OfficeValidator.registerCandidate, OfficeController.registerCandidate);
 
   // GET /api/v1/offices
   app.get(`${Constants.API_BASE_URL}/offices`, OfficeController.getOffice);
 
   // GET api/v1/offices/:id
   app.get(`${Constants.API_BASE_URL}/offices/:id`, OfficeValidator.checkID, OfficeController.getOfficeById);
+
+  // GET api/v1/offices/:id/result
+  app.get(`${Constants.API_BASE_URL}/offices/:id/result`, OfficeValidator.checkID, OfficeController.getOfficeVoteResult);
 
 }

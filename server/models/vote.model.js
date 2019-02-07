@@ -50,4 +50,24 @@ export default {
 
   },
 
+  getOfficeVoteResult(id) {
+    
+    const resultInfo = new Promise((resolve, reject) => {
+
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
+  
+      const result = connector.query('SELECT o.office_id AS office, ca.can_id AS candidate, COUNT(v.acct_id) AS result FROM office o, candidate ca, vote v WHERE o.office_id=($1) AND ca.office_id=($1) AND v.office_id=($1) AND v.can_id=ca.can_id GROUP BY o.office_id, ca.can_id', [id,]);
+  
+      result.then((result) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      }).catch(err => reject(err));
+  
+    });
+    
+    return resultInfo;
+
+  },
+
 }
