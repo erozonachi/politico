@@ -61,6 +61,11 @@
     margin: 1.5em 0 0 1.5em;
     color: rgba(255, 255, 255, 1);
  }
+
+ .s-sidebar__trigger img {
+    display: inline-block;
+    color: rgba(255, 255, 255, 1);
+ }
  
  .s-sidebar__nav {
     position: fixed;
@@ -282,7 +287,7 @@ a {
 
 .desktop-content p, .mobile-content p {
     font-size: 1.5em;
-    text-align: justify;
+    text-align: left;
 }
 
 .form-container, .d-form-container, .container, .login-container {
@@ -296,20 +301,12 @@ a {
 		 border-radius: 5px;
 }
 
-.form-container, .d-form-container {
+.form-container {
     clear: left;
     display: block;
     /* height: 100%; */
     padding: 10px;
     background-color: #fff;
-}
-.entries-container {
-    width: 90%;
-    margin: 30px 5%;
-    padding: 0;
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.5);
-   /*  overflow-y: scroll; */
 }
 .form-container {
     width: 50%;
@@ -317,7 +314,12 @@ a {
 }
 
 .d-form-container {
+    display: inline-block;
+    padding: 10px;
+    background-color: #fff;
+    min-width: 80%;
     width: 80%;
+    max-width: 80%;
     margin: 100px 10%;
 }
 
@@ -356,7 +358,7 @@ a {
 select, input[type=text], input[type=password], input[type=email], input[type=tel], input[type=hidden] {
     clear: both;
     width: 100%;
-    margin-top: 5px;
+    margin-bottom: 10px;
     padding: 12px 20px;
     display: inline-block;
     border: 1px solid #ccc;
