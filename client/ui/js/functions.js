@@ -10,54 +10,29 @@ document.onreadystatechange = () => {
         signUpForm.onsubmit = (e) => {
             
             e.preventDefault();
-
-            const phone = String(document.getElementById('phone').value).trim();
-            const fName = String(document.getElementById('fName').value).trim();
-            const lName = String(document.getElementById('lName').value).trim();
-            const email = String(document.getElementById('email').value).trim();
+            
             const password = String(document.getElementById('password').value).trim();
             const confirm = String(document.getElementById('confirm').value).trim();
-            const nameFormat = /^[a-zA-Z]+$/i;
 
-            if (fName == "") {
-              alert("First Name is required");
-              return false;
-            } else if (!nameFormat.test(fName)) {
-              alert("First Name can only contain letters");
-              return false;
-            }
-            if (lName == "") {
-              alert("Last Name is required");
-              return false;
-            } else if (!nameFormat.test(lName)) {
-              alert("Last Name can only contain letters");
-              return false;
-            }
-            if (phone == "") {
-              alert("Phone number is required");
-              return false;
-            }
-            
-            const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            if (email == "") {
-              alert("Email is required");
-              return false;
-            } else if (!emailRegEx.test(email)) {
-              alert("Invalid email format");
-              return false;
-            }
+            const errPassword = document.getElementById('error-password');
+            const errConfirm = document.getElementById('error-confirm');
+
+            const btnSignUp = document.getElementById('btnNext');
+
+            errPassword.innerHTML = '';
+            errConfirm.innerHTML = '';
             
             if (password.length < 10) {
-              alert("Password not up to 10 characters");
-              return false;
+              errPassword.innerHTML = "Password not up to 10 characters";
+              return;
             } else if (/^[a-zA-Z]+$/i.test(password) || /^[0-9]+$/i.test(password)) {
-              alert("Weak password: mix letters, numbers, and special characters");
+              errPassword.innerHTML = "Weak password: mix letters, numbers, and special characters";
               return false;
             } else if (confirm != password) {
-              alert("Password and confirm password not match");
+              errConfirm.innerHTML = "Password and confirm password not match";
               return false;
             }
-            const btnSignUp = document.getElementById('btnSignUp');
+
             btnSignUp.innerHTML = '<i class="spinner spin"></i> Wait...';
             setTimeout(function () { btnSignUp.innerHTML ='Sign Up'; }, 10000);
             
@@ -75,15 +50,20 @@ document.onreadystatechange = () => {
           btnLogin.setAttribute('disabled', 'disabled');
           const username = String(document.getElementById('username').value).trim();
           const password = String(document.getElementById('password').value).trim();
+
+          const errUsername = document.getElementById('error-username');
+          const errPassword = document.getElementById('error-password');
+          errUsername.innerHTML = '';
+          errPassword.innerHTML = '';
           
           if (username === '') {
-            alert("Username is required");
+            errUsername.innerHTML = "Username is required";
             btnLogin.removeAttribute('disabled');
             return false;
           }
 
           if (password === '') {
-            alert("Password is required");
+            errPassword.innerHTML = "Password is required";
             btnLogin.removeAttribute('disabled');
             return false;
           }
@@ -123,6 +103,7 @@ document.onreadystatechange = () => {
         }
       }
 
+      // Reset Password form submission
       const resetForm = document.getElementById('resetForm');
       if (resetForm) {
         resetForm.onsubmit = (e) => {
@@ -141,15 +122,25 @@ document.onreadystatechange = () => {
           const password = document.getElementById('newPassword');
           const confirm = document.getElementById('confirm');
 
+          const errEmail = document.getElementById('error-email');
+          const errOtp = document.getElementById('error-otp');
+          const errPassword = document.getElementById('error-newPassword');
+          const errConfirm = document.getElementById('error-confirm');
+
+          errEmail.innerHTML = '';
+          errOtp.innerHTML = '';
+          errPassword.innerHTML = '';
+          errConfirm.innerHTML = '';
+
           let period = null;
 
           const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           if (String(email.value).trim() == "") {
-            alert("Email is required");
+            errEmail.innerHTML = "Email is required";
             btnReset.removeAttribute('disabled');
             return false;
           } else if (!emailRegEx.test(String(email.value).trim())) {
-            alert("Invalid email format");
+            errEmail.innerHTML = "Invalid email format";
             btnReset.removeAttribute('disabled');
             return false;
           }
@@ -171,27 +162,27 @@ document.onreadystatechange = () => {
             }
 
             if (String(otp.value).trim() == "") {
-              alert("OTP is required");
+              errOtp.innerHTML = "OTP is required";
               btnReset.removeAttribute('disabled');
               return false;
             }
             
             if (String(password.value).length < 10) {
-              alert("Password not up to 10 characters");
+              errPassword.innerHTML = "Password not up to 10 characters";
               btnReset.removeAttribute('disabled');
               return false;
             } else if (String(password.value).trim() === '') {
-              alert("New password field cannot be empty");
+              errPassword.innerHTML = "Password field cannot be empty";
               btnReset.removeAttribute('disabled');
               return false;
             } else if (/^[a-zA-Z]+$/i.test(String(password.value)) || /^[0-9]+$/i.test(String(password.value))) {
-              alert("Weak password: mix letters, numbers, and special characters");
+              errPassword.innerHTML = "Weak password: mix letters, numbers, and special characters";
               btnReset.removeAttribute('disabled');
               return false;
             }
             
             if (String(confirm.value) !== String(password.value)) {
-              alert("Password and confirm password not match");
+              errConfirm.innerHTML = "Password and confirm password not match";
               btnReset.removeAttribute('disabled');
               return false;
             }
@@ -277,17 +268,8 @@ document.onreadystatechange = () => {
       const linkParties = document.getElementById('linkParties');
       if (linkParties) {
         linkParties.onclick = (e) => {
-          if (!document.getElementById('addPartyForm').getAttribute('class')) {
-            document.getElementById('addPartyForm').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('editPartyForm').getAttribute('class')) {
-            document.getElementById('editPartyForm').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('addOfficeForm').getAttribute('class')) {
-            document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('contestForm').getAttribute('class')) {
-            document.getElementById('contestForm').setAttribute('class', 'hidden');
+          if (!document.getElementById('officeList').getAttribute('class')) {
+            document.getElementById('officeList').setAttribute('class', 'hidden');
           }
           if (!document.getElementById('candidateList').getAttribute('class')) {
             document.getElementById('candidateList').setAttribute('class', 'hidden');
@@ -303,7 +285,6 @@ document.onreadystatechange = () => {
           if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
-          if (linkContest.getAttribute('class')) linkContest.removeAttribute('class');
 
           if (!linkParties.getAttribute('class')) linkParties.setAttribute('class', 'active');
         }
@@ -313,17 +294,8 @@ document.onreadystatechange = () => {
       const linkOffices = document.getElementById('linkOffices');
       if (linkOffices) {
         linkOffices.onclick = (e) => {
-          if (!document.getElementById('addPartyForm').getAttribute('class')) {
-            document.getElementById('addPartyForm').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('editPartyForm').getAttribute('class')) {
-            document.getElementById('editPartyForm').setAttribute('class', 'hidden');
-          }
           if (!document.getElementById('partyList').getAttribute('class')) {
             document.getElementById('partyList').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('contestForm').getAttribute('class')) {
-            document.getElementById('contestForm').setAttribute('class', 'hidden');
           }
           if (!document.getElementById('candidateList').getAttribute('class')) {
             document.getElementById('candidateList').setAttribute('class', 'hidden');
@@ -332,14 +304,13 @@ document.onreadystatechange = () => {
             document.getElementById('votedCandidates').setAttribute('class', 'hidden');
           }
         
-          if (document.getElementById('addOfficeForm').getAttribute('class')) {
-            document.getElementById('addOfficeForm').removeAttribute('class');
+          if (document.getElementById('officeList').getAttribute('class')) {
+            document.getElementById('officeList').removeAttribute('class');
           }
 
           if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
-          if (linkContest.getAttribute('class')) linkContest.removeAttribute('class');
 
           if (!linkOffices.getAttribute('class')) linkOffices.setAttribute('class', 'active');
         }
@@ -349,20 +320,11 @@ document.onreadystatechange = () => {
       const linkPolls = document.getElementById('linkPolls');
       if (linkPolls) {
         linkPolls.onclick = (e) => {
-          if (!document.getElementById('addPartyForm').getAttribute('class')) {
-            document.getElementById('addPartyForm').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('editPartyForm').getAttribute('class')) {
-            document.getElementById('editPartyForm').setAttribute('class', 'hidden');
-          }
           if (!document.getElementById('partyList').getAttribute('class')) {
             document.getElementById('partyList').setAttribute('class', 'hidden');
           }
-          if (!document.getElementById('addOfficeForm').getAttribute('class')) {
-            document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('contestForm').getAttribute('class')) {
-            document.getElementById('contestForm').setAttribute('class', 'hidden');
+          if (!document.getElementById('officeList').getAttribute('class')) {
+            document.getElementById('officeList').setAttribute('class', 'hidden');
           }
           if (!document.getElementById('votedCandidates').getAttribute('class')) {
             document.getElementById('votedCandidates').setAttribute('class', 'hidden');
@@ -375,7 +337,6 @@ document.onreadystatechange = () => {
           if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
-          if (linkContest.getAttribute('class')) linkContest.removeAttribute('class');
 
           if (!linkPolls.getAttribute('class')) linkPolls.setAttribute('class', 'active');
         }
@@ -385,20 +346,11 @@ document.onreadystatechange = () => {
       const linkProfile = document.getElementById('linkProfile');
       if (linkProfile) {
         linkProfile.onclick = (e) => {
-          if (!document.getElementById('addPartyForm').getAttribute('class')) {
-            document.getElementById('addPartyForm').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('editPartyForm').getAttribute('class')) {
-            document.getElementById('editPartyForm').setAttribute('class', 'hidden');
-          }
           if (!document.getElementById('partyList').getAttribute('class')) {
             document.getElementById('partyList').setAttribute('class', 'hidden');
           }
-          if (!document.getElementById('addOfficeForm').getAttribute('class')) {
-            document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('contestForm').getAttribute('class')) {
-            document.getElementById('contestForm').setAttribute('class', 'hidden');
+          if (!document.getElementById('officeList').getAttribute('class')) {
+            document.getElementById('officeList').setAttribute('class', 'hidden');
           }
           if (!document.getElementById('candidateList').getAttribute('class')) {
             document.getElementById('candidateList').setAttribute('class', 'hidden');
@@ -411,7 +363,6 @@ document.onreadystatechange = () => {
           if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
           if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
-          if (linkContest.getAttribute('class')) linkContest.removeAttribute('class');
 
           if (!linkProfile.getAttribute('class')) linkProfile.setAttribute('class', 'active');
         }
@@ -421,35 +372,10 @@ document.onreadystatechange = () => {
       const linkContest = document.getElementById('linkContest');
       if (linkContest) {
         linkContest.onclick = (e) => {
-          if (!document.getElementById('addPartyForm').getAttribute('class')) {
-            document.getElementById('addPartyForm').setAttribute('class', 'hidden');
+          const modalContest = document.getElementById('modalContest');
+          if (modalContest) {
+            modalContest.style.display = 'block';
           }
-          if (!document.getElementById('editPartyForm').getAttribute('class')) {
-            document.getElementById('editPartyForm').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('partyList').getAttribute('class')) {
-            document.getElementById('partyList').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('addOfficeForm').getAttribute('class')) {
-            document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('candidateList').getAttribute('class')) {
-            document.getElementById('candidateList').setAttribute('class', 'hidden');
-          }
-          if (!document.getElementById('votedCandidates').getAttribute('class')) {
-            document.getElementById('votedCandidates').setAttribute('class', 'hidden');
-          }
-  
-          if (document.getElementById('contestForm').getAttribute('class')) {
-            document.getElementById('contestForm').removeAttribute('class');
-          }
-  
-          if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
-          if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
-          if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
-          if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
-  
-          if (!linkContest.getAttribute('class')) linkContest.setAttribute('class', 'active');
         }
       
       }
@@ -462,20 +388,40 @@ document.onreadystatechange = () => {
 
           const partyName = document.getElementById('partyName');
           const partyAddress = document.getElementById('partyAddress');
-          const partyLogo = document.getElementById('partyLogo');
+          const partyLogo = document.getElementById('partyLogo').value.trim();
+
+          const errName = document.getElementById('error-partyName');
+          const errAddress = document.getElementById('error-partyAddress');
+          const errLogo = document.getElementById('error-partyLogo');
+
+          errName.innerHTML = '';
+          errAddress.innerHTML = '';
+          errLogo.innerHTML = '';
 
           if (String(partyName.value).trim() === '') {
-            alert('Party Name cannot be empty');
+            errName.innerHTML = 'Party Name cannot be empty';
+            return;
+          } else if (!RegExp(/^[a-zA-Z\s]*$/, 'g').test(partyName.value.trim())) {
+            errName.innerHTML = 'Name can only be words and spaces';
             return;
           }
 
           if (String(partyAddress.value).trim() === '') {
-            alert('Party Address cannot be empty');
+            errAddress.innerHTML = 'Party Address cannot be empty';
+            return;
+          } else if (RegExp(/^[0-9.\s]*$/, 'g').test(partyAddress.value.trim())) {
+            errAddress.innerHTML = 'Address cannot be numbers';
+            return;
+          } else if (!RegExp(/^[A-Za-z0-9\, _]*[A-Za-z0-9\,][A-Za-z0-9\, _]*$/, 'g').test(partyAddress.value.trim())) {
+            errAddress.innerHTML = 'Address can only contain letters, digits and spaces';
             return;
           }
 
-          if (String(partyLogo).trim() === '') {
-            alert('Party Logo file cannot be empty');
+          if (partyLogo === '') {
+            errLogo.innerHTML = 'Party Logo file cannot be empty';
+            return;
+          } else if (!partyLogo.match(/\.jpg$/) && !partyLogo.match(/\.JPG$/) && !partyLogo.match(/\.png$/) && !partyLogo.match(/\.PNG$/)) {
+            errLogo.innerHTML = ".jpg or .png extension required";
             return;
           }
 
@@ -498,8 +444,15 @@ document.onreadystatechange = () => {
           e.preventDefault();
 
           const partyName = document.getElementById('editPartyName');
+          const errPartyName = document.getElementById('error-editPartyName');
+
+          errPartyName.innerHTML = '';
+
           if (String(partyName.value).trim() === '') {
-            alert('Party Name cannot be empty');
+            errPartyName.innerHTML = 'Party Name cannot be empty';
+            return;
+          } else if (!RegExp(/^[a-zA-Z\s]*$/, 'g').test(partyName.value.trim())) {
+            errPartyName.innerHTML = 'Name can only be words and spaces';
             return;
           }
 
@@ -521,12 +474,22 @@ document.onreadystatechange = () => {
 
           const officeType = document.getElementById('officeType');
           const officeName = document.getElementById('officeName');
+
+          const errType = document.getElementById('error-officeType');
+          const errName = document.getElementById('error-officeName');
+
+          errType.innerHTML = '';
+          errName.innerHTML = '';
+
           if (String(officeType.value).trim() === '') {
-            alert('Office type cannot be empty');
+            errType.innerHTML = 'Office type cannot be empty';
             return;
           }
           if (String(officeName.value).trim() === '') {
-            alert('Office name cannot be empty');
+            errName.innerHTML = 'Office name cannot be empty';
+            return;
+          } else if (!RegExp(/^[a-zA-Z\s]*$/, 'g').test(String(officeName.value).trim())) {
+            errName.innerHTML = 'Name can only be words and spaces';
             return;
           }
 
@@ -543,18 +506,25 @@ document.onreadystatechange = () => {
 
       //Contest form submission
       const contestForm = document.getElementById('contestForm');
-      if(contestForm) {
+      if (contestForm) {
         contestForm.onsubmit = (e) => {
           e.preventDefault();
 
           const office = document.getElementById('contestOffice');
           const party = document.getElementById('contestParty');
+
+          const errOffice = document.getElementById('error-contestOffice');
+          const errParty = document.getElementById('error-contestParty');
+
+          errOffice.innerHTML = '';
+          errParty.innerHTML = '';
+
           if (String(office.value).trim() === '') {
-            alert('Office type cannot be empty');
+            errOffice.innerHTML = 'Office type cannot be empty';
             return;
           }
           if (String(party.value).trim() === '') {
-            alert('Party cannot be empty');
+            errParty.innerHTML = 'Party cannot be empty';
             return;
           }
 
@@ -570,6 +540,65 @@ document.onreadystatechange = () => {
         }
       }
 
+      // Modals....................................................
+      const closeContest = document.getElementById('closeContest');
+      if (closeContest) {
+        closeContest.onclick = (e) => {
+          const modal = document.getElementById('modalContest');
+          modal.style.display = 'none';
+        }
+      
+      }
+
+      const closeAddParty = document.getElementById('closeAddParty');
+      if (closeAddParty) {
+        closeAddParty.onclick = (e) => {
+          const modal = document.getElementById('modalAddParty');
+          modal.style.display = 'none';
+        }
+      
+      }
+
+      const closeAddOffice = document.getElementById('closeAddOffice');
+      if (closeAddOffice) {
+        closeAddOffice.onclick = (e) => {
+          const modal = document.getElementById('modalAddOffice');
+          modal.style.display = 'none';
+        }
+      
+      }
+
+      const closeEditParty = document.getElementById('closeEditParty');
+      if (closeEditParty) {
+        closeEditParty.onclick = (e) => {
+          const modal = document.getElementById('modalEditParty');
+          modal.style.display = 'none';
+        }
+      
+      }
+
+      window.onclick = (e) => {
+
+        const modalContest = document.getElementById('modalContest');
+        const modalAddParty = document.getElementById('modalAddParty');
+        const modalAddOffice = document.getElementById('modalAddOffice');
+        const modalEditParty = document.getElementById('modalEditParty');
+
+        if (e.target == modalContest) {
+          modalContest.style.display = "none";
+        } 
+        else if (e.target === modalAddParty) {
+          modalAddParty.style.display = "none";
+        }
+        else if (e.target === modalAddOffice) {
+          modalAddOffice.style.display = "none";
+        }
+        else if (e.target === modalEditParty) {
+          modalEditParty.style.display = "none";
+        }
+
+      }
+
     }
 };
 
@@ -583,52 +612,152 @@ function toggleMenu(X) {
   }
 }
 
+function previous() {
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+  const nameGroup = document.getElementById('nameGroup');
+  const contactGroup = document.getElementById('contactGroup');
+  const authGroup = document.getElementById('authGroup');
+
+  if (!contactGroup.getAttribute('class')) {
+    authGroup.setAttribute('class', 'hidden');
+    contactGroup.setAttribute('class', 'hidden');
+    nameGroup.removeAttribute('class');
+    btnPrev.setAttribute('disabled', 'disabled');
+    btnNext.innerHTML = 'Next';
+    btnNext.setAttribute('type', 'button');
+    return;
+    
+  } else if (!authGroup.getAttribute('class')) {
+    authGroup.setAttribute('class', 'hidden');
+    contactGroup.removeAttribute('class');
+    nameGroup.setAttribute('class', 'hidden');
+    btnPrev.removeAttribute('disabled');
+    btnNext.innerHTML = 'Next';
+    btnNext.setAttribute('type', 'button');
+    return;
+  }
+
+  return;
+}
+
+function next() {
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+  const nameGroup = document.getElementById('nameGroup');
+  const contactGroup = document.getElementById('contactGroup');
+  const authGroup = document.getElementById('authGroup');
+
+  const phone = String(document.getElementById('phone').value).trim();
+  const fName = String(document.getElementById('fName').value).trim();
+  const lName = String(document.getElementById('lName').value).trim();
+  const oName = String(document.getElementById('oName').value).trim();
+  const email = String(document.getElementById('email').value).trim();
+  const passport = String(document.getElementById('passport').value).trim();
+  const nameFormat = /^[a-zA-Z]+$/i;
+
+  const errFName = document.getElementById('error-fName');
+  const errLName = document.getElementById('error-lName');
+  const errOName = document.getElementById('error-oName');
+  const errPhone = document.getElementById('error-phone');
+  const errEmail = document.getElementById('error-email');
+  const errPassport = document.getElementById('error-passport');
+
+  errFName.innerHTML = '';
+  errLName.innerHTML = '';
+  errOName.innerHTML = '';
+
+  errEmail.innerHTML = '';
+  errPhone.innerHTML = '';
+  errPassport.innerHTML = '';
+
+  if (!nameGroup.getAttribute('class')) {
+    if (fName == "") {
+      errFName.innerHTML = "First Name is required";
+      return;
+    } else if (!nameFormat.test(fName)) {
+      errFName.innerHTML = "First Name can only contain letters";
+      return;
+    }
+    if (lName == "") {
+      errLName.innerHTML = "Last Name is required";
+      return;
+    } else if (!nameFormat.test(lName)) {
+      errLName.innerHTML= "Last Name can only contain letters";
+      return;
+    }
+    if (oName != "") {
+      if (!nameFormat.test(oName)) {
+        errOName.innerHTML= "Other Name can only contain letters";
+        return;
+      }
+    }
+    authGroup.setAttribute('class', 'hidden');
+    contactGroup.removeAttribute('class');
+    nameGroup.setAttribute('class', 'hidden');
+    btnPrev.removeAttribute('disabled');
+    btnNext.innerHTML = 'Next';
+    btnNext.setAttribute('type', 'button');
+    return;
+    
+  } else if (!contactGroup.getAttribute('class')) {
+    if (phone == "") {
+      errPhone.innerHTML = "Phone number is required";
+      return;
+    } else if (!RegExp(/^([0]{1}|[234]{3})([7-9]{1})([0|1]{1})([0|1|2|3|4|5|6|7|8|9]{1})([\d]{7})$/).test(phone)) {
+      errPhone.innerHTML = "Invalid Nigerian mobile number";
+      return;
+    }
+    
+    const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (email == "") {
+      errEmail.innerHTML = "Email is required";
+      return;
+    } else if (!emailRegEx.test(email)) {
+      errEmail.innerHTML = "Invalid email format";
+      return;
+    }
+
+    if (passport == "") {
+      errPassport.innerHTML = "Passport is required";
+      return;
+    } else if (!passport.match(/\.jpg$/) && !passport.match(/\.JPG$/) && !passport.match(/\.png$/) && !passport.match(/\.PNG$/)) {
+      errPassport.innerHTML = ".jpg or .png extension required";
+      return;
+    }
+
+    authGroup.removeAttribute('class');
+    contactGroup.setAttribute('class', 'hidden');
+    nameGroup.setAttribute('class', 'hidden');
+    btnPrev.removeAttribute('disabled');
+    btnNext.innerHTML = 'Sign Up';
+    btnNext.setAttribute('type', 'submit');
+    return;
+
+  }
+
+  return;
+}
+
 function newParty() {
-  if (!document.getElementById('editPartyForm').getAttribute('class')) {
-    document.getElementById('editPartyForm').setAttribute('class', 'hidden');
+  const modal = document.getElementById('modalAddParty');
+  if (modal) {
+    modal.style.display = 'block';
   }
+}
 
-  if (!document.getElementById('partyList').getAttribute('class')) {
-    document.getElementById('partyList').setAttribute('class', 'hidden');
+function newOffice() {
+  const modal = document.getElementById('modalAddOffice');
+  if (modal) {
+    modal.style.display = 'block';
   }
-  if (!document.getElementById('addOfficeForm').getAttribute('class')) {
-    document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
-  }
-  if (!document.getElementById('contestForm').getAttribute('class')) {
-    document.getElementById('contestForm').setAttribute('class', 'hidden');
-  }
-  if (!document.getElementById('candidateList').getAttribute('class')) {
-    document.getElementById('candidateList').setAttribute('class', 'hidden');
-  }
-  if (!document.getElementById('votedCandidates').getAttribute('class')) {
-    document.getElementById('votedCandidates').setAttribute('class', 'hidden');
-  }
-
-  document.getElementById('addPartyForm').removeAttribute('class');
 }
 
 function editParty() {
-  if (!document.getElementById('addPartyForm').getAttribute('class')) {
-    document.getElementById('addPartyForm').setAttribute('class', 'hidden');
+  const modal = document.getElementById('modalEditParty');
+  if (modal) {
+    modal.style.display = 'block';
   }
-
-  if (!document.getElementById('partyList').getAttribute('class')) {
-    document.getElementById('partyList').setAttribute('class', 'hidden');
-  }
-  if (!document.getElementById('addOfficeForm').getAttribute('class')) {
-    document.getElementById('addOfficeForm').setAttribute('class', 'hidden');
-  }
-  if (!document.getElementById('contestForm').getAttribute('class')) {
-    document.getElementById('contestForm').setAttribute('class', 'hidden');
-  }
-  if (!document.getElementById('candidateList').getAttribute('class')) {
-    document.getElementById('candidateList').setAttribute('class', 'hidden');
-  }
-  if (!document.getElementById('votedCandidates').getAttribute('class')) {
-    document.getElementById('votedCandidates').setAttribute('class', 'hidden');
-  }
-
-  document.getElementById('editPartyForm').removeAttribute('class');
 }
 
 function removeParty() {
