@@ -62,104 +62,173 @@
             <!-- Content -->
             <main class="s-layout__content">
                <section>
-                  <form id="editPartyForm" class="hidden">
-                        <div id="" class="custom d-form-container">
-                           <center><h1>Edit Party</h1></center><br/>
-                           <div>
-                              <label for="editPartyName"><b>Name</b></label>
-                              <div class="custom tooltip">
-                                    <input type="text" placeholder="Party Name" name="editPartyName" id="editPartyName" required>
-                                    <span class="tooltiptext">Party Name</span>
-                              </div>
-                              <div class="custom tooltip">
-                                    <input type="hidden" name="partyID" id="partyID" >
-                                    <span class="tooltiptext"></span>
-                              </div>
-                           </div>
-                        
-                           <button type="submit" id="btnEditParty" class="big-btn">&nbsp;Edit Party</button>
-                        </div>
-                     </form>
-                     
-               <form id="addPartyForm" class="hidden">
-                  <div id="" class="custom d-form-container">
-                      <center><h1>New Party</h1></center><br/>
-                      <div>
-                          <label for="partyName"><b>Name</b></label>
-                          <div class="custom tooltip">
-                              <input type="text" placeholder="Party Name" name="partyName" id="partyName" required>
-                              <span class="tooltiptext">Party Name</span>
-                          </div>
-                          <label for="partyAddress"><b>HQtr Address</b></label>
-                          <div class="custom tooltip">
-                              <input type="text" placeholder="HQtr Address" name="partyAddress" id="partyAddress" required>
-                              <span class="tooltiptext">HQ Address</span>
-                          </div>
-                          <label for="partyLogo"><b>Party Logo</b></label>
-                          <div class="custom tooltip">
-                              <input type="file" placeholder="Upload Logo" name="partyLogo" id="partyLogo" accept="image/x-png,image/gif,image/jpeg" required>
-                              <span class="tooltiptext">Upload Logo</span>
-                          </div>
-                      </div>
                   
-                      <button type="submit" id="btnAddParty" class="big-btn">&nbsp;Add Party</button>
+                  <div class="modal" id="modalEditParty">
+                     <div class="modal-content">
+                        <div class="modal-header">  
+                           <span class="close" id="closeEditParty">&times;</span>
+                           <h2>Edit Party</h2>
+                        </div>
+                        <div class="modal-body">
+                           <form id="editPartyForm">
+                              <div id="" class="custom">
+                                 <div>
+                                    <label for="editPartyName"><b>Name</b></label>
+                                    <div class="custom">
+                                       <div class="error" id="error-editPartyName"></div>
+                                       <input type="text" placeholder="Party Name" name="editPartyName" id="editPartyName" required>
+                                    </div>
+                                    <div class="custom">
+                                          <input type="hidden" name="partyID" id="partyID" >
+                                    </div>
+                                 </div>
+                              
+                                 <button type="submit" id="btnEditParty" class="big-btn">&nbsp;Edit Party</button>
+                              </div>
+                           </form>
+                         </div>
+                         <div class="modal-footer">
+                         </div>
+                     </div>
                   </div>
-                  </form>
 
-                  <form id="addOfficeForm" class="hidden">
-                     <div id="" class="custom d-form-container">
-                        <center><h1>Add Office</h1></center><br/>
-                        <div>
-                           <label for="officeType"><b>Type</b></label>
-                           <div class="custom tooltip">
-                                 <select name="officeType" id="officeType" required>
-                                    <option value="">Select Office Type</option>
-                                    <option value="federal">Federal</option>
-                                    <option value="legislative">Legislative</option>
-                                    <option value="state">State</option>
-                                    <option value="local">Local Government</option>
-                                 </select>
-                                 <span class="tooltiptext">Office Type</span>
-                           </div>
-                           <label for="officeName"><b>Name</b></label>
-                           <div class="custom tooltip">
-                                 <input type="text" placeholder="Office Name" name="officeName" id="officeName" required>
-                                 <span class="tooltiptext">Office Name</span>
-                           </div>
-                        </div>
-                     
-                        <button type="submit" id="btnAddOffice" class="big-btn">&nbsp;Add Office</button>
+                  <div class="modal" id="modalAddParty">
+                     <div class="modal-content">
+                         <div class="modal-header">  
+                           <span class="close" id="closeAddParty">&times;</span>
+                           <h2>New Party</h2>
+                         </div>
+                         <div class="modal-body">
+                           <form id="addPartyForm">
+                              <div id="" class="custom">
+                                  <div>
+                                      <label for="partyName"><b>Name</b></label>
+                                      <div class="custom">
+                                          <div class="error" id="error-partyName"></div>
+                                          <input type="text" placeholder="Party Name" name="partyName" id="partyName" required>
+                                      </div>
+                                      <label for="partyAddress"><b>HQtr Address</b></label>
+                                      <div class="custom">
+                                          <div class="error" id="error-partyAddress"></div>
+                                          <input type="text" placeholder="HQtr Address" name="partyAddress" id="partyAddress" required>
+                                      </div>
+                                      <label for="partyLogo"><b>Party Logo</b></label>
+                                      <div class="custom">
+                                          <div class="error" id="error-partyLogo"></div>
+                                          <input type="file" placeholder="Upload Logo" name="partyLogo" id="partyLogo" accept="image/x-png,image/jpeg" required>
+                                      </div>
+                                  </div>
+                              
+                                  <button type="submit" id="btnAddParty" class="big-btn">&nbsp;Add Party</button>
+                              </div>
+                              </form>
+                         </div>
+                         <div class="modal-footer">
+                         </div>
                      </div>
-                  </form>
+                  </div>
 
-                  <form id="contestForm" class="hidden">
-                     <div id="" class="custom d-form-container">
-                        <center><h1>Contest for Position</h1></center><br/>
-                        <div>
-                           <label for="contestOffice"><b>Position</b></label>
-                           <div class="custom tooltip">
-                                 <select name="contestOffice" id="contestOffice" required>
-                                    <option value="">Select Position</option>
-                                    <option value="1">President</option>
-                                    <option value="2">Senate Member</option>
-                                 </select>
-                                 <span class="tooltiptext">Position</span>
+                  <div class="modal" id="modalAddOffice">
+                        <div class="modal-content">
+                           <div class="modal-header">  
+                              <span class="close" id="closeAddOffice">&times;</span>
+                              <h2>Add Office</h2>
                            </div>
-                           <label for="contestParty"><b>Party</b></label>
-                           <div class="custom tooltip">
-                                 <select name="contestParty" id="contestParty" required>
-                                    <option value="">Select Party</option>
-                                    <option value="1">Action Peoples Congress</option>
-                                    <option value="2">Peoples Democratic Party</option>
-                                 </select>
-                                 <span class="tooltiptext">Party</span>
-                           </div>
+                           <div class="modal-body">
+                                 <form id="addOfficeForm">
+                                    <div class="custom">
+                                       <div>
+                                          <label for="officeType"><b>Type</b></label>
+                                          <div class="custom">
+                                             <div class="error" id="error-officeType"></div>
+                                             <select name="officeType" id="officeType" required>
+                                                <option value="">Choose Office Type</option>
+                                                <option value="federal">Federal</option>
+                                                <option value="legislative">Legislative</option>
+                                                <option value="state">State</option>
+                                                <option value="local">Local</option>
+                                             </select>
+                                          </div>
+                                          <label for="officeName"><b>Name</b></label>
+                                          <div class="custom">
+                                             <div class="error" id="error-officeName"></div>
+                                             <input type="text" placeholder="Office Name" name="officeName" id="officeName" required>
+                                          </div>
+                                       </div>
+                                    
+                                       <button type="submit" id="btnAddOffice" class="big-btn">&nbsp;Add Office</button>
+                                    </div>
+                                 </form>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
                         </div>
-                     
-                        <button type="submit" id="btnContest" class="big-btn">&nbsp;Contest</button>
                      </div>
-                  </form>
+
+                  <div class="modal" id="modalContest">
+                     <div class="modal-content">
+                         <div class="modal-header">  
+                           <span class="close" id="closeContest">&times;</span>
+                           <h2>Contest for Position</h2>
+                         </div>
+                         <div class="modal-body">
+                           <form id="contestForm">
+                              <div id="" class="custom">
+                                 <div>
+                                    <label for="contestOffice"><b>Position</b></label>
+                                    <div class="custom">
+                                       <div class="error" id="error-contestOffice"></div>
+                                       <select name="contestOffice" id="contestOffice" required>
+                                          <option value="">Choose Position</option>
+                                          <option value="1">President</option>
+                                          <option value="2">Senate Member</option>
+                                       </select>
+                                    </div>
+                                    <label for="contestParty"><b>Party</b></label>
+                                    <div class="custom">
+                                       <div class="error" id="error-contestParty"></div>
+                                       <select name="contestParty" id="contestParty" required>
+                                          <option value="">Choose Party</option>
+                                          <option value="1">Action Peoples Congress</option>
+                                          <option value="2">Peoples Democratic Party</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                              
+                                 <button type="submit" id="btnContest" class="big-btn">&nbsp;Contest</button>
+                              </div>
+                           </form>
+                         </div>
+                         <div class="modal-footer">
+                         </div>
+                     </div>
+                  </div>
                </section>
+
+                  <!--Political office list-->
+                  <table id="officeList" class="hidden">
+                     <caption>Political Offices<button class="btn" onclick="newOffice();">New Office</button></caption>
+                     <thead>
+                       <tr>
+                         <th scope="col">Type</th>
+                         <th scope="col">Name</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <tr>
+                         <td data-label="Type">Federal</td>
+                         <td data-label="Name">Presidency</td>
+                        </tr>
+                        <tr>
+                           <td data-label="Type">State</td>
+                           <td data-label="Name">Gubernatorial</td>
+                        </tr>
+                        <tr>
+                           <td data-label="Type">Local</td>
+                           <td data-label="Name">Chairmanship</td>
+                       </tr>
+                     </tbody>
+                  </table>
 
                   <!--Political party list-->
                   <table id="partyList" class="hidden">
@@ -199,7 +268,7 @@
                      <caption>Candidate List
                         <div class="custom">
                               <select name="candidateOffice" id="candidateOffice" required>
-                                 <option value="">Select Office</option>
+                                 <option value="">Choose Office</option>
                                  <option value="1">President</option>
                                  <option value="2">Senate Member</option>
                               </select>
@@ -236,33 +305,38 @@
                   </table>
 
                   <!--Voted candidate list-->
-                  <table id="votedCandidates" >
-                     <caption>Candidates you voted for</caption>
-                     <thead>
-                       <tr>
-                         <th scope="col">Party Logo</th>
-                         <th scope="col">Office</th>
-                         <th scope="col">Candidate</th>
-                       </tr>
-                     </thead>
-                     <tbody>
-                       <tr>
-                         <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
-                         <td data-label="Office">President</td>
-                         <td data-label="Candidate">Eneh, James</td>
-                       </tr>
-                       <tr>
-                         <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
-                         <td data-label="Office">Senate Member</td>
-                         <td data-label="Candidate">Ifeoluwa Kayode</td>
-                       </tr>
-                       <tr>
-                         <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
-                         <td data-label="Office">Representative Member</td>
-                         <td data-label="Candidate">Ibrahim Musa</td>
-                       </tr>
-                     </tbody>
-                  </table>
+                  <div id="votedCandidates">
+                     <center>
+                        <img class="avatar dp" src="images/avatar.jpg" /><br/>
+                     </center>
+                     <table>
+                        <caption>Candidates you voted for</caption>
+                        <thead>
+                          <tr>
+                            <th scope="col">Party Logo</th>
+                            <th scope="col">Office</th>
+                            <th scope="col">Candidate</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
+                            <td data-label="Office">President</td>
+                            <td data-label="Candidate">Eneh, James</td>
+                          </tr>
+                          <tr>
+                            <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
+                            <td data-label="Office">Senate Member</td>
+                            <td data-label="Candidate">Ifeoluwa Kayode</td>
+                          </tr>
+                          <tr>
+                            <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
+                            <td data-label="Office">Representative Member</td>
+                            <td data-label="Candidate">Ibrahim Musa</td>
+                          </tr>
+                        </tbody>
+                     </table>
+                  </div>
             </main>
             </div>
       <script type="text/javascript" src="js/functions.js"></script>
