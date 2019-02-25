@@ -2,39 +2,156 @@
  * 
  * @author: Eneh, James 
  */
+const base_url = 'https://politico-ng.herokuapp.com/api/v1/';
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
+
+      const uploadImage = (file) => {
+        const cloudName = 'eneh';
+        const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+        const formData = new FormData();
+
+        formData.append('upload_preset', 'politico-eneh');
+        formData.append('tags', 'client_upload');
+        formData.append('file', file);
+
+        const uploadResult = new Promise((resolve, reject) => {
+          fetch(url, {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.json())
+          .catch(error => reject(error))
+          .then(response => resolve(response));
+        });
+
+        return uploadResult;
+      };
+      // User display picture............................................................
+      const displayPic = document.getElementById('dp');
+      const displayName = document.getElementById('displayName');
+      if (displayPic) {
+        if (typeof(Storage) !== 'undefined' && sessionStorage.getItem('passportUrl')) {
+          displayPic.removeAttribute('src');
+          displayPic.setAttribute('src', sessionStorage.getItem('passportUrl'));
+          displayName.innerHTML = sessionStorage.getItem('fullName').toUpperCase();
+        }
+      }
+      // Access Control......................................................................
+      const btnNewParty = document.getElementById('btnNewParty');
+      const btnNewOffice = document.getElementById('btnNewOffice');
+      if (btnNewParty || btnNewOffice) {
+        if (typeof(Storage) !== 'undefined' && sessionStorage.getItem('isAdmin') === 'false') {
+          btnNewParty.removeAttribute('class');
+          btnNewParty.setAttribute('class', 'hidden');
+          btnNewOffice.removeAttribute('class');
+          btnNewOffice.setAttribute('class', 'hidden');
+        }
+      }
       /**Index Page Functions... */
       const signUpForm = document.getElementById('signUpForm');
       if (signUpForm) {
         signUpForm.onsubmit = (e) => {
             
-            e.preventDefault();
-            
-            const password = String(document.getElementById('password').value).trim();
-            const confirm = String(document.getElementById('confirm').value).trim();
+          e.preventDefault();
+          
+          const password = String(document.getElementById('password').value).trim();
+          const confirm = String(document.getElementById('confirm').value).trim();
 
-            const errPassword = document.getElementById('error-password');
-            const errConfirm = document.getElementById('error-confirm');
+          const phone = String(document.getElementById('phone').value).trim();
+          const fName = String(document.getElementById('fName').value).trim();
+          const lName = String(document.getElementById('lName').value).trim();
+          const oName = String(document.getElementById('oName').value).trim();
+          const email = String(document.getElementById('email').value).trim();
+          const passport = document.getElementById('passport');
 
-            const btnSignUp = document.getElementById('btnNext');
+          const errPassword = document.getElementById('error-password');
+          const errConfirm = document.getElementById('error-confirm');
 
-            errPassword.innerHTML = '';
-            errConfirm.innerHTML = '';
-            
-            if (password.length < 10) {
-              errPassword.innerHTML = "Password not up to 10 characters";
-              return;
-            } else if (/^[a-zA-Z]+$/i.test(password) || /^[0-9]+$/i.test(password)) {
-              errPassword.innerHTML = "Weak password: mix letters, numbers, and special characters";
-              return false;
-            } else if (confirm != password) {
-              errConfirm.innerHTML = "Password and confirm password not match";
-              return false;
-            }
+          const btnSignUp = document.getElementById('btnNext');
 
-            btnSignUp.innerHTML = '<i class="spinner spin"></i> Wait...';
-            setTimeout(function () { btnSignUp.innerHTML ='Sign Up'; }, 10000);
+          errPassword.innerHTML = '';
+          errConfirm.innerHTML = '';
+          
+          if (password.length < 10) {
+            errPassword.innerHTML = "Password not up to 10 characters";
+            return;
+          } else if (/^[a-zA-Z]+$/i.test(password) || /^[0-9]+$/i.test(password)) {
+            errPassword.innerHTML = "Weak password: mix letters, numbers, and special characters";
+            return false;
+          } else if (confirm != password) {
+            errConfirm.innerHTML = "Password and confirm password not match";
+            return false;
+          }
+
+          btnSignUp.innerHTML = '<i class="spinner spin"></i> Wait...';
+          
+          const uploadResult = uploadImage(passport.files[0]);
+          uploadResult.then((result) => {
+            const imageUrl = result.secure_url;
+            const payload = {
+              firstName: fName,
+              lastName: lName,
+              otherName: oName,
+              email: email,
+              phoneNumber: phone,
+              passportUrl: imageUrl,
+              password: password
+            };
+
+            const url = `${base_url}auth/signup`;
+            console.log(payload);
+            const fetchData = { 
+              method: 'POST', 
+              body: JSON.stringify(payload),
+              headers: {
+                "Content-Type": "application/json; charset=utf-8"
+              }
+            };
+
+            fetch(url, fetchData)
+            .then((resp) => resp.json(), (error) => {
+              console.log(resp);
+              console.error(error);
+              btnSignUp.innerHTML = 'Sign Up';
+              alert('SignUp cannot be completed at this time! Try again');
+            })
+            .then((res) => {
+              //const res = JSON.parse(data);
+              if (res.status === 201) {
+                if (typeof(Storage) !== 'undefined') {
+                  sessionStorage.setItem('userId', res.data[0].user.id);
+                  sessionStorage.setItem('fullName', res.data[0].user.firstName +' '+ res.data[0].user.lastName);
+                  sessionStorage.setItem('email', res.data[0].user.email);
+                  sessionStorage.setItem('phone', res.data[0].user.phoneNumber);
+                  sessionStorage.setItem('passportUrl', res.data[0].user.passportUrl);
+                  sessionStorage.setItem('isAdmin', res.data[0].user.isAdmin);
+                  sessionStorage.setItem('token', res.data[0].token);
+                }
+                console.log(res);
+                btnSignUp.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Redirecting...';
+                alert('Sign up successful!');
+                window.location.replace("dashboard.html");
+              } else {
+                console.log(res);
+                btnSignUp.innerHTML = 'Sign Up';
+                alert(res.error);
+              }
+              //return data;
+            }, (error) => {
+              console.error(error);
+              btnSignUp.innerHTML = 'Sign Up';
+              alert('SignUp cannot be completed at this time! Try again');
+            })
+            .catch ((error) => {
+              console.error(error);
+              btnSignUp.innerHTML = 'Sign Up';
+              alert('Unable to sign up, try again');
+            });
+          }, (error) => {
+            console.error(`Error: ${error}`);
+            btnSignUp.innerHTML = 'Sign Up'
+          }).catch(error => {console.error(`Error: ${error}`); btnSignUp.innerHTML = 'Sign Up';});
             
         };
       }
