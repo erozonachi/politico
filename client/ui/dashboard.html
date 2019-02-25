@@ -22,7 +22,7 @@
                  <ul>
                     <li>
                        <a class="s-sidebar__nav-link" href="javascript:void(0);">
-                          <i class="home"></i><em>Welcome James</em>
+                          <i class="home"></i><em id="displayName">Welcome James</em>
                        </a>
                     </li>
                     <li id="linkProfile" class="active">
@@ -207,7 +207,7 @@
 
                   <!--Political office list-->
                   <table id="officeList" class="hidden">
-                     <caption>Political Offices<button class="btn" onclick="newOffice();">New Office</button></caption>
+                     <caption>Political Offices<button class="btn" id="btnNewOffice" onclick="newOffice();">New Office</button></caption>
                      <thead>
                        <tr>
                          <th scope="col">Type</th>
@@ -232,7 +232,7 @@
 
                   <!--Political party list-->
                   <table id="partyList" class="hidden">
-                     <caption>Political Parties<button class="btn" onclick="newParty();">New Party</button></caption>
+                     <caption>Political Parties<button class="btn" id="btnNewParty" onclick="newParty();">New Party</button></caption>
                      <thead>
                        <tr>
                          <th scope="col">Logo</th>
@@ -307,7 +307,7 @@
                   <!--Voted candidate list-->
                   <div id="votedCandidates">
                      <center>
-                        <img class="avatar dp" src="images/avatar.jpg" /><br/>
+                        <img class="avatar dp" id="dp" src="images/avatar.jpg" /><br/>
                      </center>
                      <table>
                         <caption>Candidates you voted for</caption>
