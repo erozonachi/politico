@@ -186,11 +186,63 @@ document.onreadystatechange = () => {
           }
 
           btnLogin.innerHTML = '<i class="spinner spin"></i> Authenticating...';
-          setTimeout(function () { 
+          
+          const payload = {
+            username: username,
+            password: document.getElementById('password').value
+          };
+
+          const url = `${base_url}auth/login`;
+          console.log(payload);
+          const fetchData = { 
+            method: 'POST', 
+            body: JSON.stringify(payload),
+            headers: {
+              "Content-Type": "application/json; charset=utf-8"
+            }
+          };
+
+          fetch(url, fetchData)
+          .then((resp) => resp.json(), (error) => {
+            console.log(resp);
+            console.error(error);
+            btnLogin.innerHTML = 'Sign Up';
             btnLogin.removeAttribute('disabled');
-            btnLogin.innerHTML ='<i class="lock"></i>&nbsp;Sign In';
-            window.location.replace("dashboard.html");
-          }, 1000);
+            alert('Something went wrong! Try again');
+          })
+          .then((res) => {
+            //const res = JSON.parse(data);
+            if (res.status === 200) {
+              if (typeof(Storage) !== 'undefined') {
+                sessionStorage.setItem('userId', res.data[0].user.id);
+                sessionStorage.setItem('fullName', res.data[0].user.firstName +' '+ res.data[0].user.lastName);
+                sessionStorage.setItem('email', res.data[0].user.email);
+                sessionStorage.setItem('phone', res.data[0].user.phoneNumber);
+                sessionStorage.setItem('passportUrl', res.data[0].user.passportUrl);
+                sessionStorage.setItem('isAdmin', res.data[0].user.isAdmin);
+                sessionStorage.setItem('token', res.data[0].token);
+              }
+              console.log(res);
+              btnLogin.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Redirecting...';
+              window.location.replace("dashboard.html");
+            } else {
+              console.log(res);
+              btnLogin.innerHTML = 'Sign In';
+              btnLogin.removeAttribute('disabled');
+              alert(res.error);
+            }
+          }, (error) => {
+            console.error(error);
+            btnLogin.innerHTML = 'Sign In';
+            btnLogin.removeAttribute('disabled');
+            alert('Something went wrong! Try again');
+          })
+          .catch ((error) => {
+            console.error(error);
+            btnLogin.innerHTML = 'Sign In';
+            btnLogin.removeAttribute('disabled');
+            alert('Something went wrong, try again');
+          });
         }
       }
 
