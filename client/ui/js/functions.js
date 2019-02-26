@@ -557,7 +557,7 @@ document.onreadystatechange = () => {
 
           const partyName = document.getElementById('partyName');
           const partyAddress = document.getElementById('partyAddress');
-          const partyLogo = document.getElementById('partyLogo').value.trim();
+          const partyLogo = document.getElementById('partyLogo');
 
           const errName = document.getElementById('error-partyName');
           const errAddress = document.getElementById('error-partyAddress');
@@ -586,22 +586,74 @@ document.onreadystatechange = () => {
             return;
           }
 
-          if (partyLogo === '') {
+          if (partyLogo.value.trim() === '') {
             errLogo.innerHTML = 'Party Logo file cannot be empty';
             return;
-          } else if (!partyLogo.match(/\.jpg$/) && !partyLogo.match(/\.JPG$/) && !partyLogo.match(/\.png$/) && !partyLogo.match(/\.PNG$/)) {
+          } else if (!partyLogo.value.trim().match(/\.jpg$/) && !partyLogo.value.trim().match(/\.JPG$/) && !partyLogo.value.trim().match(/\.png$/) && !partyLogo.value.trim().match(/\.PNG$/)) {
             errLogo.innerHTML = ".jpg or .png extension required";
             return;
           }
 
           const btnAddParty = document.getElementById('btnAddParty');
           btnAddParty.innerHTML = '<i class="spinner spin"></i> Creating...';
-          setTimeout(function () {
-            partyName.value = '';
-            partyAddress.value = '';
-            partyLogo.value = '';
-            btnAddParty.innerHTML ='Add Party';
-          }, 10000);
+          
+          const uploadResult = uploadImage(partyLogo.files[0]);
+          uploadResult.then((result) => {
+            const imageUrl = result.secure_url;
+            const payload = {
+              name: partyName.value.trim(),
+              hqAddress: partyAddress.value.trim(),
+              logoUrl: imageUrl
+            };
+
+            const url = `${base_url}parties`;
+            console.log(payload);
+            const fetchData = { 
+              method: 'POST', 
+              body: JSON.stringify(payload),
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                "x-access-token": sessionStorage.getItem('token')
+              }
+            };
+
+            fetch(url, fetchData)
+            .then((resp) => resp.json(), (error) => {
+              console.log(resp);
+              console.error(error);
+              btnAddParty.innerHTML = 'Add Party';
+              alert('Party cannot be added at this time! Try again');
+            })
+            .then((res) => {
+              //const res = JSON.parse(data);
+              if (res.status === 201) {
+                console.log(res);
+                partyName.value = '';
+                partyAddress.value = '';
+                delete partyLogo.files;
+                partyLogo.value = '';
+                btnAddParty.innerHTML ='Add Party';
+                alert('Successful!');
+              } else {
+                console.log(res);
+                btnAddParty.innerHTML = 'Add Party';
+                alert(res.error);
+              }
+              //return data;
+            }, (error) => {
+              console.error(error);
+              btnAddParty.innerHTML = 'Add Party';
+              alert('Party cannot be added at this time! Try again');
+            })
+            .catch ((error) => {
+              console.error(error);
+              btnAddParty.innerHTML = 'Add Party';
+              alert('Unable to add party, try again');
+            });
+          }, (error) => {
+            console.error(`Error: ${error}`);
+            btnAddParty.innerHTML = 'Add Party';
+          }).catch(error => {console.error(`Error: ${error}`); btnAddParty.innerHTML = 'Add Party';});
 
         }
       }
