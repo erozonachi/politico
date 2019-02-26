@@ -638,6 +638,7 @@ table th,
 table td {
     padding: .625em;
     text-align: center;
+    text-transform: capitalize;
 }
 
 table th {
