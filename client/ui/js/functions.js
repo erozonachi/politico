@@ -716,11 +716,54 @@ document.onreadystatechange = () => {
 
           const btnAddOffice = document.getElementById('btnAddOffice');
           btnAddOffice.innerHTML = '<i class="spinner spin"></i> Creating...';
-          setTimeout(function () {
-            officeType.selectedIndex = 0;
-            officeName.value = '';
-            btnAddOffice.innerHTML ='Add Office';
-          }, 10000);
+          
+          const payload = {
+            type: officeType.value.trim(),
+            name: officeName.value.trim(),
+          };
+
+          const url = `${base_url}offices`;
+          console.log(payload);
+          const fetchData = { 
+            method: 'POST', 
+            body: JSON.stringify(payload),
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              "x-access-token": sessionStorage.getItem('token')
+            }
+          };
+
+          fetch(url, fetchData)
+          .then((resp) => resp.json(), (error) => {
+            console.log(resp);
+            console.error(error);
+            btnAddOffice.innerHTML = 'Add Office';
+            alert('Office cannot be added at this time! Try again');
+          })
+          .then((res) => {
+            //const res = JSON.parse(data);
+            if (res.status === 201) {
+              console.log(res);
+              officeType.selectedIndex = 0;
+              officeName.value = '';
+              btnAddOffice.innerHTML ='Add Office';
+              alert('Successful!');
+            } else {
+              console.log(res);
+              btnAddOffice.innerHTML = 'Add Office';
+              alert(res.error);
+            }
+            //return data;
+          }, (error) => {
+            console.error(error);
+            btnAddOffice.innerHTML = 'Add Office';
+            alert('Office cannot be added at this time! Try again');
+          })
+          .catch ((error) => {
+            console.error(error);
+            btnAddOffice.innerHTML = 'Add Office';
+            alert('Unable to add office, try again');
+          });
 
         }
       }
