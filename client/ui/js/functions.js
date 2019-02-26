@@ -163,6 +163,93 @@ document.onreadystatechange = () => {
       })
       .catch(error => { console.error(`Error: ${error}`) });
 
+      // Render office List...................................................................
+      const renderOfficeList = (list) => {
+        const officeContainer = document.getElementById('officeContainer');
+        if (officeContainer) {
+          if (list && list.length <= 0) {
+            const bold = document.createElement('b');
+            const txt = document.createTextNode('No Political Office found.');
+            bold.appendChild(txt);
+            const td = document.createElement('td');
+            td.appendChild(bold);
+            const tr = document.createElement('tr');
+            tr.appendChild(td);
+            officeContainer.innerHTML = tr;
+            return;
+          }
+          officeContainer.innerHTML = '';
+          if (list) {
+            list.forEach(item => {
+              
+              const tdType = document.createElement('td');
+              tdType.setAttribute('data-label', 'Type');
+              const txtType = document.createTextNode(item['type']);
+              tdType.appendChild(txtType);
+
+              const tdName = document.createElement('td');
+              tdName.setAttribute('data-label', 'Name');
+              const txtName = document.createTextNode(item['name']);
+              tdName.appendChild(txtName);
+    
+              const tr = document.createElement('tr');
+              tr.appendChild(tdType);
+              tr.appendChild(tdName);
+    
+              officeContainer.appendChild(tr);
+            });
+          }
+        }
+        return;
+      };
+
+      // Fetch offices endpoint call................................................
+      const fetchOffices = () => {
+
+        const result = new Promise((resolve, reject) => {
+          
+          const url = `${base_url}offices`;
+            const fetchData = { 
+              method: 'GET',
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                "x-access-token": sessionStorage.getItem('token') || ''
+              }
+            };
+
+            fetch(url, fetchData)
+            .then((resp) => resp.json(), (error) => {
+              console.log(resp);
+              console.error(error);
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                console.log(res);
+                resolve(res);
+              } else {
+                console.log(res);
+                resolve(res);
+              }
+            }, (error) => {
+              console.error(error);
+              reject(error)
+            })
+            .catch ((error) => {
+              console.error(error);
+              reject(error)
+            });
+        });
+
+        return result;
+      };
+
+      const officesList = fetchOffices();
+      officesList.then((res) => {
+        const list = res.data;
+        renderOfficeList(list);
+      })
+      .catch(error => { console.error(`Error: ${error}`) });
+
       /**Index Page Functions... */
       const signUpForm = document.getElementById('signUpForm');
       if (signUpForm) {
