@@ -86,7 +86,7 @@ document.onreadystatechange = () => {
     
               const btnEdit = document.createElement('button');
               btnEdit.setAttribute('class', 'btn edit');
-              btnEdit.setAttribute('onclick', 'editParty();');
+              btnEdit.setAttribute('onclick', `editParty('${item['id']}', '${item['name']}');`);
               const txtEdit = document.createTextNode('Edit');
               btnEdit.appendChild(txtEdit);
     
@@ -836,6 +836,12 @@ document.onreadystatechange = () => {
                 partyLogo.value = '';
                 btnAddParty.innerHTML ='Add Party';
                 alert('Successful!');
+                const partiesList = fetchParties();
+                partiesList.then((res) => {
+                  const list = res.data;
+                  renderPartyList(list);
+                })
+                .catch(error => { console.error(`Error: ${error}`) });
               } else {
                 console.log(res);
                 btnAddParty.innerHTML = 'Add Party';
@@ -867,6 +873,7 @@ document.onreadystatechange = () => {
           e.preventDefault();
 
           const partyName = document.getElementById('editPartyName');
+          const partyId = document.getElementById('partyID');
           const errPartyName = document.getElementById('error-editPartyName');
 
           errPartyName.innerHTML = '';
@@ -885,6 +892,51 @@ document.onreadystatechange = () => {
             partyName.value = '';
             btnEditParty.innerHTML ='Edit Party';
           }, 10000);
+
+          const url = `${base_url}parties/${partyId.value.trim()}/${partyName.value.trim()}`;
+          const fetchData = { 
+            method: 'PATCH', 
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              "x-access-token": sessionStorage.getItem('token')
+            }
+          };
+
+          fetch(url, fetchData)
+          .then((resp) => resp.json(), (error) => {
+            console.log(resp);
+            console.error(error);
+            btnEditParty.innerHTML = 'Edit Party';
+            alert('Party cannot be edited at this time! Try again');
+          })
+          .then((res) => {
+            //const res = JSON.parse(data);
+            if (res.status === 200) {
+              console.log(res);
+              btnEditParty.innerHTML ='Edit Party';
+              alert('Successful!');
+              const partiesList = fetchParties();
+              partiesList.then((res) => {
+                const list = res.data;
+                renderPartyList(list);
+              })
+              .catch(error => { console.error(`Error: ${error}`) });
+            } else {
+              console.log(res);
+              btnEditParty.innerHTML = 'Edit Party';
+              alert(res.error);
+            }
+            //return data;
+          }, (error) => {
+            console.error(error);
+            btnEditParty.innerHTML = 'Edit Party';
+            alert('Party cannot be edited at this time! Try again');
+          })
+          .catch ((error) => {
+            console.error(error);
+            btnEditParty.innerHTML = 'Edit Party';
+            alert('Unable to edit party, try again');
+          });
 
         }
       }
@@ -950,6 +1002,12 @@ document.onreadystatechange = () => {
               officeName.value = '';
               btnAddOffice.innerHTML ='Add Office';
               alert('Successful!');
+              const officesList = fetchOffices();
+              officesList.then((res) => {
+                const list = res.data;
+                renderOfficeList(list);
+              })
+              .catch(error => { console.error(`Error: ${error}`) });
             } else {
               console.log(res);
               btnAddOffice.innerHTML = 'Add Office';
@@ -1219,7 +1277,12 @@ function newOffice() {
   }
 }
 
-function editParty() {
+function editParty(id, name) {
+  const partyName = document.getElementById('editPartyName');
+  const partyId = document.getElementById('partyID');
+  partyName.value = name;
+  partyId.value = id;
+
   const modal = document.getElementById('modalEditParty');
   if (modal) {
     modal.style.display = 'block';
