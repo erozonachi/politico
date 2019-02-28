@@ -70,13 +70,13 @@ export default {
 
   },
 
-  getInterests() {
+  getInterests(id) {
     
     const candidates = new Promise((resolve, reject) => {
 
       const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
-      const result = connector.query('SELECT i."interestId", i."officeId", i."partyId", i."accountId", o."name" AS "officeName", p."name" AS "partyName", a."firstName", a."lastName" FROM interest i, office o, party p, account a WHERE o."officeId"=i."officeId" AND p."partyId"=i."partyId" AND a."accountId"=i."accountId" AND i."deleted"=false ORDER BY o."name", p."name" ASC');
+      const result = connector.query('SELECT i."interestId" AS "id", i."officeId" AS "office", i."partyId" AS "party", i."accountId" AS "user", o."name" AS "officeName", p."name" AS "partyName", a."firstName", a."lastName" FROM interest i, office o, party p, account a WHERE i."officeId"=($1) AND o."officeId"=i."officeId" AND p."partyId"=i."partyId" AND a."accountId"=i."accountId" AND i."deleted"=false ORDER BY o."name", p."name" ASC', [id,]);
   
       result.then((result) => {
         resolve(result);
