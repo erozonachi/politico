@@ -205,6 +205,24 @@ class OfficeController {
 
   }
 
+  static getInterests(req, res) {
+    
+    const { id } = req.params;
+    const interests = Interest.getInterests(id.trim());
+    interests.then((result) => {
+      if (result.rowCount <= 0) {
+        return res.status(200).json({ status: 200, data: []});
+      } else {
+        return res.status(200).json({ status: 200, data: result.rows});
+      }
+    }, (error) => {
+
+      return res.status(508).json({ status: 508, error: 'Oops! Database error, try again' });
+
+    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again` }));
+
+  }
+
 }
 
 export default OfficeController;
