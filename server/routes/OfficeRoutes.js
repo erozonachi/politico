@@ -18,6 +18,9 @@ export default function officeRoutes(app) {
   // POST /api/v1/office/:id/register
   app.post(`${Constants.API_BASE_URL}/offices/:id/register`, AuthController.isAdmin, OfficeValidator.registerCandidate, OfficeController.registerCandidate);
 
+  // POST /api/v1/office/express-interest
+  app.post(`${Constants.API_BASE_URL}/offices/express-interest`, AuthController.isAuthenticated, OfficeValidator.expressInterest, OfficeController.expressInterest);
+
   // GET /api/v1/offices
   app.get(`${Constants.API_BASE_URL}/offices`, AuthController.isAuthenticated, OfficeController.getOffice);
 

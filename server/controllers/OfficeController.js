@@ -6,6 +6,7 @@
 * */
 import Office from '../models/office.model';
 import Candidate from '../models/candidate.model';
+import Interest from '../models/interest.model';
 import Vote from '../models/vote.model';
 
 class OfficeController {
@@ -105,6 +106,54 @@ class OfficeController {
 
           if (error.code === '23505') {
             return res.status(400).json({status: 400, error: `office already has a candidate under the same party`});
+          }
+
+          return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
+
+        }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+      }
+    }, (error) => {
+      return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
+
+    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+
+  }
+
+  static expressInterest(req, res) {
+
+    const id = req.params.userId;
+    const data = req.body;
+    data.candidate = Number.parseInt(id);
+      
+    const checkUser = Interest.checkUser(id);
+    checkUser.then((result) => {
+      if (result.rowCount > 0) {
+        return res.status(400).json({ status: 400, error: `User with ID: ${id} has already expressed interest`});
+      } else {
+        const expressInterest = Interest.create(data);
+        expressInterest.then((result) => {
+          if (result.rowCount <= 0) {
+            return res.status(400).json({ status: 400, error: `The interest has been expressed already`});
+          } else {
+            return res.status(201).json({ status: 201, data: data});
+          }
+        }, (error) => {
+          if (error.code === '23503') {
+
+            if (error.detail.includes('officeId')) {
+              return res.status(404).json({status: 404, error: `office not found`,});
+            }
+            if (error.detail.includes('partyId')) {
+              return res.status(404).json({status: 404, error: `party not found`,});
+            }
+            if (error.detail.includes('accountId')) {
+              return res.status(404).json({status: 404, error: `user not found`,});
+            }
+
+          }
+
+          if (error.code === '23505') {
+            return res.status(400).json({status: 400, error: `The interest has been expressed already`});
           }
 
           return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
