@@ -45,6 +45,7 @@ const fetchParties = () => {
 // Render Party List...................................................................
 const renderPartyList = (list) => {
   const partyContainer = document.getElementById('partyContainer');
+  const contestParty = document.getElementById('contestParty');
   if (partyContainer) {
     if (list && list.length <= 0) {
       const bold = document.createElement('b');
@@ -103,7 +104,14 @@ const renderPartyList = (list) => {
         tr.appendChild(tdAddress);
         tr.appendChild(tdActions);
 
+        // Party select box
+        const txtOption = document.createTextNode(`${item['name']}`);
+        const option = document.createElement('option');
+        option.setAttribute('value', `${item['id']}`);
+        option.appendChild(txtOption);
+
         partyContainer.appendChild(tr);
+        contestParty.appendChild(option);
       });
     }
   }
@@ -165,6 +173,7 @@ document.onreadystatechange = () => {
       // Render office List...................................................................
       const renderOfficeList = (list) => {
         const officeContainer = document.getElementById('officeContainer');
+        const contestOffice = document.getElementById('contestOffice');
         if (officeContainer) {
           if (list && list.length <= 0) {
             const bold = document.createElement('b');
@@ -194,8 +203,15 @@ document.onreadystatechange = () => {
               const tr = document.createElement('tr');
               tr.appendChild(tdType);
               tr.appendChild(tdName);
+
+              // Office select box
+              const txtOption = document.createTextNode(`${item['type']} - ${item['name']}`);
+              const option = document.createElement('option');
+              option.setAttribute('value', `${item['id']}`);
+              option.appendChild(txtOption);
     
               officeContainer.appendChild(tr);
+              contestOffice.appendChild(option);
             });
           }
         }
@@ -1053,12 +1069,54 @@ document.onreadystatechange = () => {
 
           const btnContest = document.getElementById('btnContest');
           btnContest.innerHTML = '<i class="spinner spin"></i> Creating...';
-          setTimeout(function () {
-            office.selectedIndex = 0;
-            party.selectedIndex = 0;
-            alert('Submission Successful')
-            btnContest.innerHTML ='Contest';
-          }, 10000);
+          
+          const payload = {
+            office: office.value.trim(),
+            party: party.value.trim(),
+          };
+
+          const url = `${base_url}offices/interests`;
+          console.log(payload);
+          const fetchData = { 
+            method: 'POST', 
+            body: JSON.stringify(payload),
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              "x-access-token": sessionStorage.getItem('token')
+            }
+          };
+
+          fetch(url, fetchData)
+          .then((resp) => resp.json(), (error) => {
+            console.log(resp);
+            console.error(error);
+            btnContest.innerHTML = 'Contest';
+            alert('Interest cannot be expressed at this time! Try again');
+          })
+          .then((res) => {
+            //const res = JSON.parse(data);
+            if (res.status === 201) {
+              console.log(res);
+              office.selectedIndex = 0;
+              party.selectedIndex = 0;
+              alert('Successful')
+              btnContest.innerHTML ='Contest';
+            } else {
+              console.log(res);
+              btnContest.innerHTML = 'Contest';
+              alert(res.error);
+            }
+            //return data;
+          }, (error) => {
+            console.error(error);
+            btnContest.innerHTML = 'Contest';
+            alert('Interest cannot be expressed at this time! Try again');
+          })
+          .catch ((error) => {
+            console.error(error);
+            btnContest.innerHTML = 'Contest';
+            alert('Unable to express interest, try again');
+          });
 
         }
       }
