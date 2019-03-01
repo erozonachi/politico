@@ -385,6 +385,13 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, inp
     font-size: .75em;
 }
 
+.info {
+    color: #016601;
+    font-style: italic;
+    font-weight: bold;
+    font-size: .75em;
+}
+
 button:disabled {
     cursor: not-allowed;
     background-color: #aaaaaa;
