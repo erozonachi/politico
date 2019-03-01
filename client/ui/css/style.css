@@ -647,6 +647,10 @@ table th {
     text-transform: uppercase;
 }
 
+option {
+    text-transform: capitalize;
+}
+
 @media screen and (max-width: 600px) {
     table {
         border: 0;
