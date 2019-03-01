@@ -3,6 +3,112 @@
  * @author: Eneh, James 
  */
 const base_url = 'https://politico-ng.herokuapp.com/api/v1/';
+// Fetch parties endpoint call................................................
+const fetchParties = () => {
+
+  const result = new Promise((resolve, reject) => {
+    
+    const url = `${base_url}parties`;
+      const fetchData = { 
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "x-access-token": sessionStorage.getItem('token') || ''
+        }
+      };
+
+      fetch(url, fetchData)
+      .then((resp) => resp.json(), (error) => {
+        console.log(resp);
+        console.error(error);
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res);
+          resolve(res);
+        } else {
+          console.log(res);
+          resolve(res);
+        }
+      }, (error) => {
+        console.error(error);
+        reject(error)
+      })
+      .catch ((error) => {
+        console.error(error);
+        reject(error)
+      });
+  });
+
+  return result;
+};
+// Render Party List...................................................................
+const renderPartyList = (list) => {
+  const partyContainer = document.getElementById('partyContainer');
+  if (partyContainer) {
+    if (list && list.length <= 0) {
+      const bold = document.createElement('b');
+      const txt = document.createTextNode('No Political Party found.');
+      bold.appendChild(txt);
+      const td = document.createElement('td');
+      td.appendChild(bold);
+      const tr = document.createElement('tr');
+      tr.appendChild(td);
+      partyContainer.innerHTML = tr;
+      return;
+    }
+    partyContainer.innerHTML = '';
+    if (list) {
+      list.forEach(item => {
+        const img = document.createElement('img');
+        img.setAttribute('class', 'avatar');
+        img.setAttribute('src', item['logoUrl']);
+        const tdLogo = document.createElement('td');
+        tdLogo.setAttribute('data-label', 'Logo');
+        tdLogo.appendChild(img);
+
+        const tdName = document.createElement('td');
+        tdName.setAttribute('data-label', 'Name');
+        const txtName = document.createTextNode(item['name']);
+        tdName.appendChild(txtName);
+
+        const tdAddress = document.createElement('td');
+        tdAddress.setAttribute('data-label', 'Name');
+        const txtAddress = document.createTextNode(item['hqAddress']);
+        tdAddress.appendChild(txtAddress);
+
+        const btnEdit = document.createElement('button');
+        btnEdit.setAttribute('class', 'btn edit');
+        btnEdit.setAttribute('onclick', `editParty('${item['id']}', '${item['name']}');`);
+        const txtEdit = document.createTextNode('Edit');
+        btnEdit.appendChild(txtEdit);
+
+        const btnDel = document.createElement('button');
+        btnDel.setAttribute('class', 'btn del');
+        btnDel.setAttribute('id', `btnRemove${item['id']}`);
+        btnDel.setAttribute('onclick', `removeParty('${item['id']}');`);
+        const txtDel = document.createTextNode('Remove');
+        btnDel.appendChild(txtDel);
+
+        const tdActions = document.createElement('td');
+        tdActions.setAttribute('data-label', 'Actions');
+        if (typeof(Storage) !== 'undefined' && sessionStorage.getItem('isAdmin') !== 'false') {
+          tdActions.appendChild(btnEdit);
+          tdActions.appendChild(btnDel);
+        }
+
+        const tr = document.createElement('tr');
+        tr.appendChild(tdLogo);
+        tr.appendChild(tdName);
+        tr.appendChild(tdAddress);
+        tr.appendChild(tdActions);
+
+        partyContainer.appendChild(tr);
+      });
+    }
+  }
+  return;
+};
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
 
@@ -48,113 +154,6 @@ document.onreadystatechange = () => {
           btnNewOffice.setAttribute('class', 'hidden');
         }
       }
-
-      // Render Party List...................................................................
-      const renderPartyList = (list) => {
-        const partyContainer = document.getElementById('partyContainer');
-        if (partyContainer) {
-          if (list && list.length <= 0) {
-            const bold = document.createElement('b');
-            const txt = document.createTextNode('No Political Party found.');
-            bold.appendChild(txt);
-            const td = document.createElement('td');
-            td.appendChild(bold);
-            const tr = document.createElement('tr');
-            tr.appendChild(td);
-            partyContainer.innerHTML = tr;
-            return;
-          }
-          partyContainer.innerHTML = '';
-          if (list) {
-            list.forEach(item => {
-              const img = document.createElement('img');
-              img.setAttribute('class', 'avatar');
-              img.setAttribute('src', item['logoUrl']);
-              const tdLogo = document.createElement('td');
-              tdLogo.setAttribute('data-label', 'Logo');
-              tdLogo.appendChild(img);
-    
-              const tdName = document.createElement('td');
-              tdName.setAttribute('data-label', 'Name');
-              const txtName = document.createTextNode(item['name']);
-              tdName.appendChild(txtName);
-    
-              const tdAddress = document.createElement('td');
-              tdAddress.setAttribute('data-label', 'Name');
-              const txtAddress = document.createTextNode(item['hqAddress']);
-              tdAddress.appendChild(txtAddress);
-    
-              const btnEdit = document.createElement('button');
-              btnEdit.setAttribute('class', 'btn edit');
-              btnEdit.setAttribute('onclick', `editParty('${item['id']}', '${item['name']}');`);
-              const txtEdit = document.createTextNode('Edit');
-              btnEdit.appendChild(txtEdit);
-    
-              const btnDel = document.createElement('button');
-              btnDel.setAttribute('class', 'btn del');
-              btnDel.setAttribute('onclick', 'removeParty();');
-              const txtDel = document.createTextNode('Remove');
-              btnDel.appendChild(txtDel);
-    
-              const tdActions = document.createElement('td');
-              tdActions.setAttribute('data-label', 'Actions');
-              if (typeof(Storage) !== 'undefined' && sessionStorage.getItem('isAdmin') !== 'false') {
-                tdActions.appendChild(btnEdit);
-                tdActions.appendChild(btnDel);
-              }
-    
-              const tr = document.createElement('tr');
-              tr.appendChild(tdLogo);
-              tr.appendChild(tdName);
-              tr.appendChild(tdAddress);
-              tr.appendChild(tdActions);
-    
-              partyContainer.appendChild(tr);
-            });
-          }
-        }
-        return;
-      };
-
-      // Fetch parties endpoint call................................................
-      const fetchParties = () => {
-
-        const result = new Promise((resolve, reject) => {
-          
-          const url = `${base_url}parties`;
-            const fetchData = { 
-              method: 'GET',
-              headers: {
-                "Content-Type": "application/json; charset=utf-8",
-                "x-access-token": sessionStorage.getItem('token') || ''
-              }
-            };
-
-            fetch(url, fetchData)
-            .then((resp) => resp.json(), (error) => {
-              console.log(resp);
-              console.error(error);
-            })
-            .then((res) => {
-              if (res.status === 200) {
-                console.log(res);
-                resolve(res);
-              } else {
-                console.log(res);
-                resolve(res);
-              }
-            }, (error) => {
-              console.error(error);
-              reject(error)
-            })
-            .catch ((error) => {
-              console.error(error);
-              reject(error)
-            });
-        });
-
-        return result;
-      };
 
       const partiesList = fetchParties();
       partiesList.then((res) => {
@@ -1289,9 +1288,56 @@ function editParty(id, name) {
   }
 }
 
-function removeParty() {
+function removeParty(id) {
   if (confirm("Are you sure, you want to delete the party?\nClick 'OK' to continue")) {
-    alert('Party deletion successful');
+    const btnRemove = document.getElementById(`btnRemove${id}`);
+    btnRemove.innerHTML = 'Removing...';
+
+    const url = `${base_url}parties/${id.trim()}`;
+    const fetchData = { 
+      method: 'DELETE', 
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "x-access-token": sessionStorage.getItem('token')
+      }
+    };
+
+    fetch(url, fetchData)
+    .then((resp) => resp.json(), (error) => {
+      console.log(resp);
+      console.error(error);
+      btnRemove.innerHTML = 'Remove';
+      alert('Party cannot be removed at this time! Try again');
+    })
+    .then((res) => {
+      //const res = JSON.parse(data);
+      if (res.status === 200) {
+        console.log(res);
+        const partiesList = fetchParties();
+        partiesList.then((res) => {
+          const list = res.data;
+          renderPartyList(list);
+        })
+        .catch(error => { console.error(`Error: ${error}`) });
+      } else if (res.status === 500 || res.status === 508) {
+        btnRemove.innerHTML = 'Remove';
+        alert('Party is in use and cannot be deleted at this time');
+      } else {
+        console.log(res);
+        btnRemove.innerHTML = 'Remove';
+        alert(res.error);
+      }
+      //return data;
+    }, (error) => {
+      console.error(error);
+      btnRemove.innerHTML = 'Remove';
+      alert('Party cannot be removed at this time! Try again');
+    })
+    .catch ((error) => {
+      console.error(error);
+      btnRemove.innerHTML = 'Remove';
+      alert('Unable to remove party, try again');
+    });
   }
 }
 
