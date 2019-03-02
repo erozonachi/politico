@@ -56,7 +56,7 @@ export default {
 
       const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
-      const result = connector.query('SELECT * FROM candidate WHERE "officeId"=($1)', [id,]);
+      const result = connector.query('SELECT i."candidateId" AS "id", i."officeId" AS "office", i."partyId" AS "party", i."accountId" AS "user", p."logoUrl", p."name" AS "partyName", a."firstName", a."lastName" FROM candidate i, party p, account a WHERE i."officeId"=($1) AND p."partyId"=i."partyId" AND a."accountId"=i."accountId" AND i."deleted"=false ORDER BY p."name" ASC', [id,]);
   
       result.then((result) => {
         resolve(result);

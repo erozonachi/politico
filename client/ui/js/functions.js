@@ -1135,6 +1135,8 @@ document.onreadystatechange = () => {
               infoCandidate.innerHTML = '';
               alert('Unable to load candidates, try again');
             });
+          } else {
+            infoCandidate.innerHTML = '';
           }
         }
       }
@@ -1161,7 +1163,56 @@ document.onreadystatechange = () => {
             errCandidate.innerHTML = 'Candidate cannot be empty';
             return;
           }
-          alert('Successful');
+          const btnCandidate = document.getElementById('btnCandidate');
+          btnCandidate.innerHTML = '<i class="spinner spin"></i> Registering...';
+          const idGroup = candidate.value.split('-');
+          const payload = {
+            office: idGroup[1].trim(),
+            party: idGroup[2].trim(),
+          };
+
+          const url = `${base_url}offices/${idGroup[3]}/register`;
+          console.log(payload);
+          const fetchData = { 
+            method: 'POST', 
+            body: JSON.stringify(payload),
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              "x-access-token": sessionStorage.getItem('token')
+            }
+          };
+
+          fetch(url, fetchData)
+          .then((resp) => resp.json(), (error) => {
+            console.log(resp);
+            console.error(error);
+            btnCandidate.innerHTML = 'Register';
+            alert('Candidate cannot be registered at this time! Try again');
+          })
+          .then((res) => {
+            //const res = JSON.parse(data);
+            if (res.status === 201) {
+              console.log(res);
+              office.selectedIndex = 0;
+              candidate.selectedIndex = 0;
+              alert('Successful')
+              btnCandidate.innerHTML ='Register';
+            } else {
+              console.log(res);
+              btnCandidate.innerHTML = 'Register';
+              alert(res.error);
+            }
+            //return data;
+          }, (error) => {
+            console.error(error);
+            btnCandidate.innerHTML = 'Register';
+            alert('Candidate cannot be registered at this time! Try again');
+          })
+          .catch ((error) => {
+            console.error(error);
+            btnCandidate.innerHTML = 'Register';
+            alert('Unable to register candidate, try again');
+          });
         }
       }
 
