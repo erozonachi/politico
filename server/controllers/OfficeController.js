@@ -80,10 +80,16 @@ class OfficeController {
     const checkUser = Candidate.checkUser(id);
     checkUser.then((result) => {
       if (result.rowCount > 0) {
-        return res.status(400).json({ status: 400, error: `User with ID: ${id} is already a candidate`});
+        return res.status(400).json({ status: 400, error: `User with is already a candidate`});
       } else {
         const registerCandidate = Candidate.create(data);
         registerCandidate.then((result) => {
+          const delResult = Interest.deleteInterest(data);
+          delResult.then((result) => {
+            // Silence
+          }, (error) => {
+            // Silence
+          }).catch(err => {/** Silence */});
           if (result.rowCount <= 0) {
             return res.status(400).json({ status: 400, error: `The office has a candidate already`});
           } else {
@@ -128,7 +134,7 @@ class OfficeController {
     const checkUser = Interest.checkUser(id);
     checkUser.then((result) => {
       if (result.rowCount > 0) {
-        return res.status(400).json({ status: 400, error: `User with ID: ${id} has already expressed interest`});
+        return res.status(400).json({ status: 400, error: `User has already expressed interest`});
       } else {
         const expressInterest = Interest.create(data);
         expressInterest.then((result) => {
@@ -194,8 +200,8 @@ class OfficeController {
         if (result.rowCount <= 0) {
           return res.status(404).json({ status: 404, error: 'No candidate found for office id: '+id});
         } else {
-          const output = result.rows.map(info => ({id: info.candidateId, office: info.officeId, party: info.partyId, user: info.accountId,}));
-          return res.status(200).json({ status: 200, data: output});
+          
+          return res.status(200).json({ status: 200, data: result.rows});
         }
       }, (error) => {
 
