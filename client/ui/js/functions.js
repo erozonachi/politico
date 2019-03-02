@@ -155,11 +155,14 @@ document.onreadystatechange = () => {
       const btnNewParty = document.getElementById('btnNewParty');
       const btnNewOffice = document.getElementById('btnNewOffice');
       if (btnNewParty || btnNewOffice) {
+        const linkCandidate = document.getElementById('linkCandidate');
         if (typeof(Storage) !== 'undefined' && sessionStorage.getItem('isAdmin') === 'false') {
           btnNewParty.removeAttribute('class');
           btnNewParty.setAttribute('class', 'hidden');
           btnNewOffice.removeAttribute('class');
           btnNewOffice.setAttribute('class', 'hidden');
+          linkCandidate.removeAttribute('class');
+          linkCandidate.setAttribute('class', 'hidden');
         }
       }
 
@@ -174,6 +177,7 @@ document.onreadystatechange = () => {
       const renderOfficeList = (list) => {
         const officeContainer = document.getElementById('officeContainer');
         const contestOffice = document.getElementById('contestOffice');
+        const candidateOffice = document.getElementById('candidateOffice');
         if (officeContainer) {
           if (list && list.length <= 0) {
             const bold = document.createElement('b');
@@ -212,6 +216,7 @@ document.onreadystatechange = () => {
     
               officeContainer.appendChild(tr);
               contestOffice.appendChild(option);
+              candidateOffice.appendChild(option);
             });
           }
         }
@@ -754,6 +759,18 @@ document.onreadystatechange = () => {
         }
       }
 
+      //Register Candidate link click
+      const linkCandidate = document.getElementById('linkCandidate');
+      if (linkCandidate) {
+        linkCandidate.onclick = (e) => {
+          const modalCandidate = document.getElementById('modalCandidate');
+          if (modalCandidate) {
+            modalCandidate.style.display = 'block';
+          }
+        }
+      
+      }
+
       //Contest link click
       const linkContest = document.getElementById('linkContest');
       if (linkContest) {
@@ -1043,6 +1060,111 @@ document.onreadystatechange = () => {
         }
       }
 
+      // On click Office select box
+      const candidateOffice = document.getElementById('candidateOffice');
+      if (candidateOffice) {
+        candidateOffice.onchange = (e) => {
+          e.preventDefault();
+
+          const candidate = document.getElementById('candidateUser');
+          candidate.innerHTML = '';
+          const txtOption = document.createTextNode(`Choose Candidate`);
+          const option = document.createElement('option');
+          option.setAttribute('value', ``);
+          option.appendChild(txtOption);
+          candidate.appendChild(option);
+
+          const infoCandidate = document.getElementById('info-candidateUser');
+          infoCandidate.innerHTML = 'Loading...';
+
+          if (candidateOffice.value.trim() !== '') {
+            const url = `${base_url}offices/${candidateOffice.value}/interests`;
+            const fetchData = { 
+              method: 'GET',
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                "x-access-token": sessionStorage.getItem('token')
+              }
+            };
+
+            fetch(url, fetchData)
+            .then((resp) => resp.json(), (error) => {
+              console.log(resp);
+              console.error(error);
+              infoCandidate.innerHTML = '';
+              alert('Candidates cannot be loaded at this time! Try again');
+            })
+            .then((res) => {
+              //const res = JSON.parse(data);
+              if (res.status === 200) {
+                console.log(res);
+                if (res.data.length > 0) {
+                  const list = res.data;
+                  list.forEach(item => {
+                    // Office select box
+                    let partyCode = '';
+                    const splited = item['partyName'].split(' ');
+                    while (splited.length) {
+                      partyCode = `${partyCode}${splited.shift().charAt(0).toUpperCase()}`;
+                    }
+                    const txtOption = document.createTextNode(`${item['officeName']} - ${partyCode} - ${item['firstName']} ${item['lastName']}`);
+                    const option = document.createElement('option');
+                    option.setAttribute('value', `${item['id']}-${item['office']}-${item['party']}-${item['user']}`);
+                    option.appendChild(txtOption);
+
+                    candidate.appendChild(option);
+                  });
+                  infoCandidate.innerHTML ='';
+                } else {
+                  infoCandidate.innerHTML ='';
+                  alert('No candidate found for the selected office');
+                }
+              } else {
+                console.log(res);
+                infoCandidate.innerHTML = '';
+                alert(res.error);
+              }
+              //return data;
+            }, (error) => {
+              console.error(error);
+              infoCandidate.innerHTML = '';
+              alert('Candidates cannot be loaded at this time! Try again');
+            })
+            .catch ((error) => {
+              console.error(error);
+              infoCandidate.innerHTML = '';
+              alert('Unable to load candidates, try again');
+            });
+          }
+        }
+      }
+      //Register Candidate form submission
+      const candidateForm = document.getElementById('candidateForm');
+      if (candidateForm) {
+        candidateForm.onsubmit = (e) => {
+          e.preventDefault();
+
+          const office = document.getElementById('candidateOffice');
+          const candidate = document.getElementById('candidateUser');
+
+          const errOffice = document.getElementById('error-candidateOffice');
+          const errCandidate = document.getElementById('error-candidateUser');
+
+          errOffice.innerHTML = '';
+          errCandidate.innerHTML = '';
+
+          if (String(office.value).trim() === '') {
+            errOffice.innerHTML = 'Office type cannot be empty';
+            return;
+          }
+          if (String(candidate.value).trim() === '') {
+            errCandidate.innerHTML = 'Candidate cannot be empty';
+            return;
+          }
+          alert('Successful');
+        }
+      }
+
       //Contest form submission
       const contestForm = document.getElementById('contestForm');
       if (contestForm) {
@@ -1122,6 +1244,15 @@ document.onreadystatechange = () => {
       }
 
       // Modals....................................................
+      const closeCandidate = document.getElementById('closeCandidate');
+      if (closeCandidate) {
+        closeCandidate.onclick = (e) => {
+          const modal = document.getElementById('modalCandidate');
+          modal.style.display = 'none';
+        }
+      
+      }
+
       const closeContest = document.getElementById('closeContest');
       if (closeContest) {
         closeContest.onclick = (e) => {
@@ -1164,6 +1295,7 @@ document.onreadystatechange = () => {
         const modalAddParty = document.getElementById('modalAddParty');
         const modalAddOffice = document.getElementById('modalAddOffice');
         const modalEditParty = document.getElementById('modalEditParty');
+        const modalCandidate = document.getElementById('modalCandidate');
 
         if (e.target == modalContest) {
           modalContest.style.display = "none";
@@ -1176,6 +1308,9 @@ document.onreadystatechange = () => {
         }
         else if (e.target === modalEditParty) {
           modalEditParty.style.display = "none";
+        }
+        else if (e.target === modalCandidate) {
+          modalCandidate.style.display = "none";
         }
 
       }

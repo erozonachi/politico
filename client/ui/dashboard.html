@@ -40,6 +40,11 @@
                           <i class="building"></i><em>Government Offices</em>
                        </a>
                     </li>
+                    <li id="linkCandidate">
+                       <a class="s-sidebar__nav-link" href="javascript:void(0);">
+                          <i class="office"></i><em>Register Candidate</em>
+                       </a>
+                    </li>
                     <li id="linkContest">
                        <a class="s-sidebar__nav-link" href="javascript:void(0);">
                           <i class="office"></i><em>Contest</em>
@@ -164,6 +169,42 @@
                             </div>
                         </div>
                      </div>
+
+                  <div class="modal" id="modalCandidate">
+                     <div class="modal-content">
+                         <div class="modal-header">  
+                           <span class="close" id="closeCandidate">&times;</span>
+                           <h2>Register Candidate</h2>
+                         </div>
+                         <div class="modal-body">
+                           <form id="candidateForm">
+                              <div id="" class="custom">
+                                 <div>
+                                    <label for="candidateOffice"><b>Office</b></label>
+                                    <div class="custom">
+                                       <div class="error" id="error-candidateOffice"></div>
+                                       <select name="candidateOffice" id="candidateOffice" required>
+                                          <option value="">Choose Office</option>
+                                       </select>
+                                    </div>
+                                    <label for="candidateUser"><b>Candidate</b></label>
+                                    <div class="custom">
+                                       <div class="error" id="error-candidateUser"></div>
+                                       <div class="info" id="info-candidateUser"></div>
+                                       <select name="candidateUser" id="candidateUser" required>
+                                          <option value="">Choose Candidate</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                              
+                                 <button type="submit" id="btnCandidate" class="big-btn">&nbsp;Register</button>
+                              </div>
+                           </form>
+                         </div>
+                         <div class="modal-footer">
+                         </div>
+                     </div>
+                  </div>
 
                   <div class="modal" id="modalContest">
                      <div class="modal-content">
