@@ -46,7 +46,15 @@ const fetchParties = () => {
 const renderPartyList = (list) => {
   const partyContainer = document.getElementById('partyContainer');
   const contestParty = document.getElementById('contestParty');
+
   if (partyContainer) {
+    contestParty.innerHTML = '';
+    const txtOption = document.createTextNode(`Choose Party`);
+    const option = document.createElement('option');
+    option.setAttribute('value', ``);
+    option.appendChild(txtOption);
+    contestParty.appendChild(option);
+
     if (list && list.length <= 0) {
       const bold = document.createElement('b');
       const txt = document.createTextNode('No Political Party found.');
@@ -117,6 +125,50 @@ const renderPartyList = (list) => {
   }
   return;
 };
+// Render Candidate List...................................................................
+const renderCandidateList = (list) => {
+  const candidateContainer = document.getElementById('candidateContainer');
+
+  if (candidateContainer) {
+    candidateContainer.innerHTML = '';
+
+    if (list) {
+      list.forEach(item => {
+        const img = document.createElement('img');
+        img.setAttribute('class', 'avatar');
+        img.setAttribute('src', item['logoUrl']);
+        const tdLogo = document.createElement('td');
+        tdLogo.setAttribute('data-label', 'Logo');
+        tdLogo.setAttribute('title', `${item['partyName']}`);
+        tdLogo.appendChild(img);
+
+        const tdName = document.createElement('td');
+        tdName.setAttribute('data-label', 'Candidate');
+        const txtName = document.createTextNode(`${item['firstName']}, ${item['lastName']}`);
+        tdName.appendChild(txtName);
+
+        const btnVote = document.createElement('button');
+        btnVote.setAttribute('class', 'btn edit');
+        btnVote.setAttribute('id', `btnVote${item['id']}`);
+        btnVote.setAttribute('onclick', `vote('${item['id']}');`);
+        const txtVote = document.createTextNode('Vote');
+        btnVote.appendChild(txtVote);
+
+        const tdActions = document.createElement('td');
+        tdActions.setAttribute('data-label', '');
+        tdActions.appendChild(btnVote);
+
+        const tr = document.createElement('tr');
+        tr.appendChild(tdLogo);
+        tr.appendChild(tdName);
+        tr.appendChild(tdActions);
+
+        candidateContainer.appendChild(tr);
+      });
+    }
+  }
+  return;
+};
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
 
@@ -178,7 +230,32 @@ document.onreadystatechange = () => {
         const officeContainer = document.getElementById('officeContainer');
         const contestOffice = document.getElementById('contestOffice');
         const candidateOffice = document.getElementById('candidateOffice');
+        const voteOffice = document.getElementById('voteOffice');
+
         if (officeContainer) {
+          contestOffice.innerHTML = '';
+          candidateOffice.innerHTML = '';
+          voteOffice.innerHTML = '';
+
+          const txtOption = document.createTextNode(`Choose Office`);
+          const option = document.createElement('option');
+          option.setAttribute('value', ``);
+          option.appendChild(txtOption);
+
+          const txtOption1 = document.createTextNode(`Choose Office`);
+          const option1 = document.createElement('option');
+          option1.setAttribute('value', ``);
+          option1.appendChild(txtOption1);
+
+          const txtOption2 = document.createTextNode(`Choose Office`);
+          const option2 = document.createElement('option');
+          option2.setAttribute('value', ``);
+          option2.appendChild(txtOption2);
+
+          contestOffice.appendChild(option);
+          candidateOffice.appendChild(option1);
+          voteOffice.appendChild(option2);
+
           if (list && list.length <= 0) {
             const bold = document.createElement('b');
             const txt = document.createTextNode('No Political Office found.');
@@ -213,10 +290,21 @@ document.onreadystatechange = () => {
               const option = document.createElement('option');
               option.setAttribute('value', `${item['id']}`);
               option.appendChild(txtOption);
+
+              const txtOption1 = document.createTextNode(`${item['type']} - ${item['name']}`);
+              const option1 = document.createElement('option');
+              option1.setAttribute('value', `${item['id']}`);
+              option1.appendChild(txtOption1);
+
+              const txtOption2 = document.createTextNode(`${item['type']} - ${item['name']}`);
+              const option2 = document.createElement('option');
+              option2.setAttribute('value', `${item['id']}`);
+              option2.appendChild(txtOption2);
     
               officeContainer.appendChild(tr);
               contestOffice.appendChild(option);
-              candidateOffice.appendChild(option);
+              candidateOffice.appendChild(option1);
+              voteOffice.appendChild(option2);
             });
           }
         }
@@ -1060,6 +1148,72 @@ document.onreadystatechange = () => {
         }
       }
 
+      // On click Office select box (Voting)
+      const voteOffice = document.getElementById('voteOffice');
+      if (voteOffice) {
+        voteOffice.onchange = (e) => {
+          e.preventDefault();
+
+          const candidateContainer = document.getElementById('candidateContainer');
+          candidateContainer.innerHTML = '';
+          const bold = document.createElement('b');
+          const txt = document.createTextNode('Loading...');
+          bold.appendChild(txt);
+          const td = document.createElement('td');
+          td.appendChild(bold);
+          const tr = document.createElement('tr');
+          tr.appendChild(td);
+          candidateContainer.appendChild(tr);
+
+          if (voteOffice.value.trim() !== '') {
+            const url = `${base_url}offices/${voteOffice.value}/candidates`;
+            const fetchData = { 
+              method: 'GET',
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                "x-access-token": sessionStorage.getItem('token')
+              }
+            };
+
+            fetch(url, fetchData)
+            .then((resp) => resp.json(), (error) => {
+              console.log(resp);
+              console.error(error);
+              infoCandidate.innerHTML = '';
+              alert('Candidates cannot be loaded at this time! Try again');
+            })
+            .then((res) => {
+              //const res = JSON.parse(data);
+              if (res.status === 200) {
+                console.log(res);
+                if (res.data.length > 0) {
+                  candidateContainer.innerHTML ='';
+                  renderCandidateList(res.data);
+                } else {
+                  candidateContainer.innerHTML ='<tr><td>No candidate found for the selected office</td></tr>';
+                }
+              } else {
+                console.log(res);
+                candidateContainer.innerHTML = '';
+                alert(res.error);
+              }
+              //return data;
+            }, (error) => {
+              console.error(error);
+              candidateContainer.innerHTML = '';
+              alert('Candidates cannot be loaded at this time! Try again');
+            })
+            .catch ((error) => {
+              console.error(error);
+              candidateContainer.innerHTML = '';
+              alert('Unable to load candidates, try again');
+            });
+          } else {
+            candidateContainer.innerHTML = '';
+          }
+        }
+      }
+
       // On click Office select box
       const candidateOffice = document.getElementById('candidateOffice');
       if (candidateOffice) {
@@ -1535,7 +1689,7 @@ function editParty(id, name) {
 function removeParty(id) {
   if (confirm("Are you sure, you want to delete the party?\nClick 'OK' to continue")) {
     const btnRemove = document.getElementById(`btnRemove${id}`);
-    btnRemove.innerHTML = 'Removing...';
+    btnRemove.innerHTML = 'Removing';
 
     const url = `${base_url}parties/${id.trim()}`;
     const fetchData = { 
@@ -1585,8 +1739,57 @@ function removeParty(id) {
   }
 }
 
-function vote() {
-  if (confirm("Confirm you want to vote Eneh for President!\nClick 'OK' to continue")) {
-    alert('Vote successful');
+function vote(id) {
+  if (confirm("Confirm you want to vote for the candidate!\nClick 'OK' to continue")) {
+    const btnVote = document.getElementById(`btnVote${id}`);
+    btnVote.innerHTML = 'Voting';
+
+    const payload = {
+      office: document.getElementById('voteOffice').value.trim(),
+      candidate: id.trim(),
+    }
+
+    const url = `${base_url}votes`;
+    const fetchData = { 
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "x-access-token": sessionStorage.getItem('token')
+      }
+    };
+
+    fetch(url, fetchData)
+    .then((resp) => resp.json(), (error) => {
+      console.log(resp);
+      console.error(error);
+      btnVote.innerHTML = 'Vote';
+      alert('Unable to vote at this time! Try again');
+    })
+    .then((res) => {
+      //const res = JSON.parse(data);
+      if (res.status === 201) {
+        console.log(res);
+        btnVote.innerHTML = 'Vote';
+        alert('Successful');
+      } else if (res.status === 500 || res.status === 508) {
+        btnVote.innerHTML = 'Vote';
+        alert('Unable to vote at this time, try again');
+      } else {
+        console.log(res);
+        btnVote.innerHTML = 'Vote';
+        alert(res.error);
+      }
+      //return data;
+    }, (error) => {
+      console.error(error);
+      btnVote.innerHTML = 'Vote';
+      alert('Unable to vote at this time! Try again');
+    })
+    .catch ((error) => {
+      console.error(error);
+      btnVote.innerHTML = 'Vote';
+      alert('Unable to vote, try again');
+    });
   }
 }
