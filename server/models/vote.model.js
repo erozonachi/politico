@@ -70,4 +70,24 @@ export default {
 
   },
 
+  getVotedCandidates(id) {
+    
+    const resultInfo = new Promise((resolve, reject) => {
+
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
+  
+      const result = connector.query('SELECT v."voteId" AS "id", o."officeId" AS "office", o."name" AS "officeName", ca."candidateId" AS "candidate", a."lastName", a."firstName", p."name" AS "partyName", p."logoUrl" FROM vote v, office o, candidate ca, account a, party p  WHERE v."accountId"=($1) AND o."officeId"=v."officeId" AND ca."candidateId"=v."candidateId" AND a."accountId"=ca."accountId" AND p."partyId"=ca."partyId" ORDER BY p."name", o."name" ASC', [id,]);
+  
+      result.then((result) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      }).catch(err => reject(err));
+  
+    });
+    
+    return resultInfo;
+
+  },
+
 }
