@@ -186,7 +186,7 @@ class OfficeController {
         }
       }, (error) => {
 
-        return res.status(508).json({ status: 508, error: error});
+        return res.status(508).json({ status: 508, error: `Database connection error, try again`,});
 
       }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
 
