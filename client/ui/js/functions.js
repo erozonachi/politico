@@ -26,6 +26,50 @@ const fetchParties = () => {
         if (res.status === 200) {
           console.log(res);
           resolve(res);
+        } else if (res.status === 401) {
+          window.location.replace('signin.html');
+        } else {
+          console.log(res);
+          resolve(res);
+        }
+      }, (error) => {
+        console.error(error);
+        reject(error)
+      })
+      .catch ((error) => {
+        console.error(error);
+        reject(error)
+      });
+  });
+
+  return result;
+};
+
+// Fetch voted candidates endpoint call................................................
+const fetchVotedCandidates = () => {
+
+  const result = new Promise((resolve, reject) => {
+    
+    const url = `${base_url}votes/candidates`;
+      const fetchData = { 
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "x-access-token": sessionStorage.getItem('token') || ''
+        }
+      };
+
+      fetch(url, fetchData)
+      .then((resp) => resp.json(), (error) => {
+        console.log(resp);
+        console.error(error);
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res);
+          resolve(res);
+        } else if (res.status === 401) {
+          window.location.replace('signin.html');
         } else {
           console.log(res);
           resolve(res);
@@ -54,7 +98,7 @@ const renderPartyList = (list) => {
     option.setAttribute('value', ``);
     option.appendChild(txtOption);
     contestParty.appendChild(option);
-
+    partyContainer.innerHTML = '';
     if (list && list.length <= 0) {
       const bold = document.createElement('b');
       const txt = document.createTextNode('No Political Party found.');
@@ -63,10 +107,10 @@ const renderPartyList = (list) => {
       td.appendChild(bold);
       const tr = document.createElement('tr');
       tr.appendChild(td);
-      partyContainer.innerHTML = tr;
+      partyContainer.innerHTML.appendChild(tr);
       return;
     }
-    partyContainer.innerHTML = '';
+    
     if (list) {
       list.forEach(item => {
         const img = document.createElement('img');
@@ -169,6 +213,54 @@ const renderCandidateList = (list) => {
   }
   return;
 };
+
+// Render voted candidates List...................................................................
+const renderVotedCandidatesList = (list) => {
+  const votedContainer = document.getElementById('votedContainer');
+
+  if (votedContainer) {
+    votedContainer.innerHTML = '';
+    if (list && list.length <= 0) {
+      const bold = document.createElement('b');
+      const txt = document.createTextNode('No voted candidate found.');
+      bold.appendChild(txt);
+      const tr = document.createElement('tr');
+      tr.appendChild(bold);
+      votedContainer.appendChild(tr);
+      return;
+    }
+
+    if (list) {
+      list.forEach(item => {
+        const img = document.createElement('img');
+        img.setAttribute('class', 'avatar');
+        img.setAttribute('src', item['logoUrl']);
+        const tdLogo = document.createElement('td');
+        tdLogo.setAttribute('data-label', 'Party Logo');
+        tdLogo.setAttribute('title', `${item['partyName']}`);
+        tdLogo.appendChild(img);
+
+        const tdOffice = document.createElement('td');
+        tdOffice.setAttribute('data-label', 'Office');
+        const txtOffice = document.createTextNode(`${item['officeName']}`);
+        tdOffice.appendChild(txtOffice);
+
+        const tdName = document.createElement('td');
+        tdName.setAttribute('data-label', 'Candidate');
+        const txtName = document.createTextNode(`${item['firstName']}, ${item['lastName']}`);
+        tdName.appendChild(txtName);
+
+        const tr = document.createElement('tr');
+        tr.appendChild(tdLogo);
+        tr.appendChild(tdOffice);
+        tr.appendChild(tdName);
+
+        votedContainer.appendChild(tr);
+      });
+    }
+  }
+  return;
+};
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
 
@@ -193,16 +285,7 @@ document.onreadystatechange = () => {
 
         return uploadResult;
       };
-      // User display picture............................................................
-      const displayPic = document.getElementById('dp');
-      const displayName = document.getElementById('displayName');
-      if (displayPic) {
-        if (typeof(Storage) !== 'undefined' && sessionStorage.getItem('passportUrl')) {
-          displayPic.removeAttribute('src');
-          displayPic.setAttribute('src', sessionStorage.getItem('passportUrl'));
-          displayName.innerHTML = sessionStorage.getItem('fullName').toUpperCase();
-        }
-      }
+      
       // Access Control......................................................................
       const btnNewParty = document.getElementById('btnNewParty');
       const btnNewOffice = document.getElementById('btnNewOffice');
@@ -217,13 +300,6 @@ document.onreadystatechange = () => {
           linkCandidate.setAttribute('class', 'hidden');
         }
       }
-
-      const partiesList = fetchParties();
-      partiesList.then((res) => {
-        const list = res.data;
-        renderPartyList(list);
-      })
-      .catch(error => { console.error(`Error: ${error}`) });
 
       // Render office List...................................................................
       const renderOfficeList = (list) => {
@@ -334,6 +410,8 @@ document.onreadystatechange = () => {
               if (res.status === 200) {
                 console.log(res);
                 resolve(res);
+              } else if (res.status === 401) {
+                window.location.replace('signin.html');
               } else {
                 console.log(res);
                 resolve(res);
@@ -351,12 +429,37 @@ document.onreadystatechange = () => {
         return result;
       };
 
-      const officesList = fetchOffices();
-      officesList.then((res) => {
-        const list = res.data;
-        renderOfficeList(list);
-      })
-      .catch(error => { console.error(`Error: ${error}`) });
+      // User display picture............................................................
+      const displayPic = document.getElementById('dp');
+      const displayName = document.getElementById('displayName');
+      if (displayPic) {
+        if (typeof(Storage) !== 'undefined' && sessionStorage.getItem('passportUrl')) {
+          displayPic.removeAttribute('src');
+          displayPic.setAttribute('src', sessionStorage.getItem('passportUrl'));
+          displayName.innerHTML = sessionStorage.getItem('fullName').toUpperCase();
+
+          const partiesList = fetchParties();
+          partiesList.then((res) => {
+            const list = res.data;
+            renderPartyList(list);
+          })
+          .catch(error => { console.error(`Error: ${error}`) });
+
+          const officesList = fetchOffices();
+          officesList.then((res) => {
+            const list = res.data;
+            renderOfficeList(list);
+          })
+          .catch(error => { console.error(`Error: ${error}`) });
+
+          const votedList = fetchVotedCandidates();
+          votedList.then((res) => {
+            const list = res.data;
+            renderVotedCandidatesList(list);
+          })
+          .catch(error => { console.error(`Error: ${error}`) });
+        }
+      }
 
       /**Index Page Functions... */
       const signUpForm = document.getElementById('signUpForm');
