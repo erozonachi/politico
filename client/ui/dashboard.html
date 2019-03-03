@@ -284,40 +284,20 @@
                   <table id="candidateList" class="hidden">
                      <caption>Candidate List
                         <div class="custom">
-                              <select name="candidateOffice" id="candidateOffice" required>
+                              <select name="voteOffice" id="voteOffice" required>
                                  <option value="">Choose Office</option>
-                                 <option value="1">President</option>
-                                 <option value="2">Senate Member</option>
                               </select>
                         </div>
                      </caption>
                      <thead>
                        <tr>
                          <th scope="col">Party Logo</th>
-                         <th scope="col">Office</th>
                          <th scope="col">Candidate</th>
                          <th scope="col"></th>
                        </tr>
                      </thead>
-                     <tbody>
-                       <tr>
-                         <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
-                         <td data-label="Office">President</td>
-                         <td data-label="Candidate">Eneh, James</td>
-                         <td data-label=""><button class="btn edit" onclick="vote();">Vote</button></td>
-                       </tr>
-                       <tr>
-                         <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
-                         <td data-label="Office">President</td>
-                         <td data-label="Candidate">Ifeoluwa Kayode</td>
-                         <td data-label=""><button class="btn edit" onclick="vote();">Vote</button></td>
-                       </tr>
-                       <tr>
-                         <td data-label="Party Logo"><img class="avatar" src="images/org-avatar.png" /></td>
-                         <td data-label="Office">President</td>
-                         <td data-label="Candidate">Ibrahim Musa</td>
-                         <td data-label=""><button class="btn edit" onclick="vote();">Vote</button></td>
-                       </tr>
+                     <tbody id="candidateContainer">
+                       
                      </tbody>
                   </table>
 
