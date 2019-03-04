@@ -181,7 +181,17 @@ class OfficeController {
         if (result.rowCount <= 0) {
           return res.status(404).json({ status: 404, error: 'No result found for office id: '+id});
         } else {
-          const output = result.rows.map(info => ({office: info.office, candidate: info.candidate, result: Number.parseInt(info.result),}));
+          const output = result.rows.map(info => (
+            {
+              office: info.office,
+              candidate: info.candidate,
+              result: Number.parseInt(info.result),
+              firstName: info.firstName,
+              lastName: info.lastName,
+              partyName: info.partyName,
+              logoUrl: info.logoUrl,
+            }
+          ));
           return res.status(200).json({ status: 200, data: output});
         }
       }, (error) => {

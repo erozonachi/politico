@@ -169,6 +169,7 @@ const renderPartyList = (list) => {
   }
   return;
 };
+
 // Render Candidate List...................................................................
 const renderCandidateList = (list) => {
   const candidateContainer = document.getElementById('candidateContainer');
@@ -208,6 +209,45 @@ const renderCandidateList = (list) => {
         tr.appendChild(tdActions);
 
         candidateContainer.appendChild(tr);
+      });
+    }
+  }
+  return;
+};
+
+// Render Vote Result List...................................................................
+const renderVoteResultList = (list) => {
+  const container = document.getElementById('resultContainer');
+
+  if (container) {
+    container.innerHTML = '';
+
+    if (list) {
+      list.forEach(item => {
+        const img = document.createElement('img');
+        img.setAttribute('class', 'avatar');
+        img.setAttribute('src', item['logoUrl']);
+        const tdLogo = document.createElement('td');
+        tdLogo.setAttribute('data-label', 'Party Logo');
+        tdLogo.setAttribute('title', `${item['partyName']}`);
+        tdLogo.appendChild(img);
+
+        const tdName = document.createElement('td');
+        tdName.setAttribute('data-label', 'Candidate');
+        const txtName = document.createTextNode(`${item['firstName']}, ${item['lastName']}`);
+        tdName.appendChild(txtName);
+
+        const tdVotes = document.createElement('td');
+        tdVotes.setAttribute('data-label', 'Votes');
+        const txtVotes = document.createTextNode(`${item['result']}`);
+        tdVotes.appendChild(txtVotes);
+
+        const tr = document.createElement('tr');
+        tr.appendChild(tdLogo);
+        tr.appendChild(tdName);
+        tr.appendChild(tdVotes);
+
+        container.appendChild(tr);
       });
     }
   }
@@ -1342,7 +1382,7 @@ document.onreadystatechange = () => {
             .then((resp) => resp.json(), (error) => {
               console.log(resp);
               console.error(error);
-              infoCandidate.innerHTML = '';
+              candidateContainer.innerHTML = '';
               alert('Candidates cannot be loaded at this time! Try again');
             })
             .then((res) => {
@@ -1373,6 +1413,72 @@ document.onreadystatechange = () => {
             });
           } else {
             candidateContainer.innerHTML = '';
+          }
+        }
+      }
+
+      // On change Office select box (Vote Results)
+      const resultOffice = document.getElementById('resultOffice');
+      if (resultOffice) {
+        resultOffice.onchange = (e) => {
+          e.preventDefault();
+
+          const resultContainer = document.getElementById('resultContainer');
+          resultContainer.innerHTML = '';
+          const bold = document.createElement('b');
+          const txt = document.createTextNode('Loading...');
+          bold.appendChild(txt);
+          const td = document.createElement('td');
+          td.appendChild(bold);
+          const tr = document.createElement('tr');
+          tr.appendChild(td);
+          resultContainer.appendChild(tr);
+
+          if (resultOffice.value.trim() !== '') {
+            const url = `${base_url}offices/${resultOffice.value}/result`;
+            const fetchData = { 
+              method: 'GET',
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                "x-access-token": sessionStorage.getItem('token')
+              }
+            };
+
+            fetch(url, fetchData)
+            .then((resp) => resp.json(), (error) => {
+              console.log(resp);
+              console.error(error);
+              resultContainer.innerHTML ='';
+              alert('Result cannot be loaded at this time! Try again');
+            })
+            .then((res) => {
+              //const res = JSON.parse(data);
+              if (res.status === 200) {
+                console.log(res);
+                if (res.data.length > 0) {
+                  resultContainer.innerHTML ='';
+                  renderVoteResultList(res.data);
+                } else {
+                  resultContainer.innerHTML ='<tr><td>No result found for the selected office</td></tr>';
+                }
+              } else {
+                console.log(res);
+                resultContainer.innerHTML = '';
+                alert(res.error);
+              }
+              //return data;
+            }, (error) => {
+              console.error(error);
+              resultContainer.innerHTML = '';
+              alert('Result cannot be loaded at this time! Try again');
+            })
+            .catch ((error) => {
+              console.error(error);
+              resultContainer.innerHTML = '';
+              alert('Unable to load result, try again');
+            });
+          } else {
+            resultContainer.innerHTML = '';
           }
         }
       }
@@ -1935,6 +2041,12 @@ function vote(id) {
         console.log(res);
         btnVote.innerHTML = 'Vote';
         alert('Successful');
+        const votedList = fetchVotedCandidates();
+        votedList.then((res) => {
+          const list = res.data;
+          renderVotedCandidatesList(list);
+        })
+        .catch(error => { console.error(`Error: ${error}`) });
       } else if (res.status === 500 || res.status === 508) {
         btnVote.innerHTML = 'Vote';
         alert('Unable to vote at this time, try again');
