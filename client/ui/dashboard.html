@@ -55,6 +55,11 @@
                           <i class="poll"></i><em>Polls</em>
                        </a>
                     </li>
+                    <li id="linkResult">
+                       <a class="s-sidebar__nav-link" href="javascript:void(0);">
+                          <i class="poll"></i><em>Poll Result</em>
+                       </a>
+                    </li>
                     <li>
                        <a class="s-sidebar__nav-link" href="index.html">
                           <i class="logout"></i><em>Logout</em>
@@ -271,12 +276,7 @@
                        </tr>
                      </thead>
                      <tbody id="partyContainer">
-                       <tr>
-                         <td data-label="Logo"><img class="avatar" src="images/org-avatar.png" /></td>
-                         <td data-label="Name">Action Peoples Congress</td>
-                         <td data-label="HQ Address">Plot 1 Maitama, Abuja FCT</td>
-                         <td data-label="Actions"><button class="btn edit" onclick="editParty();">Edit</button><button class="btn del" onclick="removeParty();">Remove</button></td>
-                       </tr>
+                       
                      </tbody>
                   </table>
 
@@ -297,6 +297,27 @@
                        </tr>
                      </thead>
                      <tbody id="candidateContainer">
+                       
+                     </tbody>
+                  </table>
+
+                  <!--Vote results list for specific government office-->
+                  <table id="resultList" class="hidden">
+                     <caption>Vote Result List
+                        <div class="custom">
+                              <select name="resultOffice" id="resultOffice" required>
+                                 <option value="">Choose Office</option>
+                              </select>
+                        </div>
+                     </caption>
+                     <thead>
+                       <tr>
+                         <th scope="col">Party Logo</th>
+                         <th scope="col">Candidate</th>
+                         <th scope="col">Votes</th>
+                       </tr>
+                     </thead>
+                     <tbody id="resultContainer">
                        
                      </tbody>
                   </table>
