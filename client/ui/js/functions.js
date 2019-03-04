@@ -307,11 +307,13 @@ document.onreadystatechange = () => {
         const contestOffice = document.getElementById('contestOffice');
         const candidateOffice = document.getElementById('candidateOffice');
         const voteOffice = document.getElementById('voteOffice');
+        const resultOffice = document.getElementById('resultOffice');
 
         if (officeContainer) {
           contestOffice.innerHTML = '';
           candidateOffice.innerHTML = '';
           voteOffice.innerHTML = '';
+          resultOffice.innerHTML = '';
 
           const txtOption = document.createTextNode(`Choose Office`);
           const option = document.createElement('option');
@@ -328,10 +330,17 @@ document.onreadystatechange = () => {
           option2.setAttribute('value', ``);
           option2.appendChild(txtOption2);
 
+          const txtOption3 = document.createTextNode(`Choose Office`);
+          const option3 = document.createElement('option');
+          option3.setAttribute('value', ``);
+          option3.appendChild(txtOption3);
+
           contestOffice.appendChild(option);
           candidateOffice.appendChild(option1);
           voteOffice.appendChild(option2);
-
+          resultOffice.appendChild(option3);
+          
+          officeContainer.innerHTML = '';
           if (list && list.length <= 0) {
             const bold = document.createElement('b');
             const txt = document.createTextNode('No Political Office found.');
@@ -340,10 +349,9 @@ document.onreadystatechange = () => {
             td.appendChild(bold);
             const tr = document.createElement('tr');
             tr.appendChild(td);
-            officeContainer.innerHTML = tr;
+            officeContainer.appendChild(tr);
             return;
           }
-          officeContainer.innerHTML = '';
           if (list) {
             list.forEach(item => {
               
@@ -376,11 +384,17 @@ document.onreadystatechange = () => {
               const option2 = document.createElement('option');
               option2.setAttribute('value', `${item['id']}`);
               option2.appendChild(txtOption2);
+
+              const txtOption3 = document.createTextNode(`${item['type']} - ${item['name']}`);
+              const option3 = document.createElement('option');
+              option3.setAttribute('value', `${item['id']}`);
+              option3.appendChild(txtOption3);
     
               officeContainer.appendChild(tr);
               contestOffice.appendChild(option);
               candidateOffice.appendChild(option1);
               voteOffice.appendChild(option2);
+              resultOffice.appendChild(option3);
             });
           }
         }
@@ -859,6 +873,9 @@ document.onreadystatechange = () => {
           if (!document.getElementById('votedCandidates').getAttribute('class')) {
             document.getElementById('votedCandidates').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('resultList').getAttribute('class')) {
+            document.getElementById('resultList').setAttribute('class', 'hidden');
+          }
         
           if (document.getElementById('partyList').getAttribute('class')) {
             document.getElementById('partyList').removeAttribute('class');
@@ -867,6 +884,7 @@ document.onreadystatechange = () => {
           if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
+          if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
 
           if (!linkParties.getAttribute('class')) linkParties.setAttribute('class', 'active');
         }
@@ -885,6 +903,9 @@ document.onreadystatechange = () => {
           if (!document.getElementById('votedCandidates').getAttribute('class')) {
             document.getElementById('votedCandidates').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('resultList').getAttribute('class')) {
+            document.getElementById('resultList').setAttribute('class', 'hidden');
+          }
         
           if (document.getElementById('officeList').getAttribute('class')) {
             document.getElementById('officeList').removeAttribute('class');
@@ -893,6 +914,7 @@ document.onreadystatechange = () => {
           if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
+          if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
 
           if (!linkOffices.getAttribute('class')) linkOffices.setAttribute('class', 'active');
         }
@@ -911,6 +933,9 @@ document.onreadystatechange = () => {
           if (!document.getElementById('votedCandidates').getAttribute('class')) {
             document.getElementById('votedCandidates').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('resultList').getAttribute('class')) {
+            document.getElementById('resultList').setAttribute('class', 'hidden');
+          }
         
           if (document.getElementById('candidateList').getAttribute('class')) {
             document.getElementById('candidateList').removeAttribute('class');
@@ -919,8 +944,39 @@ document.onreadystatechange = () => {
           if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
+          if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
 
           if (!linkPolls.getAttribute('class')) linkPolls.setAttribute('class', 'active');
+        }
+      }
+
+      //Poll Result link click...
+      const linkResult = document.getElementById('linkResult');
+      if (linkResult) {
+        linkResult.onclick = (e) => {
+          if (!document.getElementById('partyList').getAttribute('class')) {
+            document.getElementById('partyList').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('officeList').getAttribute('class')) {
+            document.getElementById('officeList').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('votedCandidates').getAttribute('class')) {
+            document.getElementById('votedCandidates').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('candidateList').getAttribute('class')) {
+            document.getElementById('candidateList').setAttribute('class', 'hidden');
+          }
+
+          if (document.getElementById('resultList').getAttribute('class')) {
+            document.getElementById('resultList').removeAttribute('class');
+          }
+
+          if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
+          if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
+          if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
+          if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
+
+          if (!linkResult.getAttribute('class')) linkResult.setAttribute('class', 'active');
         }
       }
 
@@ -937,6 +993,9 @@ document.onreadystatechange = () => {
           if (!document.getElementById('candidateList').getAttribute('class')) {
             document.getElementById('candidateList').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('resultList').getAttribute('class')) {
+            document.getElementById('resultList').setAttribute('class', 'hidden');
+          }
         
           if (document.getElementById('votedCandidates').getAttribute('class')) {
             document.getElementById('votedCandidates').removeAttribute('class');
@@ -945,6 +1004,7 @@ document.onreadystatechange = () => {
           if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
           if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
+          if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
 
           if (!linkProfile.getAttribute('class')) linkProfile.setAttribute('class', 'active');
         }
