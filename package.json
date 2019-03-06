@@ -33,7 +33,8 @@
     "rimraf": "^2.6.3"
   },
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 50000 --exit --compilers js:babel-core/register server/tests/test.js",
+    "dev_test": "set NODE_ENV=dev_test && nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 500000 --exit --compilers js:babel-core/register server/tests/test.js",
+    "test": "set NODE_ENV=test && nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 500000 --exit --compilers js:babel-core/register server/tests/test.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "server": "nodemon server/index.js --exec babel-node",
     "heroku-postbuild": "npm install",

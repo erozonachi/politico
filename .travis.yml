@@ -1,16 +1,24 @@
 env:
   global:
     - CC_TEST_REPORTER_ID=b3f52fa22297baebcfa76df7ed8f222997e8e7c80cef1fbdb3846722342e464a
+    - NODE_ENV=test
 language: node_js
 node_js:
   - "node"
 install: npm install
+services:
+  - postgresql
 addons:
   chrome: stable
 cache:
   directories:
     - "node_modules"
 before_script:
+  - psql -c 'create database politicodb_test;' -U postgres
+  - psql -c "CREATE USER root WITH PASSWORD 'password';" -U postgres
+  - npm run drop-tables
+  - npm run migration
+  - npm run add-sys-admin
   - yarn global add nyc
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
