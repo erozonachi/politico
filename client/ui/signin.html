@@ -35,12 +35,14 @@
                     <div id="" class="custom login-container">
                     <center><h1>Sign In</h1></center><br/>
                         <label for="name"><b>Username</b></label>
-                        <div class="custom tooltip">
+                        <div class="custom">
+                            <div class="error" id="error-username"></div>
                             <input type="text" placeholder="Username" id="username" name="username" required>
                         </div>
                     
                         <label for="password"><b>Password</b></label>
-                        <div class="custom tooltip">
+                        <div class="custom">
+                            <div class="error" id="error-password"></div>
                             <input type="password" placeholder="Password" id="password" name="password" required>
                         </div>
                     
@@ -54,29 +56,29 @@
                         <h1>Reset Password</h1><br/>
                         <div id="otpGroup" class="">
                             <label for="name"><b>Your Email</b></label>
-                            <div class="custom tooltip">
-                                <input type="text" placeholder="Your Email" name="email" id="email" required>
-                                <span class="tooltiptext">Your email</span>
+                            <div class="custom">
+                                <div class="error" id="error-email"></div>
+                                <input type="email" placeholder="Your Email" name="email" id="email" required>
                             </div>
                         </div>
                         
                         <div id="resetGroup" class="hidden">
                             <label for="psw"><b>OTP</b></label>
-                            <div class="custom tooltip">
+                            <div class="custom">
+                                <div class="error" id="error-otp"></div>
                                 <input type="password" placeholder="OTP" name="otp" id="otp" >
-                                <span class="tooltiptext">One time pass sent to your email</span>
                             </div>
 
                             <label for="newPassword"><b>New Password</b></label>
-                            <div class="custom tooltip">
+                            <div class="custom">
+                                <div class="error" id="error-newPassword"></div>
                                 <input type="password" placeholder="New Password" name="newPassword" id="newPassword" >
-                                <span class="tooltiptext">Min character length of 10. Digit and letter mix</span>
                             </div>
 
                             <label for="psw"><b>Confirm Password</b></label>
-                            <div class="custom tooltip">
+                            <div class="custom">
+                                <div class="error" id="error-confirm"></div>
                                 <input type="password" placeholder="Confirm Password" name="confirm" id="confirm" >
-                                <span class="tooltiptext">Match new password</span>
                             </div>
                             
                         </div>

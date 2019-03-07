@@ -6,6 +6,7 @@
 * */
 import Office from '../models/office.model';
 import Candidate from '../models/candidate.model';
+import Interest from '../models/interest.model';
 import Vote from '../models/vote.model';
 
 class OfficeController {
@@ -26,7 +27,7 @@ class OfficeController {
         
         if (error.code === '23505') {
 
-          return res.status(400).json({status: 400, error: `office already exists`,});
+          return res.status(400).json({status: 400, error: `Office already exist`,});
           
         }
         return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
@@ -79,10 +80,16 @@ class OfficeController {
     const checkUser = Candidate.checkUser(id);
     checkUser.then((result) => {
       if (result.rowCount > 0) {
-        return res.status(400).json({ status: 400, error: `User with ID: ${id} is already a candidate`});
+        return res.status(400).json({ status: 400, error: `User is already a candidate`});
       } else {
         const registerCandidate = Candidate.create(data);
         registerCandidate.then((result) => {
+          const delResult = Interest.deleteInterest(data);
+          delResult.then((result) => {
+            // Silence
+          }, (error) => {
+            // Silence
+          }).catch(err => {/** Silence */});
           if (result.rowCount <= 0) {
             return res.status(400).json({ status: 400, error: `The office has a candidate already`});
           } else {
@@ -118,6 +125,54 @@ class OfficeController {
 
   }
 
+  static expressInterest(req, res) {
+
+    const id = req.params.userId;
+    const data = req.body;
+    data.candidate = Number.parseInt(id);
+      
+    const checkUser = Interest.checkUser(id);
+    checkUser.then((result) => {
+      if (result.rowCount > 0) {
+        return res.status(400).json({ status: 400, error: `User has already expressed interest`});
+      } else {
+        const expressInterest = Interest.create(data);
+        expressInterest.then((result) => {
+          if (result.rowCount <= 0) {
+            return res.status(400).json({ status: 400, error: `The interest has been expressed already`});
+          } else {
+            return res.status(201).json({ status: 201, data: data});
+          }
+        }, (error) => {
+          if (error.code === '23503') {
+
+            if (error.detail.includes('officeId')) {
+              return res.status(404).json({status: 404, error: `office not found`,});
+            }
+            if (error.detail.includes('partyId')) {
+              return res.status(404).json({status: 404, error: `party not found`,});
+            }
+            if (error.detail.includes('accountId')) {
+              return res.status(404).json({status: 404, error: `user not found`,});
+            }
+
+          }
+
+          if (error.code === '23505') {
+            return res.status(400).json({status: 400, error: `The interest has been expressed already`});
+          }
+
+          return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
+
+        }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+      }
+    }, (error) => {
+      return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
+
+    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+
+  }
+
   static getOfficeVoteResult(req, res) {
     
     const { id } = req.params;
@@ -126,12 +181,22 @@ class OfficeController {
         if (result.rowCount <= 0) {
           return res.status(404).json({ status: 404, error: 'No result found for office id: '+id});
         } else {
-          const output = result.rows.map(info => ({office: info.office, candidate: info.candidate, result: Number.parseInt(info.result),}));
+          const output = result.rows.map(info => (
+            {
+              office: info.office,
+              candidate: info.candidate,
+              result: Number.parseInt(info.result),
+              firstName: info.firstName,
+              lastName: info.lastName,
+              partyName: info.partyName,
+              logoUrl: info.logoUrl,
+            }
+          ));
           return res.status(200).json({ status: 200, data: output});
         }
       }, (error) => {
 
-        return res.status(508).json({ status: 508, error: error});
+        return res.status(508).json({ status: 508, error: `Database connection error, try again`,});
 
       }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
 
@@ -145,14 +210,32 @@ class OfficeController {
         if (result.rowCount <= 0) {
           return res.status(404).json({ status: 404, error: 'No candidate found for office id: '+id});
         } else {
-          const output = result.rows.map(info => ({id: info.candidateId, office: info.officeId, party: info.partyId, user: info.accountId,}));
-          return res.status(200).json({ status: 200, data: output});
+          
+          return res.status(200).json({ status: 200, data: result.rows});
         }
       }, (error) => {
 
         return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
 
       }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+
+  }
+
+  static getInterests(req, res) {
+    
+    const { id } = req.params;
+    const interests = Interest.getInterests(id.trim());
+    interests.then((result) => {
+      if (result.rowCount <= 0) {
+        return res.status(200).json({ status: 200, data: []});
+      } else {
+        return res.status(200).json({ status: 200, data: result.rows});
+      }
+    }, (error) => {
+
+      return res.status(508).json({ status: 508, error: 'Oops! Database error, try again' });
+
+    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again` }));
 
   }
 

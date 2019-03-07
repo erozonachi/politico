@@ -33,7 +33,8 @@
     "rimraf": "^2.6.3"
   },
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 50000 --exit --compilers js:babel-core/register server/tests/test.js",
+    "dev_test": "set NODE_ENV=dev_test && nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 500000 --exit --compilers js:babel-core/register server/tests/test.js",
+    "test": "set NODE_ENV=test && nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 500000 --exit --compilers js:babel-core/register server/tests/test.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "server": "nodemon server/index.js --exec babel-node",
     "heroku-postbuild": "npm install",
@@ -42,12 +43,13 @@
     "m-office": "babel-node server/migrations/office.migration.js",
     "m-user": "babel-node server/migrations/user.migration.js",
     "m-candidate": "babel-node server/migrations/candidate.migration.js",
+    "m-interest": "babel-node server/migrations/interest.migration.js",
     "m-petition": "babel-node server/migrations/petition.migration.js",
     "m-vote": "babel-node server/migrations/vote.migration.js",
     "m-setting": "babel-node server/migrations/set_timezone.js",
     "drop-tables": "babel-node server/migrations/drop_tables.js",
     "add-sys-admin": "babel-node server/migrations/system_admin.js",
-    "migration": "npm run m-party && npm run m-office && npm run m-user && npm run m-candidate &&  npm run m-petition && npm run m-vote && npm run m-setting"
+    "migration": "npm run m-party && npm run m-office && npm run m-user && npm run m-interest && npm run m-candidate &&  npm run m-petition && npm run m-vote && npm run m-setting"
   },
   "repository": {
     "type": "git",

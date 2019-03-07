@@ -54,6 +54,24 @@ class VoteController {
     }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`,}));
   }
 
+  static getVotedCandidates(req, res) {
+    
+    const { userId } = req.params;
+      const getResult = Vote.getVotedCandidates(userId);
+      getResult.then((result) => {
+        if (result.rowCount <= 0) {
+          return res.status(404).json({ status: 404, error: 'No voted candidate found for the user'});
+        } else {
+          return res.status(200).json({ status: 200, data: result.rows});
+        }
+      }, (error) => {
+
+        return res.status(508).json({ status: 508, error: `Database connection error, try again`,});
+
+      }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+
+  }
+
 }
 
 export default VoteController;
