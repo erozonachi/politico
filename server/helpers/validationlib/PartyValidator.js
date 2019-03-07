@@ -48,7 +48,7 @@ export default {
       return res.status(400).json({status: 400, error: 'name is required'});
     }
     if (FieldValidator.isNumeric(req.params.name)) {
-      return res.status(400).json({status: 400, error: 'name is cannot be numbers'});
+      return res.status(400).json({status: 400, error: 'name cannot be numbers'});
     }
     if (!FieldValidator.isSapcedAlpha(req.params.name)) {
       return res.status(400).json({status: 400, error: 'name can only be  combination of words and spaces'});

@@ -27,7 +27,7 @@ class OfficeController {
         
         if (error.code === '23505') {
 
-          return res.status(400).json({status: 400, error: `office already exists`,});
+          return res.status(400).json({status: 400, error: `Office already exist`,});
           
         }
         return res.status(508).json({ status: 508, error: `Oops! Database error, try again`});
@@ -80,7 +80,7 @@ class OfficeController {
     const checkUser = Candidate.checkUser(id);
     checkUser.then((result) => {
       if (result.rowCount > 0) {
-        return res.status(400).json({ status: 400, error: `User with is already a candidate`});
+        return res.status(400).json({ status: 400, error: `User is already a candidate`});
       } else {
         const registerCandidate = Candidate.create(data);
         registerCandidate.then((result) => {
