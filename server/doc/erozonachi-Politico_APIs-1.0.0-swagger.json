@@ -1,0 +1,1851 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Politico API",
+    "description" : "This is an API documentation for the Politico App. The api is located at https://politico-ng.herokuapp.com",
+    "version" : "1.0.0",
+    "contact" : {
+      "email" : "erozonachieneh@gmail.com"
+    }
+  },
+  "servers" : [ {
+    "url" : "https://politico-ng.herokuapp.com/api/v1"
+  } ],
+  "paths" : {
+    "/auth/login" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "description" : "User login",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "username", "password" ],
+                "properties" : {
+                  "username" : {
+                    "type" : "string",
+                    "example" : "eneh"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "example" : "$$WakaNda2019$$"
+                  }
+                }
+              },
+              "examples" : {
+                "0" : {
+                  "value" : {
+                    "username" : "erozonachi.eneh@gmail.com",
+                    "password" : "abcde12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Login successful",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "token" : {
+                            "type" : "string",
+                            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+                          },
+                          "user" : {
+                            "type" : "object",
+                            "properties" : {
+                              "id" : {
+                                "type" : "number",
+                                "example" : 7
+                              },
+                              "firstName" : {
+                                "type" : "string",
+                                "example" : "James"
+                              },
+                              "lastName" : {
+                                "type" : "string",
+                                "example" : "Eneh"
+                              },
+                              "email" : {
+                                "type" : "string",
+                                "example" : "erozonachieneh@gmail.com"
+                              },
+                              "phoneNumber" : {
+                                "type" : "string",
+                                "example" : "09063912145"
+                              },
+                              "passportUrl" : {
+                                "type" : "string",
+                                "example" : "https://dp.io/eneh-dp.png"
+                              },
+                              "isAdmin" : {
+                                "type" : "boolean",
+                                "example" : false
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "username is required"
+                    }
+                  }
+                },
+                "examples" : {
+                  "0" : {
+                    "value" : "{\n    \"status\": 400,\n    \"error\": \"username is required\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/auth/signup" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "description" : "New user registration",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "firstName", "lastName", "email", "phoneNumber", "passportUrl", "password" ],
+                "properties" : {
+                  "firstName" : {
+                    "type" : "string",
+                    "example" : "James"
+                  },
+                  "lastName" : {
+                    "type" : "string",
+                    "example" : "Eneh"
+                  },
+                  "otherName" : {
+                    "type" : "string",
+                    "example" : ""
+                  },
+                  "email" : {
+                    "type" : "string",
+                    "example" : "erozonachieneh@gmail.com"
+                  },
+                  "phoneNumber" : {
+                    "type" : "string",
+                    "example" : "09063912145"
+                  },
+                  "passportUrl" : {
+                    "type" : "string",
+                    "example" : "https://res.dp.io/eneh-dp.png"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "example" : "$$WakaNda2019$$"
+                  }
+                }
+              },
+              "examples" : {
+                "0" : {
+                  "value" : "{\n    \"firstName\": \"James\",\n    \"lastName\": \"Munachimso\",\n    \"otherName\": \"\",\n    \"email\": \"erozonachi.eneh@gmail.com\",\n    \"phoneNumber\": \"09063912144\",\n    \"passportUrl\": \"https://swagger.io/swagger/media/assets/images/swagger_logo.svg\",\n    \"password\": \"abcde12345\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Signup successful",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 201
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "token" : {
+                            "type" : "string",
+                            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+                          },
+                          "user" : {
+                            "type" : "object",
+                            "properties" : {
+                              "id" : {
+                                "type" : "number",
+                                "example" : 7
+                              },
+                              "firstName" : {
+                                "type" : "string",
+                                "example" : "James"
+                              },
+                              "lastName" : {
+                                "type" : "string",
+                                "example" : "Eneh"
+                              },
+                              "email" : {
+                                "type" : "string",
+                                "example" : "erozonachieneh@gmail.com"
+                              },
+                              "phoneNumber" : {
+                                "type" : "string",
+                                "example" : "09063912145"
+                              },
+                              "passportUrl" : {
+                                "type" : "string",
+                                "example" : "https://dp.io/eneh-dp.png"
+                              },
+                              "isAdmin" : {
+                                "type" : "boolean",
+                                "example" : false
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "firstName is required"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/auth/previlage/{userId}" : {
+      "patch" : {
+        "tags" : [ "Auth" ],
+        "description" : "Make user an admin (Requires admin role)",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "Id of the user to be upgraded to admin role",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "example" : 7
+          }
+        }, {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "message" : {
+                            "type" : "string",
+                            "example" : "successful"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "userId is not a number"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/parties" : {
+      "post" : {
+        "tags" : [ "Parties" ],
+        "description" : "Create New Party (Requires admin role)",
+        "parameters" : [ {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "name", "hqAddress", "logoUrl" ],
+                "properties" : {
+                  "name" : {
+                    "type" : "string",
+                    "example" : "National Revolution Party"
+                  },
+                  "hqAddress" : {
+                    "type" : "string",
+                    "example" : "Ikoyi, Lagos"
+                  },
+                  "logoUrl" : {
+                    "type" : "string",
+                    "example" : "https://res.logo.io/logo.png"
+                  }
+                }
+              },
+              "examples" : {
+                "0" : {
+                  "value" : "{\n  \"name\": \"National Revolution Party\",\n  \"hqAddress\": \"Ikoyi, Lagos\",\n  \"logoUrl\": \"https://swagger.io/swagger/media/assets/images/swagger_logo.svg\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 201
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "number",
+                          "example" : 7
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "example" : "National Revolution Party"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "name is required"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "Parties" ],
+        "description" : "Fetch all parties",
+        "parameters" : [ {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : {
+                            "type" : "number",
+                            "example" : 7
+                          },
+                          "name" : {
+                            "type" : "string",
+                            "example" : "Democratic Party"
+                          },
+                          "hqAddress" : {
+                            "type" : "string",
+                            "example" : "Lekki, Lagos"
+                          },
+                          "logoUrl" : {
+                            "type" : "string",
+                            "example" : "https://res.logo.io/dp-logo.png"
+                          },
+                          "createdOn" : {
+                            "type" : "string",
+                            "format" : "date",
+                            "example" : "2019-02-10"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Not authourized",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 401
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "User not authourized"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/parties/{partyId}" : {
+      "get" : {
+        "tags" : [ "Parties" ],
+        "description" : "Fetch specific party by ID",
+        "parameters" : [ {
+          "name" : "partyId",
+          "in" : "path",
+          "description" : "Id of the party to be fetched",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        }, {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "number",
+                          "example" : 7
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "example" : "Democratic Party"
+                        },
+                        "hqAddress" : {
+                          "type" : "string",
+                          "example" : "Lekki, Lagos"
+                        },
+                        "logoUrl" : {
+                          "type" : "string",
+                          "example" : "https://res.logo.io/dp-logo.png"
+                        },
+                        "createdOn" : {
+                          "type" : "string",
+                          "format" : "date",
+                          "example" : "2019-02-10"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "partyId is required"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Parties" ],
+        "description" : "Delete specific party by ID (Requires admin role)",
+        "parameters" : [ {
+          "name" : "partyId",
+          "in" : "path",
+          "description" : "Id of the party to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "example" : 7
+          }
+        }, {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "message" : {
+                            "type" : "string",
+                            "example" : "Successful"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "partyId is required"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/parties/{partyId}/{newPartyName}" : {
+      "patch" : {
+        "tags" : [ "Parties" ],
+        "description" : "Update specific party by Id (Requires admin role)",
+        "parameters" : [ {
+          "name" : "partyId",
+          "in" : "path",
+          "description" : "Id of the party to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "example" : 7
+          }
+        }, {
+          "name" : "newPartyName",
+          "in" : "path",
+          "description" : "Party new name",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "Revolutionary Party"
+          }
+        }, {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "number",
+                          "example" : 7
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "example" : "Revolutionary Party"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "partyId is required"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/offices" : {
+      "post" : {
+        "tags" : [ "Offices" ],
+        "description" : "Create new office (Requires admin role)",
+        "parameters" : [ {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "type", "name" ],
+                "properties" : {
+                  "type" : {
+                    "type" : "string",
+                    "enum" : [ "Federal", "Legislative", "State", "Local" ]
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "example" : "President"
+                  }
+                }
+              },
+              "examples" : {
+                "0" : {
+                  "value" : "{\n  \"type\": \"Federal\",\n  \"name\": \"Presidential\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 201
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "number",
+                          "example" : 7
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "example" : "Federal"
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "example" : "President"
+                        },
+                        "createdOn" : {
+                          "type" : "string",
+                          "format" : "date"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "name is required"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "Offices" ],
+        "description" : "Fetch all offices",
+        "parameters" : [ {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : {
+                            "type" : "number",
+                            "example" : 7
+                          },
+                          "type" : {
+                            "type" : "string",
+                            "example" : "federal"
+                          },
+                          "name" : {
+                            "type" : "string",
+                            "example" : "president"
+                          },
+                          "createdOn" : {
+                            "type" : "string",
+                            "format" : "date"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Not authourized",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 401
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "User not authorized"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/offices/{officeId}" : {
+      "get" : {
+        "tags" : [ "Offices" ],
+        "description" : "Fetch specific office by ID",
+        "parameters" : [ {
+          "name" : "officeId",
+          "in" : "path",
+          "description" : "Id of the office to be fetched",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "example" : 7
+          }
+        }, {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "number",
+                          "example" : 7
+                        },
+                        "type" : {
+                          "type" : "string",
+                          "example" : "local"
+                        },
+                        "name" : {
+                          "type" : "string",
+                          "example" : "chairman"
+                        },
+                        "createdOn" : {
+                          "type" : "string",
+                          "format" : "date"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "officeId is required"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/offices/interests" : {
+      "post" : {
+        "tags" : [ "Offices" ],
+        "description" : "Declare interest for an office",
+        "parameters" : [ {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "office", "party" ],
+                "properties" : {
+                  "office" : {
+                    "type" : "number",
+                    "example" : 5
+                  },
+                  "party" : {
+                    "type" : "number",
+                    "example" : 7
+                  }
+                }
+              },
+              "examples" : {
+                "0" : {
+                  "value" : "{\n  \"office\": 1,\n  \"party\": 6\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 201
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "office" : {
+                          "type" : "number",
+                          "example" : 5
+                        },
+                        "party" : {
+                          "type" : "number",
+                          "example" : 7
+                        },
+                        "candidate" : {
+                          "type" : "number",
+                          "example" : 9
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "office is not a number"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/offices/{userId}/register" : {
+      "post" : {
+        "tags" : [ "Offices" ],
+        "description" : "Register a user as candidate running for an office under a political party (Requires admin role)",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "Id of the user to be registered as candidate running for an office",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : 3
+          }
+        }, {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "office", "party" ],
+                "properties" : {
+                  "office" : {
+                    "type" : "number",
+                    "example" : 5
+                  },
+                  "party" : {
+                    "type" : "number",
+                    "example" : 7
+                  }
+                }
+              },
+              "examples" : {
+                "0" : {
+                  "value" : "{\n  \"office\": 1,\n  \"party\": 6\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 201
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "office" : {
+                          "type" : "number",
+                          "example" : 5
+                        },
+                        "party" : {
+                          "type" : "number",
+                          "example" : 7
+                        },
+                        "candidate" : {
+                          "type" : "number",
+                          "example" : 9
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "userId is not a number"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/offices/{officeId}/interests" : {
+      "get" : {
+        "tags" : [ "Offices" ],
+        "description" : "Fetch all interests on a specific office by ID (Requires admin role)",
+        "parameters" : [ {
+          "name" : "officeId",
+          "in" : "path",
+          "description" : "Id of the office",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "example" : 3
+          }
+        }, {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : {
+                            "type" : "number",
+                            "example" : 1
+                          },
+                          "office" : {
+                            "type" : "number",
+                            "example" : 5
+                          },
+                          "party" : {
+                            "type" : "number",
+                            "example" : 7
+                          },
+                          "user" : {
+                            "type" : "number",
+                            "example" : 3
+                          },
+                          "officeName" : {
+                            "type" : "string",
+                            "example" : "President"
+                          },
+                          "partyName" : {
+                            "type" : "string",
+                            "example" : "Revolutionary Party"
+                          },
+                          "firstName" : {
+                            "type" : "string",
+                            "example" : "James"
+                          },
+                          "lastName" : {
+                            "type" : "string",
+                            "example" : "Eneh"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "officeId is not a number"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/offices/{officeId}/candidates" : {
+      "get" : {
+        "tags" : [ "Offices" ],
+        "description" : "Fetch all candidates on a specific office by ID",
+        "parameters" : [ {
+          "name" : "officeId",
+          "in" : "path",
+          "description" : "Id of the office",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "example" : 3
+          }
+        }, {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : {
+                            "type" : "number",
+                            "example" : 1
+                          },
+                          "office" : {
+                            "type" : "number",
+                            "example" : 3
+                          },
+                          "party" : {
+                            "type" : "number",
+                            "example" : 5
+                          },
+                          "user" : {
+                            "type" : "number",
+                            "example" : 7
+                          },
+                          "logoUrl" : {
+                            "type" : "string",
+                            "example" : "https://logo.io/rp.png"
+                          },
+                          "partyName" : {
+                            "type" : "string",
+                            "example" : "Revolutionary Party"
+                          },
+                          "firstName" : {
+                            "type" : "string",
+                            "example" : "James"
+                          },
+                          "lastName" : {
+                            "type" : "string",
+                            "example" : "Eneh"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "officeId is not a number"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/offices/{officeId}/result" : {
+      "get" : {
+        "tags" : [ "Offices" ],
+        "description" : "Fetch vote results on a specific office by ID",
+        "parameters" : [ {
+          "name" : "officeId",
+          "in" : "path",
+          "description" : "Id of the office",
+          "required" : true,
+          "schema" : {
+            "type" : "number",
+            "example" : 3
+          }
+        }, {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "office" : {
+                            "type" : "number",
+                            "example" : 3
+                          },
+                          "candidate" : {
+                            "type" : "number",
+                            "example" : 5
+                          },
+                          "result" : {
+                            "type" : "number",
+                            "example" : 7
+                          },
+                          "firstName" : {
+                            "type" : "string",
+                            "example" : "James"
+                          },
+                          "lastName" : {
+                            "type" : "string",
+                            "example" : "Eneh"
+                          },
+                          "partyName" : {
+                            "type" : "string",
+                            "example" : "Revolutionary Party"
+                          },
+                          "logoUrl" : {
+                            "type" : "string",
+                            "example" : "https://logo.io/rp.png"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "officeId is not a number"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/votes" : {
+      "post" : {
+        "tags" : [ "Votes" ],
+        "description" : "Vote a choice candidate running for an office",
+        "parameters" : [ {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "office", "candidate" ],
+                "properties" : {
+                  "office" : {
+                    "type" : "number",
+                    "example" : 5
+                  },
+                  "candidate" : {
+                    "type" : "number",
+                    "example" : 7
+                  }
+                }
+              },
+              "examples" : {
+                "0" : {
+                  "value" : "{\n  \"office\": 1,\n  \"candidate\": 4\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 201
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "office" : {
+                          "type" : "number",
+                          "example" : 5
+                        },
+                        "candidate" : {
+                          "type" : "number",
+                          "example" : 7
+                        },
+                        "voter" : {
+                          "type" : "number",
+                          "example" : 3
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "office is required"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/votes/candidates" : {
+      "get" : {
+        "tags" : [ "Votes" ],
+        "description" : "Fetch all candidates voted by the user",
+        "parameters" : [ {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : {
+                            "type" : "number",
+                            "example" : 1
+                          },
+                          "office" : {
+                            "type" : "number",
+                            "example" : 3
+                          },
+                          "officeName" : {
+                            "type" : "string",
+                            "example" : "President"
+                          },
+                          "candidate" : {
+                            "type" : "number",
+                            "example" : 5
+                          },
+                          "lastName" : {
+                            "type" : "string",
+                            "example" : "Eneh"
+                          },
+                          "firstName" : {
+                            "type" : "string",
+                            "example" : "James"
+                          },
+                          "partyName" : {
+                            "type" : "string",
+                            "example" : "Revolutionary Party"
+                          },
+                          "logoUrl" : {
+                            "type" : "string",
+                            "example" : "https://logo.io/rp.jpg"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Resource not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 404
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "No candidate found"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    }
+  }
+}
