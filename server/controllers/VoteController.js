@@ -28,13 +28,13 @@ class VoteController {
         }, (error) => {
           if (error.code === '23503') {
 
-            if (error.detail.includes('office_id')) {
+            if (error.detail.includes('officeId')) {
               return res.status(404).json({status: 404, error: `office not found`,});
             }
-            if (error.detail.includes('can_id')) {
+            if (error.detail.includes('candidateId')) {
               return res.status(404).json({status: 404, error: `candidate not found`,});
             }
-            if (error.detail.includes('acct_id')) {
+            if (error.detail.includes('accountId')) {
               return res.status(404).json({status: 404, error: `voter not found`,});
             }
 
