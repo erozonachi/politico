@@ -50,6 +50,26 @@ export default {
 
   },
 
+  checkVotedCandidate(info) {
+    
+    const candidateInfo = new Promise((resolve, reject) => {
+
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
+  
+      const result = connector.query('SELECT * FROM vote v, candidate c WHERE v."officeId"=($2) AND c."candidateId"=v."candidateId"  AND c."officeId"=($2) AND c."accountId"=($1)', [info.createdBy, info.office,]);
+  
+      result.then((result) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      }).catch(err => reject(err));
+  
+    });
+    
+    return candidateInfo;
+
+  },
+
   getOfficeVoteResult(id) {
     
     const resultInfo = new Promise((resolve, reject) => {
