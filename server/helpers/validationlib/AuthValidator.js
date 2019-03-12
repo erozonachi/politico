@@ -87,4 +87,16 @@ export default {
     next();
   },
 
+  getOtp(req, res, next) {
+    
+    if (FieldValidator.isEmpty(req.body.email)) {
+      return res.status(400).json({status: 400, error: 'email is required'});
+    }
+    if (!FieldValidator.isEmail(req.body.email)) {
+      return res.status(400).json({status: 400, error: 'Invalid email'});
+    }
+
+    next();
+  },
+
 }
