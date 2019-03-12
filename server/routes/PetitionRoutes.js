@@ -15,4 +15,7 @@ export default function petitionRoutes(app) {
   // POST /api/v1/petitions
   app.post(`${Constants.API_BASE_URL}/petitions`, AuthController.isAuthenticated, PetitionValidator.createPetition, PetitionController.createPetition);
 
+  // GET /api/v1/petitions
+  app.get(`${Constants.API_BASE_URL}/petitions`, AuthController.isAdmin, PetitionController.getPetitions);
+
 }

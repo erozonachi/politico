@@ -30,4 +30,24 @@ export default {
 
   },
 
+  getPetitions() {
+    
+    const resultInfo = new Promise((resolve, reject) => {
+
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
+  
+      const result = connector.query('SELECT pe."petitionId" AS "id", pe."body" AS "text", pe."evidences" AS "evidence", pe."accountId" AS "createdBy", o."officeId" AS "office", o."name" AS "officeName", ca."candidateId" AS "candidate", a."lastName", a."firstName", p."name" AS "partyName", p."logoUrl" FROM petition pe, office o, candidate ca, account a, party p WHERE o."officeId"=pe."officeId" AND ca."officeId"=pe."officeId" AND ca."accountId"=pe."accountId" AND a."accountId"=ca."accountId" AND p."partyId"=ca."partyId" ORDER BY p."name", o."name" ASC');
+  
+      result.then((result) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      }).catch(err => reject(err));
+  
+    });
+    
+    return resultInfo;
+
+  },
+
 }

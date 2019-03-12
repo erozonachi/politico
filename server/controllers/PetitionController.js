@@ -41,5 +41,22 @@ class PetitionController {
     }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`,}));
   }
 
+  static getPetitions(req, res) {
+    
+    const getResult = Petition.getPetitions();
+    getResult.then((result) => {
+      const output = result.rows.map(info => {
+        info.evidence = JSON.parse(info.evidence);
+        return info;
+      });
+      return res.status(200).json({ status: 200, data: output});
+    }, (error) => {
+
+      return res.status(508).json({ status: 508, error: `Database connection error, try again`,});
+
+    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
+
+  }
+
 }
 export default PetitionController;
