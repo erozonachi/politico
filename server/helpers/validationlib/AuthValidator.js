@@ -99,4 +99,33 @@ export default {
     next();
   },
 
+  resetPassword(req, res, next) {
+    
+    if (FieldValidator.isEmpty(req.body.email)) {
+      return res.status(400).json({status: 400, error: 'email is required'});
+    }
+    if (!FieldValidator.isEmail(req.body.email)) {
+      return res.status(400).json({status: 400, error: 'Invalid email'});
+    }
+
+    if (FieldValidator.isEmpty(req.body.otp)) {
+      return res.status(400).json({status: 400, error: 'otp is required'});
+    }
+    if (!FieldValidator.isNumeric(req.body.otp)) {
+      return res.status(400).json({status: 400, error: 'Invalid otp'});
+    }
+
+    if (FieldValidator.isEmpty(req.body.password)) {
+      return res.status(400).json({status: 400, error: 'password is required'});
+    }
+    if (!FieldValidator.minLength(req.body.password, 8)) {
+      return res.status(400).json({status: 400, error: 'Password cannot be less than 8 character length'});
+    }
+    if (FieldValidator.isAlpha(req.body.password) || FieldValidator.isNumeric(req.body.password)) {
+      return res.status(400).json({status: 400, error: 'Weak password, a combination of letters, digits or special characters required'});
+    }
+
+    next();
+  },
+
 }

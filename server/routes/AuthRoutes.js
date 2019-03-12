@@ -20,6 +20,9 @@ export default function authRoutes(app) {
   // POST /api/v1/auth/reset
   app.post(`${Constants.API_BASE_URL}/auth/reset`, AuthValidator.getOtp, AuthController.createResetOtp);
 
+  // PATCH /api/v1/auth/reset
+  app.patch(`${Constants.API_BASE_URL}/auth/reset`, AuthValidator.resetPassword, AuthController.resetPassword);
+
   // PATCH /api/v1/auth/previlage/:id
   app.patch(`${Constants.API_BASE_URL}/auth/previlage/:id`, AuthController.isAdmin, AuthValidator.checkID, AuthController.makeUserAdmin);
 

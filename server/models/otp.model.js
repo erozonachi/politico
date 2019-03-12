@@ -36,7 +36,7 @@ export default {
 
       const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
-      const result = connector.query('SELECT * FROM otp WHERE "pass"=($1) AND "email"=($2) AND "createdOn"=CURRENT_DATE  AND "used"=false', [otp.pass, otp.email,]);
+      const result = connector.query('SELECT * FROM otp WHERE "pass"=($1) AND "email"=($2) AND "createdOn"::DATE=CURRENT_DATE  AND "used"=false', [otp.otp, otp.email.trim(),]);
   
       result.then((result) => {
         resolve(result);
@@ -76,7 +76,7 @@ export default {
 
       const connector = new pg.Pool(Constants.CONNECTION_STRING);
   
-      const result = connector.query('UPDATE otp SET "used"=true WHERE "email"=($1) AND "pass"=($2)', [otp.email, otp.pass]);
+      const result = connector.query('UPDATE otp SET "used"=true WHERE "email"=($1) AND "pass"=($2)', [otp.email, otp.otp]);
   
       result.then((result) => {
         resolve(result);
