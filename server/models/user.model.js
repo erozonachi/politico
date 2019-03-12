@@ -91,4 +91,25 @@ export default {
 
   },
 
+  updatePassword(info) {
+
+    const resetPassword = new Promise((resolve, reject) => {
+
+      const connector = new pg.Pool(Constants.CONNECTION_STRING);
+
+      const result = connector.query('UPDATE account SET "password"=($1) WHERE "email"=($2) RETURNING "accountId", "email"',
+        [info.password, info.email.trim(),]);
+
+      result.then((result) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      }).catch(err => reject(err));
+
+    });
+  
+    return resetPassword;
+
+  },
+
 }

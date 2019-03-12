@@ -70,7 +70,7 @@ class AuthController {
         return res.status(400).json(error);
       }
       return res.status(508).json({ status: 508, error: 'Database connection failed, try again'});
-    });
+    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
 
   }
 
@@ -231,6 +231,43 @@ class AuthController {
       }
 
     }).catch(err => {return res.status(500).json({ status: 500, error: `Server error, try again`})});
+
+  }
+
+  static resetPassword(req, res) {
+      
+    const body = req.body;
+    const checkOtp = Otp.checkOtp(body);
+    checkOtp.then((result) => {
+      if (result.rowCount <= 0) {
+        return res.status(404).json({ status: 404, error: 'otp does not exist'});
+      } else {
+        bcrypt.hash(body.password, Constants.HASH_SALT_ROUNDS).then((hash) => {
+        
+          body.password = hash;
+          const result = User.updatePassword(body);
+          result.then((result) => {
+
+            Otp.markAsUsed(body).then((result) => {
+              return res.status(200).json({ status: 200, data: [{message: `success`}]});
+            }, (error) => {
+              return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
+            }).catch(err => res.status(508).json({ status: 508, error: `Oops! Database error, try again`}));
+
+          }, (error) => {
+            return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
+          }).catch(err => res.status(508).json({ status: 508, error: `Oops! Database error, try again`}));
+  
+        }, (error) => {
+          return res.status(508).json({ status: 508, error: 'Oops! Password reset error, try again'});
+        }).catch(err => res.status(508).json({ status: 508, error: `Oops! Password reset error, try again`}));
+        
+      }
+    }, (error) => {
+
+      return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
+
+    }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
 
   }
 
