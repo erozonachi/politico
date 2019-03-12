@@ -9,6 +9,7 @@
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
+    "nodemailer": "^5.1.1",
     "pg": "^7.4.3"
   },
   "devDependencies": {
@@ -29,7 +30,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
-    "nyc": "^13.1.0",
+    "nyc": "^13.3.0",
     "rimraf": "^2.6.3"
   },
   "scripts": {
@@ -46,10 +47,11 @@
     "m-interest": "babel-node server/migrations/interest.migration.js",
     "m-petition": "babel-node server/migrations/petition.migration.js",
     "m-vote": "babel-node server/migrations/vote.migration.js",
+    "m-otp": "babel-node server/migrations/otp.migration.js",
     "m-setting": "babel-node server/migrations/set_timezone.js",
     "drop-tables": "babel-node server/migrations/drop_tables.js",
     "add-sys-admin": "babel-node server/migrations/system_admin.js",
-    "migration": "npm run m-party && npm run m-office && npm run m-user && npm run m-interest && npm run m-candidate &&  npm run m-petition && npm run m-vote && npm run m-setting"
+    "migration": "npm run m-party && npm run m-office && npm run m-user && npm run m-interest && npm run m-candidate &&  npm run m-petition && npm run m-vote && npm run m-otp && npm run m-setting"
   },
   "repository": {
     "type": "git",

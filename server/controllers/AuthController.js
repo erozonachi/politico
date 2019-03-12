@@ -5,9 +5,11 @@
 *
 * */
 import User from '../models/user.model';
+import Otp from '../models/otp.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import * as Constants from '../helpers/Constants';
+import Mail from '../helpers/Mail';
 
 class AuthController {
 
@@ -185,7 +187,52 @@ class AuthController {
 
     }).catch(err => res.status(500).json({ status: 500, error: `Server error, try again`}));
 
-}
+  }
+  
+  static createResetOtp(req, res) {
+      
+    const info = req.body;
+    info.pass = Math.floor(Math.random() * (Constants.MAX - Constants.MIN)) + Constants.MIN;
+    const createOtp = Otp.create(info);
+    createOtp.then((result) => {
+      info.pass = result.rows[0].pass || info.pass;
+      const sendOtp = Mail.sendOtp(Mail.messanger(), info);
+      sendOtp.then((result) => {
+        return res.status(201).json({ status: 201, data: [{message: `Check your email for password reset OTP`, email: info.email,}]});
+      }, (error) => {
+        return res.status(508).json({ status: 508, error: 'Oops! Mailing error, try again'});
+      }).catch(err => {return res.status(508).json({ status: 508, error: `Oops! Mailing error, try again`})});
+        
+    }, (error) => {
+
+      if (error.code === '23503') {
+
+        if (error.detail.includes('email')) {
+          return res.status(404).json({status: 404, error: `email not found`,});
+        }
+
+      } else if (error.code === '23505') {
+        const getOtp = Otp.getOtp(info.email);
+        getOtp.then((result) => {
+          info.pass = result.rows[0].pass;
+          const sendOtp = Mail.sendOtp(Mail.messanger(), info);
+          sendOtp.then((result) => {
+            return res.status(200).json({ status: 200, data: [{message: `Check your email for password reset OTP`, email: info.email,}]});
+          }, (error) => {
+            return res.status(508).json({ status: 508, error: 'Oops! Mailing error, try again'});
+          }).catch(err => {return res.status(508).json({ status: 508, error: `Oops! Mailing error, try again`})});
+        }, (error) => {
+
+          return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
+
+        }).catch(err => {return res.status(500).json({ status: 500, error: `Server error, try again`})});
+      } else {
+        return res.status(508).json({ status: 508, error: 'Oops! Database error, try again'});
+      }
+
+    }).catch(err => {return res.status(500).json({ status: 500, error: `Server error, try again`})});
+
+  }
 
 }
 

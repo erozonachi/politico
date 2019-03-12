@@ -6,6 +6,8 @@
 * */
 export const API_BASE_URL = '/api/v1';
 export const HASH_SALT_ROUNDS = 10;
+export const MAX = 99999999;
+export const MIN = 11111111;
 export const CONNECTION_STRING = process.env.DATABASE_URL? {
   connectionString: process.env.DATABASE_URL,
   ssl: true,
