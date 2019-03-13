@@ -60,6 +60,11 @@
                           <i class="poll"></i><em>Poll Result</em>
                        </a>
                     </li>
+                    <li id="linkPetition">
+                       <a class="s-sidebar__nav-link" href="javascript:void(0);">
+                          <i class="lock"></i><em>Write Petition</em>
+                       </a>
+                    </li>
                     <li>
                        <a class="s-sidebar__nav-link" href="index.html">
                           <i class="logout"></i><em>Logout</em>
@@ -238,6 +243,45 @@
                                  </div>
                               
                                  <button type="submit" id="btnContest" class="big-btn">&nbsp;Contest</button>
+                              </div>
+                           </form>
+                         </div>
+                         <div class="modal-footer">
+                         </div>
+                     </div>
+                  </div>
+                  
+                  <div class="modal" id="modalPetition">
+                     <div class="modal-content">
+                         <div class="modal-header">  
+                           <span class="close" id="closePetition">&times;</span>
+                           <h2>Write Petition</h2>
+                         </div>
+                         <div class="modal-body">
+                           <form id="petitionForm">
+                              <div id="" class="custom">
+                                 <div>
+                                    <label for="petitionOffice"><b>Position</b></label>
+                                    <div class="custom">
+                                       <div class="error" id="error-petitionOffice"></div>
+                                       <select name="petitionOffice" id="petitionOffice" required>
+                                          <option value="">Choose Office</option>
+                                       </select>
+                                    </div>
+                                    <label for="petitionText"><b>Body</b></label>
+                                    <div class="custom">
+                                       <div class="error" id="error-petitionText"></div>
+                                       <textarea name="petitionText" id="petitionText" value="" required>
+                                       </textarea>
+                                    </div>
+                                    <label for="petitionEvidence"><b>Evidence</b></label>
+                                    <div class="custom">
+                                       <div class="error" id="error-petitionEvidence"></div>
+                                       <input type="file" placeholder="Upload Evidence" name="petitionEvidence" id="petitionEvidence" accept=".png,.jpeg,.jpg,.mp4,.MP4" multiple required>
+                                    </div>
+                                 </div>
+                              
+                                 <button type="submit" id="btnPetition" class="big-btn">&nbsp;Submit</button>
                               </div>
                            </form>
                          </div>

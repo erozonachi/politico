@@ -348,12 +348,14 @@ document.onreadystatechange = () => {
         const candidateOffice = document.getElementById('candidateOffice');
         const voteOffice = document.getElementById('voteOffice');
         const resultOffice = document.getElementById('resultOffice');
+        const petitionOffice = document.getElementById('petitionOffice');
 
         if (officeContainer) {
           contestOffice.innerHTML = '';
           candidateOffice.innerHTML = '';
           voteOffice.innerHTML = '';
           resultOffice.innerHTML = '';
+          petitionOffice.innerHTML = '';
 
           const txtOption = document.createTextNode(`Choose Office`);
           const option = document.createElement('option');
@@ -375,10 +377,16 @@ document.onreadystatechange = () => {
           option3.setAttribute('value', ``);
           option3.appendChild(txtOption3);
 
+          const txtOption4 = document.createTextNode(`Choose Office`);
+          const option4 = document.createElement('option');
+          option4.setAttribute('value', ``);
+          option4.appendChild(txtOption4);
+
           contestOffice.appendChild(option);
           candidateOffice.appendChild(option1);
           voteOffice.appendChild(option2);
           resultOffice.appendChild(option3);
+          petitionOffice.appendChild(option4);
           
           officeContainer.innerHTML = '';
           if (list && list.length <= 0) {
@@ -429,12 +437,18 @@ document.onreadystatechange = () => {
               const option3 = document.createElement('option');
               option3.setAttribute('value', `${item['id']}`);
               option3.appendChild(txtOption3);
+
+              const txtOption4 = document.createTextNode(`${item['type']} - ${item['name']}`);
+              const option4 = document.createElement('option');
+              option4.setAttribute('value', `${item['id']}`);
+              option4.appendChild(txtOption4);
     
               officeContainer.appendChild(tr);
               contestOffice.appendChild(option);
               candidateOffice.appendChild(option1);
               voteOffice.appendChild(option2);
               resultOffice.appendChild(option3);
+              petitionOffice.appendChild(option4);
             });
           }
         }
@@ -512,6 +526,8 @@ document.onreadystatechange = () => {
             renderVotedCandidatesList(list);
           })
           .catch(error => { console.error(`Error: ${error}`) });
+        } else {
+          window.location.replace('signin.html');
         }
       }
 
@@ -1069,6 +1085,18 @@ document.onreadystatechange = () => {
           const modalContest = document.getElementById('modalContest');
           if (modalContest) {
             modalContest.style.display = 'block';
+          }
+        }
+      
+      }
+
+      //Contest link click
+      const linkPetition = document.getElementById('linkPetition');
+      if (linkPetition) {
+        linkPetition.onclick = (e) => {
+          const modal = document.getElementById('modalPetition');
+          if (modal) {
+            modal.style.display = 'block';
           }
         }
       
@@ -1717,6 +1745,43 @@ document.onreadystatechange = () => {
         }
       }
 
+      //Petition form submission
+      const petitionForm = document.getElementById('petitionForm');
+      if (petitionForm) {
+        petitionForm.onsubmit = (e) => {
+          e.preventDefault();
+
+          const office = document.getElementById('petitionOffice');
+          const text = document.getElementById('petitionText');
+          const evidence = document.getElementById('petitionEvidence');
+
+          const errOffice = document.getElementById('error-petitionOffice');
+          const errText = document.getElementById('error-petitionText');
+          const errEvidence = document.getElementById('error-petitionEvidence');
+
+          errOffice.innerHTML = '';
+          errText.innerHTML = '';
+          errEvidence.innerHTML = '';
+
+          if (String(office.value).trim() === '') {
+            errOffice.innerHTML = 'Office type cannot be empty';
+            return;
+          }
+          if (String(text.value).trim() === '') {
+            errText.innerHTML = 'Body cannot be empty';
+            return;
+          }
+          if (String(evidence.value).trim() === '') {
+            errEvidence.innerHTML = 'Evidence is required';
+            return;
+          }
+
+          const btnPetition = document.getElementById('btnPetition');
+          btnPetition.innerHTML = '<i class="spinner spin"></i> Submitting...';
+          setTimeout(() => btnPetition.innerHTML = 'Submit', 5000);
+        }
+      }
+
       // Modals....................................................
       const closeCandidate = document.getElementById('closeCandidate');
       if (closeCandidate) {
@@ -1731,6 +1796,15 @@ document.onreadystatechange = () => {
       if (closeContest) {
         closeContest.onclick = (e) => {
           const modal = document.getElementById('modalContest');
+          modal.style.display = 'none';
+        }
+      
+      }
+
+      const closePetition = document.getElementById('closePetition');
+      if (closePetition) {
+        closePetition.onclick = (e) => {
+          const modal = document.getElementById('modalPetition');
           modal.style.display = 'none';
         }
       
@@ -1770,6 +1844,7 @@ document.onreadystatechange = () => {
         const modalAddOffice = document.getElementById('modalAddOffice');
         const modalEditParty = document.getElementById('modalEditParty');
         const modalCandidate = document.getElementById('modalCandidate');
+        const modalPetition = document.getElementById('modalPetition');
 
         if (e.target == modalContest) {
           modalContest.style.display = "none";
@@ -1785,6 +1860,9 @@ document.onreadystatechange = () => {
         }
         else if (e.target === modalCandidate) {
           modalCandidate.style.display = "none";
+        }
+        else if (e.target === modalPetition) {
+          modalPetition.style.display = "none";
         }
 
       }
