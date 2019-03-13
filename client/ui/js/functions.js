@@ -331,6 +331,7 @@ document.onreadystatechange = () => {
       const btnNewOffice = document.getElementById('btnNewOffice');
       if (btnNewParty || btnNewOffice) {
         const linkCandidate = document.getElementById('linkCandidate');
+        const linkPetitions = document.getElementById('linkPetitionsList');
         if (typeof(Storage) !== 'undefined' && sessionStorage.getItem('isAdmin') === 'false') {
           btnNewParty.removeAttribute('class');
           btnNewParty.setAttribute('class', 'hidden');
@@ -338,6 +339,8 @@ document.onreadystatechange = () => {
           btnNewOffice.setAttribute('class', 'hidden');
           linkCandidate.removeAttribute('class');
           linkCandidate.setAttribute('class', 'hidden');
+          linkPetitions.removeAttribute('class');
+          linkPetitions.setAttribute('class', 'hidden');
         }
       }
 
@@ -932,6 +935,9 @@ document.onreadystatechange = () => {
           if (!document.getElementById('resultList').getAttribute('class')) {
             document.getElementById('resultList').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('petitionsList').getAttribute('class')) {
+            document.getElementById('petitionsList').setAttribute('class', 'hidden');
+          }
         
           if (document.getElementById('partyList').getAttribute('class')) {
             document.getElementById('partyList').removeAttribute('class');
@@ -941,6 +947,7 @@ document.onreadystatechange = () => {
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
           if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
+          if (linkPetitionsList.getAttribute('class')) linkPetitionsList.removeAttribute('class');
 
           if (!linkParties.getAttribute('class')) linkParties.setAttribute('class', 'active');
         }
@@ -962,6 +969,9 @@ document.onreadystatechange = () => {
           if (!document.getElementById('resultList').getAttribute('class')) {
             document.getElementById('resultList').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('petitionsList').getAttribute('class')) {
+            document.getElementById('petitionsList').setAttribute('class', 'hidden');
+          }
         
           if (document.getElementById('officeList').getAttribute('class')) {
             document.getElementById('officeList').removeAttribute('class');
@@ -971,6 +981,7 @@ document.onreadystatechange = () => {
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
           if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
+          if (linkPetitionsList.getAttribute('class')) linkPetitionsList.removeAttribute('class');
 
           if (!linkOffices.getAttribute('class')) linkOffices.setAttribute('class', 'active');
         }
@@ -992,6 +1003,9 @@ document.onreadystatechange = () => {
           if (!document.getElementById('resultList').getAttribute('class')) {
             document.getElementById('resultList').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('petitionsList').getAttribute('class')) {
+            document.getElementById('petitionsList').setAttribute('class', 'hidden');
+          }
         
           if (document.getElementById('candidateList').getAttribute('class')) {
             document.getElementById('candidateList').removeAttribute('class');
@@ -1001,6 +1015,7 @@ document.onreadystatechange = () => {
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
           if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
+          if (linkPetitionsList.getAttribute('class')) linkPetitionsList.removeAttribute('class');
 
           if (!linkPolls.getAttribute('class')) linkPolls.setAttribute('class', 'active');
         }
@@ -1022,6 +1037,9 @@ document.onreadystatechange = () => {
           if (!document.getElementById('candidateList').getAttribute('class')) {
             document.getElementById('candidateList').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('petitionsList').getAttribute('class')) {
+            document.getElementById('petitionsList').setAttribute('class', 'hidden');
+          }
 
           if (document.getElementById('resultList').getAttribute('class')) {
             document.getElementById('resultList').removeAttribute('class');
@@ -1031,6 +1049,7 @@ document.onreadystatechange = () => {
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
+          if (linkPetitionsList.getAttribute('class')) linkPetitionsList.removeAttribute('class');
 
           if (!linkResult.getAttribute('class')) linkResult.setAttribute('class', 'active');
         }
@@ -1052,6 +1071,9 @@ document.onreadystatechange = () => {
           if (!document.getElementById('resultList').getAttribute('class')) {
             document.getElementById('resultList').setAttribute('class', 'hidden');
           }
+          if (!document.getElementById('petitionsList').getAttribute('class')) {
+            document.getElementById('petitionsList').setAttribute('class', 'hidden');
+          }
         
           if (document.getElementById('votedCandidates').getAttribute('class')) {
             document.getElementById('votedCandidates').removeAttribute('class');
@@ -1061,8 +1083,43 @@ document.onreadystatechange = () => {
           if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
           if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
+          if (linkPetitionsList.getAttribute('class')) linkPetitionsList.removeAttribute('class');
 
           if (!linkProfile.getAttribute('class')) linkProfile.setAttribute('class', 'active');
+        }
+      }
+      
+      //Petitions List link click...
+      const linkPetitionsList = document.getElementById('linkPetitionsList');
+      if (linkPetitionsList) {
+        linkPetitionsList.onclick = (e) => {
+          if (!document.getElementById('partyList').getAttribute('class')) {
+            document.getElementById('partyList').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('officeList').getAttribute('class')) {
+            document.getElementById('officeList').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('candidateList').getAttribute('class')) {
+            document.getElementById('candidateList').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('resultList').getAttribute('class')) {
+            document.getElementById('resultList').setAttribute('class', 'hidden');
+          }
+          if (!document.getElementById('votedCandidates').getAttribute('class')) {
+            document.getElementById('votedCandidates').setAttribute('class', 'hidden');
+          }
+        
+          if (document.getElementById('petitionsList').getAttribute('class')) {
+            document.getElementById('petitionsList').removeAttribute('class');
+          }
+
+          if (linkOffices.getAttribute('class')) linkOffices.removeAttribute('class');
+          if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
+          if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
+          if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
+          if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
+
+          if (!linkPetitionsList.getAttribute('class')) linkPetitionsList.setAttribute('class', 'active');
         }
       }
 
@@ -1771,7 +1828,21 @@ document.onreadystatechange = () => {
             errText.innerHTML = 'Body cannot be empty';
             return;
           }
-          if (String(evidence.value).trim() === '') {
+          if (`files` in evidence) {
+            if (evidence.files.length <= 0) {
+              errEvidence.innerHTML = 'Evidence is required';
+              return;
+            } else {
+              for (let i = 0; i < evidence.files.length; i++) {
+                if (!evidence.files[i].name.match(/\.jpg$/) && !evidence.files[i].name.match(/\.JPG$/) && !evidence.files[i].name.match(/\.jpeg$/) && !evidence.files[i].name.match(/\.JPEG$/) && !evidence.files[i].name.match(/\.png$/) && !evidence.files[i].name.match(/\.PNG$/) && !evidence.files[i].name.match(/\.mp4$/) && !evidence.files[i].name.match(/\.MP4$/)) {
+                  delete evidence.files;
+                  evidence.value = '';
+                  errEvidence.innerHTML = ".jpg, .png or mp4 extension required";
+                  return;
+                }
+              }
+            }
+          } else {
             errEvidence.innerHTML = 'Evidence is required';
             return;
           }
