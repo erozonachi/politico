@@ -1829,6 +1829,12 @@ document.onreadystatechange = () => {
             return;
           }
           if (`files` in evidence) {
+            if (evidence.files.length > 3) {
+              delete evidence.files;
+              evidence.value = '';
+              errEvidence.innerHTML = 'Max files of 3 exceeded';
+              return;
+            }
             if (evidence.files.length <= 0) {
               errEvidence.innerHTML = 'Evidence is required';
               return;
@@ -1840,6 +1846,12 @@ document.onreadystatechange = () => {
                   errEvidence.innerHTML = ".jpg, .png or mp4 extension required";
                   return;
                 }
+                if (evidence.files[i].size > (15 * 1024 * 1024)) {
+                  delete evidence.files;
+                  evidence.value = '';
+                  errEvidence.innerHTML = 'Max file size of 15MB exceeded';
+                  return;
+                }
               }
             }
           } else {
@@ -1849,7 +1861,79 @@ document.onreadystatechange = () => {
 
           const btnPetition = document.getElementById('btnPetition');
           btnPetition.innerHTML = '<i class="spinner spin"></i> Submitting...';
-          setTimeout(() => btnPetition.innerHTML = 'Submit', 5000);
+
+          const postPetition = (files) => {
+            const payload = {
+              office: office.value.trim(),
+              text: text.value.trim(),
+              evidence: files
+            };
+
+            const url = `${base_url}petitions`;
+            console.log(payload);
+            const fetchData = { 
+              method: 'POST', 
+              body: JSON.stringify(payload),
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                "x-access-token": sessionStorage.getItem('token')
+              }
+            };
+
+            fetch(url, fetchData)
+            .then((resp) => resp.json(), (error) => {
+              console.log(resp);
+              console.error(error);
+              btnPetition.innerHTML = 'Submit';
+              alert('Petition cannot be submitted at this time! Try again');
+            })
+            .then((res) => {
+              if (res.status === 201) {
+                console.log(res);
+                office.selectedIndex = 0;
+                text.value = '';
+                delete evidence.files;
+                evidence.value = '';
+                btnPetition.innerHTML ='Submit';
+                alert('Successful!');
+              } else {
+                console.log(res);
+                btnPetition.innerHTML = 'Submit';
+                alert(res.error);
+              }
+              //return data;
+            }, (error) => {
+              console.error(error);
+              btnPetition.innerHTML = 'Submit';
+              alert('Petition cannot be submitted at this time! Try again');
+            })
+            .catch ((error) => {
+              console.error(error);
+              btnPetition.innerHTML = 'Submit';
+              alert('Unable to submit petition, try again');
+            });
+          };
+
+          const urls = [];
+          for (let i = 0; i < evidence.files.length; i++) {
+            const uploadResult = uploadImage(evidence.files[i]);
+            uploadResult.then((result) => {
+              urls.push(result.secure_url);
+              if (urls.length === evidence.files.length) {
+                postPetition(urls);
+              }
+            }, (error) => {
+              console.error(`Error: ${error}`);
+              btnPetition.innerHTML = 'Submit';
+              alert(`Oops, Network error! Check your network and try again`);
+              return;
+            }).catch(error => {
+              console.error(`Error: ${error}`);
+              btnPetition.innerHTML = 'Submit';
+              alert(`Oops, Network error! Check your network and try again`);
+              return;
+            });
+          }
         }
       }
 
