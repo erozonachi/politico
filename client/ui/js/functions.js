@@ -86,6 +86,47 @@ const fetchVotedCandidates = () => {
 
   return result;
 };
+// Fetch petitions endpoint call................................................
+const fetchPetitions = () => {
+
+  const result = new Promise((resolve, reject) => {
+    
+    const url = `${base_url}petitions`;
+      const fetchData = { 
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "x-access-token": sessionStorage.getItem('token') || ''
+        }
+      };
+
+      fetch(url, fetchData)
+      .then((resp) => resp.json(), (error) => {
+        console.log(resp);
+        console.error(error);
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res);
+          resolve(res);
+        } else if (res.status === 401) {
+          window.location.replace('signin.html');
+        } else {
+          console.log(res);
+          resolve(res);
+        }
+      }, (error) => {
+        console.error(error);
+        reject(error)
+      })
+      .catch ((error) => {
+        console.error(error);
+        reject(error)
+      });
+  });
+
+  return result;
+};
 // Render Party List...................................................................
 const renderPartyList = (list) => {
   const partyContainer = document.getElementById('partyContainer');
@@ -126,7 +167,7 @@ const renderPartyList = (list) => {
         tdName.appendChild(txtName);
 
         const tdAddress = document.createElement('td');
-        tdAddress.setAttribute('data-label', 'Name');
+        tdAddress.setAttribute('data-label', 'Address');
         const txtAddress = document.createTextNode(item['hqAddress']);
         tdAddress.appendChild(txtAddress);
 
@@ -164,6 +205,76 @@ const renderPartyList = (list) => {
 
         partyContainer.appendChild(tr);
         contestParty.appendChild(option);
+      });
+    }
+  }
+  return;
+};
+
+// Render Petitions List...................................................................
+const renderPetitionsList = (list) => {
+  const container = document.getElementById('petitionsContainer');
+
+  if (container) {
+    container.innerHTML = '';
+    if (list && list.length <= 0) {
+      const bold = document.createElement('b');
+      const txt = document.createTextNode('No Petition found.');
+      bold.appendChild(txt);
+      const td = document.createElement('td');
+      td.appendChild(bold);
+      const tr = document.createElement('tr');
+      tr.appendChild(td);
+      container.innerHTML.appendChild(tr);
+      return;
+    }
+    
+    if (list) {
+      list.forEach(item => {
+        const tdOffice = document.createElement('td');
+        tdOffice.setAttribute('data-label', 'Office');
+        const txtOffice = document.createTextNode(item['officeName']);
+        tdOffice.appendChild(txtOffice);
+
+        const img = document.createElement('img');
+        img.setAttribute('class', 'avatar');
+        img.setAttribute('src', item['logoUrl']);
+        img.setAttribute('title', item['partyName']);
+        const tdLogo = document.createElement('td');
+        tdLogo.setAttribute('data-label', 'Party');
+        tdLogo.appendChild(img);
+
+        const tdName = document.createElement('td');
+        tdName.setAttribute('data-label', 'Candidate');
+        const txtName = document.createTextNode(`${item['lastName']}, ${item['firstName']}`);
+        tdName.appendChild(txtName);
+
+        const btnRead = document.createElement('button');
+        btnRead.setAttribute('class', 'btn relax');
+        btnRead.setAttribute('onclick', `openModal('text', '${item['text']}');`);
+        const txtRead = document.createTextNode('Read');
+        btnRead.appendChild(txtRead);
+        const tdBody = document.createElement('td');
+        tdBody.setAttribute('data-label', 'Body');
+        tdBody.appendChild(btnRead);
+
+        const btnView = document.createElement('button');
+        btnView.setAttribute('class', 'btn relax');
+        btnView.setAttribute('onclick', `openModal('media', '${item['evidence'].join('$$')}');`);
+        const txtView = document.createTextNode('View');
+        btnView.appendChild(txtView);
+        const tdEvidence = document.createElement('td');
+        tdEvidence.setAttribute('data-label', 'Evidence');
+        tdEvidence.appendChild(btnView);
+
+        const tr = document.createElement('tr');
+        tr.appendChild(tdOffice);
+        tr.appendChild(tdLogo);
+        tr.appendChild(tdName);
+        tr.appendChild(tdBody);
+        tr.appendChild(tdEvidence);
+
+        container.appendChild(tr);
       });
     }
   }
@@ -529,6 +640,15 @@ document.onreadystatechange = () => {
             renderVotedCandidatesList(list);
           })
           .catch(error => { console.error(`Error: ${error}`) });
+
+          if (sessionStorage.getItem('isAdmin') !== 'false') {
+            const petitionList = fetchPetitions();
+            petitionList.then((res) => {
+              const list = res.data;
+              renderPetitionsList(list);
+            })
+            .catch(error => { console.error(`Error: ${error}`) });
+          }
         } else {
           window.location.replace('signin.html');
         }
@@ -1992,6 +2112,15 @@ document.onreadystatechange = () => {
       
       }
 
+      const closeOpenModal = document.getElementById('closeOpenModal');
+      if (closeOpenModal) {
+        closeOpenModal.onclick = (e) => {
+          const modal = document.getElementById('modalOpenModal');
+          modal.style.display = 'none';
+        }
+      
+      }
+
       window.onclick = (e) => {
 
         const modalContest = document.getElementById('modalContest');
@@ -2000,6 +2129,7 @@ document.onreadystatechange = () => {
         const modalEditParty = document.getElementById('modalEditParty');
         const modalCandidate = document.getElementById('modalCandidate');
         const modalPetition = document.getElementById('modalPetition');
+        const modalOpenModal = document.getElementById('modalOpenModal');
 
         if (e.target == modalContest) {
           modalContest.style.display = "none";
@@ -2018,6 +2148,9 @@ document.onreadystatechange = () => {
         }
         else if (e.target === modalPetition) {
           modalPetition.style.display = "none";
+        }
+        else if (e.target === modalOpenModal) {
+          modalOpenModal.style.display = "none";
         }
 
       }
@@ -2299,5 +2432,41 @@ function vote(id) {
       btnVote.innerHTML = 'Vote';
       alert('Unable to vote, try again');
     });
+  }
+}
+
+function openModal(type, content) {
+  const title = document.getElementById(`titleOpenModal`);
+  const body = document.getElementById(`bodyOpenModal`);
+  const modal = document.getElementById(`modalOpenModal`);
+  if (type.toLowerCase() === `text`) {
+    title.innerHTML = `Petition Text`;
+    body.innerHTML = `${content}`;
+    modal.style.display = `block`;
+    return;
+  } else {
+    title.innerHTML = `Petition Evidence(s)`;
+    body.innerHTML = ``;
+    const files = content.split(`$$`);
+    if (files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        if (files[i].match(/\.jpg$/) || files[i].match(/\.JPG$/) || files[i].match(/\.jpeg$/) || files[i].match(/\.JPEG$/) || files[i].match(/\.png$/) || files[i].match(/\.PNG$/)) {
+          const img = document.createElement(`img`);
+          img.setAttribute(`class`, `media-clip`);
+          img.setAttribute(`src`, `${files[i]}`);
+          body.appendChild(img);
+
+        } else {
+          const video = document.createElement(`video`);
+          video.setAttribute(`class`, `media-clip`);
+          video.setAttribute(`src`, `${files[i]}`);
+          video.setAttribute(`autoplay`, `autoplay`);
+          video.setAttribute(`controls`, `controls`);
+          body.appendChild(video);
+        }
+      }
+    }
+    modal.style.display = `block`;
+    return;
   }
 }

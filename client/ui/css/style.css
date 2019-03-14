@@ -378,6 +378,16 @@ textarea {
     overflow: hidden;
 }
 
+.media-clip {
+    clear: both;
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid #013301;
+}
+
 input[type=file] {
     clear: both;
     width: 100%;
@@ -596,6 +606,12 @@ button:hover {
     max-width: 40%;
     margin: 0 2.5%;
   }
+
+  .relax {
+    background-color: rgb(1, 34, 1);
+    max-width: 1000%;
+    margin-right: 15px;
+  }
   
   .addBtn:hover {
     background-color: #bbb;
@@ -609,18 +625,6 @@ button:hover {
       border: 1px solid #ddd;
       padding: 5px;
       background-color: #fff;
-  }
-  
-  textarea {
-      width: 100%;
-      padding: 12px 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-  }
-  textarea {
-      height: 100px;
-      resize: none;
   }
   
 .submit {
@@ -789,6 +793,7 @@ option {
 
     .modal-content {
         width: 100%;
+        margin-bottom: 50px;
     }
     .modal {
         margin-top: 50px;
