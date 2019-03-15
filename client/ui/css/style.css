@@ -575,6 +575,10 @@ button:hover {
     cursor: pointer;
 }
 
+#otpDisplay {
+    color: #993366;
+}
+
   .btn {
     display: inline-block;
     padding: 13px 25px;
