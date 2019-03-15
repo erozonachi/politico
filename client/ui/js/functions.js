@@ -127,6 +127,44 @@ const fetchPetitions = () => {
 
   return result;
 };
+// Request OTP endpoint call................................................
+const getResetOtp = (email) => {
+
+  const result = new Promise((resolve, reject) => {
+    
+    const url = `${base_url}auth/reset`;
+    const payload = {
+      email: email
+    };
+    const fetchData = { 
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    };
+
+    fetch(url, fetchData)
+    .then((resp) => resp.json(), (error) => {
+      console.log(resp);
+      console.error(error);
+    })
+    .then((res) => {
+      console.log(res);
+      resolve(res);
+      
+    }, (error) => {
+      console.error(error);
+      reject(error)
+    })
+    .catch ((error) => {
+      console.error(error);
+      reject(error)
+    });
+  });
+
+  return result;
+};
 // Render Party List...................................................................
 const renderPartyList = (list) => {
   const partyContainer = document.getElementById('partyContainer');
@@ -444,14 +482,14 @@ document.onreadystatechange = () => {
         const linkCandidate = document.getElementById('linkCandidate');
         const linkPetitions = document.getElementById('linkPetitionsList');
         if (typeof(Storage) !== 'undefined' && sessionStorage.getItem('isAdmin') === 'false') {
+          linkPetitions.removeAttribute('class');
+          linkPetitions.setAttribute('class', 'hidden');
           btnNewParty.removeAttribute('class');
           btnNewParty.setAttribute('class', 'hidden');
           btnNewOffice.removeAttribute('class');
           btnNewOffice.setAttribute('class', 'hidden');
           linkCandidate.removeAttribute('class');
           linkCandidate.setAttribute('class', 'hidden');
-          linkPetitions.removeAttribute('class');
-          linkPetitions.setAttribute('class', 'hidden');
         }
       }
 
@@ -963,76 +1001,149 @@ document.onreadystatechange = () => {
             }
             
             btnReset.innerHTML = '<i class="spinner spin"></i> Resetting Password...';
-            setTimeout(function () {
+            const payload = {
+              email: email.value.trim(),
+              otp: otp.value,
+              password: password.value
+            };
+  
+            const url = `${base_url}auth/reset`;
+            console.log(payload);
+            const fetchData = { 
+              method: 'PATCH', 
+              body: JSON.stringify(payload),
+              headers: {
+                "Content-Type": "application/json; charset=utf-8"
+              }
+            };
+  
+            fetch(url, fetchData)
+            .then((resp) => resp.json(), (error) => {
+              console.log(resp);
+              console.error(error);
+              btnReset.innerHTML = 'Reset Password';
               btnReset.removeAttribute('disabled');
-              btnReset.innerHTML ='<i id="resetSpin" class="lock"></i>&nbsp;Request OTP';
-              alert('Password reset successful!');
+              alert('Something went wrong! Try again');
+              return;
+            })
+            .then((res) => {
 
-              resetForm.setAttribute('class', 'hidden');
-              signInForm.removeAttribute('class');
+              if (res.status === 200) {
+                console.log(res);
+                btnReset.removeAttribute('disabled');
+                btnReset.innerHTML ='<i id="resetSpin" class="lock"></i>&nbsp;Request OTP';
+                alert('Successful');
 
-              otp.removeAttribute('required');
-              password.removeAttribute('required');
-              confirm.removeAttribute('required');
-              email.removeAttribute('readonly');
-              email.value = '';
-              otp.value = '';
-              password.value = '';
-              confirm.value = '';
+                resetForm.setAttribute('class', 'hidden');
+                signInForm.removeAttribute('class');
 
-              resetGroup.setAttribute('class', 'hidden');
-              otpGroup.removeAttribute('class');
-            }, 10000);
+                otp.removeAttribute('required');
+                password.removeAttribute('required');
+                confirm.removeAttribute('required');
+                email.removeAttribute('readonly');
+                email.value = '';
+                otp.value = '';
+                password.value = '';
+                confirm.value = '';
+
+                resetGroup.setAttribute('class', 'hidden');
+                otpGroup.removeAttribute('class');
+                return;
+              } else {
+                console.log(res);
+                btnReset.innerHTML = 'Reset Password';
+                btnReset.removeAttribute('disabled');
+                alert(res.error);
+                return;
+              }
+            }, (error) => {
+              console.error(error);
+              btnReset.innerHTML = 'Reset Password';
+              btnReset.removeAttribute('disabled');
+              alert('Something went wrong! Try again');
+              return;
+            })
+            .catch ((error) => {
+              console.error(error);
+              btnReset.innerHTML = 'Reset Password';
+              btnReset.removeAttribute('disabled');
+              alert('Something went wrong, try again');
+              return;
+            });
+            
           } else {
             btnReset.innerHTML = '<i class="spinner spin"></i> Requesting OTP...';
-            setTimeout(function () {
-              btnReset.removeAttribute('disabled');
-              btnReset.innerHTML ='Reset Password';
-              alert('Success! Check your email for an OTP!');
 
-              otp.setAttribute('required', 'required');
-              password.setAttribute('required', 'required');
-              confirm.setAttribute('required', 'required');
-              email.setAttribute('readonly', 'readonly');
+            const getOtp = getResetOtp(email.value.trim());
+            getOtp.then((res) => {
+              if (res.status === 201 || res.status === 200) {
+                btnReset.removeAttribute('disabled');
+                btnReset.innerHTML ='Reset Password';
+                alert('Success! Check your email for an OTP!');
 
-              otpGroup.setAttribute('class', 'hidden');
-              resetGroup.removeAttribute('class');
+                otp.setAttribute('required', 'required');
+                password.setAttribute('required', 'required');
+                confirm.setAttribute('required', 'required');
+                email.setAttribute('readonly', 'readonly');
 
-              const otpDisplay = document.getElementById('otpDisplay');
-              const otpTimer = document.getElementById('otpTimer');
-              const resend = document.getElementById('resend');
+                otpGroup.setAttribute('class', 'hidden');
+                resetGroup.removeAttribute('class');
 
-              otpTimer.removeAttribute('class');
-              otpDisplay.removeAttribute('class');
-              resend.setAttribute('class', 'hidden');
-              let second = 60;
-              let minute = 4;
-              const makeTwoDigits = (i) => {
-                return (i < 10 ? "0" : "") + i;
-              }
-              const period = setInterval(() => {
-                second--;
-                otpTimer.innerHTML = 'Remaining Time: ' + makeTwoDigits(minute) + ':' + makeTwoDigits(second);
-                if (second <= 0 && minute > 0) {
-                  minute--;
-                  second = 60;
+                const otpDisplay = document.getElementById('otpDisplay');
+                const otpTimer = document.getElementById('otpTimer');
+                const resend = document.getElementById('resend');
+
+                otpTimer.removeAttribute('class');
+                otpDisplay.removeAttribute('class');
+                resend.setAttribute('class', 'hidden');
+                let second = 60;
+                let minute = 4;
+                const makeTwoDigits = (i) => {
+                  return (i < 10 ? "0" : "") + i;
                 }
-
-                if (second <= 0 && minute <= 0) {
-                  otpTimer.innerHTML = '';
-                  if (!resetForm.getAttribute('class')) {
-                    otpTimer.setAttribute('class', 'hidden');
-                    otpDisplay.removeAttribute('class');
-                    resend.removeAttribute('class');
-                  } else {
-                    otpTimer.removeAttribute('class');
-                    resend.removeAttribute('class');
-                    otpDisplay.setAttribute('class', 'hidden');
+                const period = setInterval(() => {
+                  second--;
+                  otpTimer.innerHTML = 'Remaining Time: ' + makeTwoDigits(minute) + ':' + makeTwoDigits(second);
+                  if (second <= 0 && minute > 0) {
+                    minute--;
+                    second = 60;
                   }
-                  clearInterval(period);
-                }
-              }, 1000);
-            }, 10000);
+
+                  if (second <= 0 && minute <= 0) {
+                    otpTimer.innerHTML = '';
+                    if (!resetForm.getAttribute('class')) {
+                      otpTimer.setAttribute('class', 'hidden');
+                      otpDisplay.removeAttribute('class');
+                      resend.removeAttribute('class');
+                    } else {
+                      otpTimer.removeAttribute('class');
+                      resend.removeAttribute('class');
+                      otpDisplay.setAttribute('class', 'hidden');
+                    }
+                    clearInterval(period);
+                  }
+                }, 1000);
+              } else {
+                btnReset.removeAttribute('disabled');
+                btnReset.innerHTML = 'Request OTP';
+                alert(res.error);
+                return;
+              }
+            }, (error) => {
+              console.error(`Error: ${error}`);
+              btnReset.removeAttribute('disabled');
+              btnReset.innerHTML = 'Request OTP';
+              alert('Unable to request OTP, try again!');
+              return;
+            })
+            .catch(error => {
+              console.error(`Error: ${error}`);
+              btnReset.removeAttribute('disabled');
+              btnReset.innerHTML = 'Request OTP';
+              alert('Unable to request OTP, try again!');
+              return;
+            });
+            
           }
         }
       }
@@ -1067,7 +1178,7 @@ document.onreadystatechange = () => {
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
           if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
-          if (linkPetitionsList.getAttribute('class')) linkPetitionsList.removeAttribute('class');
+          if (linkPetitionsList.getAttribute('class') && sessionStorage.getItem('isAdmin') !== 'false') linkPetitionsList.removeAttribute('class');
 
           if (!linkParties.getAttribute('class')) linkParties.setAttribute('class', 'active');
         }
@@ -1101,7 +1212,7 @@ document.onreadystatechange = () => {
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
           if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
-          if (linkPetitionsList.getAttribute('class')) linkPetitionsList.removeAttribute('class');
+          if (linkPetitionsList.getAttribute('class') && sessionStorage.getItem('isAdmin') !== 'false') linkPetitionsList.removeAttribute('class');
 
           if (!linkOffices.getAttribute('class')) linkOffices.setAttribute('class', 'active');
         }
@@ -1135,7 +1246,7 @@ document.onreadystatechange = () => {
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
           if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
-          if (linkPetitionsList.getAttribute('class')) linkPetitionsList.removeAttribute('class');
+          if (linkPetitionsList.getAttribute('class') && sessionStorage.getItem('isAdmin') !== 'false') linkPetitionsList.removeAttribute('class');
 
           if (!linkPolls.getAttribute('class')) linkPolls.setAttribute('class', 'active');
         }
@@ -1169,7 +1280,7 @@ document.onreadystatechange = () => {
           if (linkProfile.getAttribute('class')) linkProfile.removeAttribute('class');
           if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
-          if (linkPetitionsList.getAttribute('class')) linkPetitionsList.removeAttribute('class');
+          if (linkPetitionsList.getAttribute('class') && sessionStorage.getItem('isAdmin') !== 'false') linkPetitionsList.removeAttribute('class');
 
           if (!linkResult.getAttribute('class')) linkResult.setAttribute('class', 'active');
         }
@@ -1203,7 +1314,7 @@ document.onreadystatechange = () => {
           if (linkParties.getAttribute('class')) linkParties.removeAttribute('class');
           if (linkPolls.getAttribute('class')) linkPolls.removeAttribute('class');
           if (linkResult.getAttribute('class')) linkResult.removeAttribute('class');
-          if (linkPetitionsList.getAttribute('class')) linkPetitionsList.removeAttribute('class');
+          if (linkPetitionsList.getAttribute('class') && sessionStorage.getItem('isAdmin') !== 'false') linkPetitionsList.removeAttribute('class');
 
           if (!linkProfile.getAttribute('class')) linkProfile.setAttribute('class', 'active');
         }
@@ -1275,6 +1386,74 @@ document.onreadystatechange = () => {
           if (modal) {
             modal.style.display = 'block';
           }
+        }
+      
+      }
+      
+      //Resend OTP link click
+      const resendOtp = document.getElementById('resend');
+      if (resendOtp) {
+        resendOtp.onclick = (e) => {
+          resendOtp.innerHTML = 'Resending...'
+          const email = document.getElementById('email');
+          const getOtp = getResetOtp(email.value.trim());
+            getOtp.then((res) => {
+              if (res.status === 201 || res.status === 200) {
+                resendOtp.innerHTML ='Resend OTP';
+                alert('Success! Check your email for an OTP!');
+
+                const otpDisplay = document.getElementById('otpDisplay');
+                const otpTimer = document.getElementById('otpTimer');
+                const resend = document.getElementById('resend');
+
+                otpTimer.removeAttribute('class');
+                otpDisplay.removeAttribute('class');
+                resend.setAttribute('class', 'hidden');
+                let second = 60;
+                let minute = 4;
+                const makeTwoDigits = (i) => {
+                  return (i < 10 ? "0" : "") + i;
+                }
+                const period = setInterval(() => {
+                  second--;
+                  otpTimer.innerHTML = 'Remaining Time: ' + makeTwoDigits(minute) + ':' + makeTwoDigits(second);
+                  if (second <= 0 && minute > 0) {
+                    minute--;
+                    second = 60;
+                  }
+
+                  if (second <= 0 && minute <= 0) {
+                    otpTimer.innerHTML = '';
+                    const resetForm = document.getElementById('resetForm');
+                    if (!resetForm.getAttribute('class')) {
+                      otpTimer.setAttribute('class', 'hidden');
+                      otpDisplay.removeAttribute('class');
+                      resend.removeAttribute('class');
+                    } else {
+                      otpTimer.removeAttribute('class');
+                      resend.removeAttribute('class');
+                      otpDisplay.setAttribute('class', 'hidden');
+                    }
+                    clearInterval(period);
+                  }
+                }, 1000);
+              } else {
+                resendOtp.innerHTML ='Resend OTP';
+                alert(res.error);
+                return;
+              }
+            }, (error) => {
+              console.error(`Error: ${error}`);
+              resendOtp.innerHTML ='Resend OTP';
+              alert('Unable to request OTP, try again!');
+              return;
+            })
+            .catch(error => {
+              console.error(`Error: ${error}`);
+              resendOtp.innerHTML ='Resend OTP';
+              alert('Unable to request OTP, try again!');
+              return;
+            });
         }
       
       }
