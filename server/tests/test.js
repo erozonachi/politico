@@ -391,7 +391,22 @@ describe('Auth', () => {
     });
     it('it should return status 400 and error: Incorrect username or password', (done) => {
       const user = {
-        username: 'eneh@mail.com',
+        username: 'eneh.uk@mail.com',
+        password: 'fg67767gfjhkdikld',
+      };
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send(user)
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.eql(400);
+          expect(res.body.error).to.eql('Incorrect username or password');
+          done();
+        });
+    });
+    it('it should return status 400 and error: Incorrect username or password', (done) => {
+      const user = {
+        username: 'admin@gmail.com',
         password: 'fg67767gfjhkdikld',
       };
       chai.request(server)

@@ -48,9 +48,6 @@ class AuthController {
       });
     });
     createUser.then((result) => {
-      if (result.rowCount <= 0) {
-        return res.status(400).json({ status: 400, error: 'User already exists'});
-      } else {
         const output = result.rows.map(info => (
           {
             id: info.accountId,
@@ -64,7 +61,7 @@ class AuthController {
         ));
         const token = jwt.sign({id: output[0].id, email: output[0].email, isAdmin: output[0].isAdmin}, process.env.SECRET_KEY, {expiresIn: '1d'});
         return res.status(201).json({ status: 201, data: [{token: token, user: output[0]}] });
-      }
+
     }, (error) => {
       if (error.status === 400) {
         return res.status(400).json(error);
