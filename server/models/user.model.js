@@ -30,26 +30,6 @@ export default {
 
   },
 
-  search(data) {
-    
-    const search = new Promise((resolve, reject) => {
-
-      const connector = new pg.Pool(Constants.CONNECTION_STRING);
-  
-      const result = connector.query('SELECT * FROM account WHERE ("email"=($1) OR "phoneNumber"=($2) OR "passportUrl"=($3)) AND "deleted"=false', [data.email.trim().toLowerCase(), data.phoneNumber.trim(), data.passportUrl.trim()]);
-  
-      result.then((result) => {
-        resolve(result);
-      }, (error) => {
-        reject(error);
-      }).catch(err => reject(err));
-  
-    });
-    
-    return search;
-
-  },
-
   fetchByUsername(username) {
     
     const info = new Promise((resolve, reject) => {

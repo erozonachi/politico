@@ -14,12 +14,8 @@ class PartyController {
       
       const createParty = Party.create(data);
       createParty.then((result) => {
-        if (result.rowCount <= 0) {
-          return res.status(400).json({ status: 400, error: 'logoUrl or record already exist'});
-        } else {
           const output = result.rows.map(info => ({id: info.partyId, name: info.name,}));
           return res.status(201).json({ status: 201, data: output[0]});
-        }
       }, (error) => {
 
         if (error.code === '23505') {

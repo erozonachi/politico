@@ -91,26 +91,6 @@ export default {
 
   },
 
-  search(name, url) {
-    
-    const search = new Promise((resolve, reject) => {
-
-      const connector = new pg.Pool(Constants.CONNECTION_STRING);
-  
-      const result = connector.query('SELECT * FROM party WHERE ("name"=($1) OR "logoUrl"=($2)) AND "deleted"=false', [String(name).trim().toLowerCase(), String(url).trim()]);
-  
-      result.then((result) => {
-        resolve(result);
-      }, (error) => {
-        reject(error);
-      }).catch(err => reject(err));
-  
-    });
-    
-    return search;
-
-  },
-
   delete(id) {
     
     const deleteParty = new Promise((resolve, reject) => {

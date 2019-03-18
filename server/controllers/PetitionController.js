@@ -46,7 +46,9 @@ class PetitionController {
     const getResult = Petition.getPetitions();
     getResult.then((result) => {
       const output = result.rows.map(info => {
-        info.evidence = JSON.parse(info.evidence);
+        if (info.evidence){
+          info.evidence = JSON.parse(info.evidence);
+        }
         return info;
       });
       return res.status(200).json({ status: 200, data: output});

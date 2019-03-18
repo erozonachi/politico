@@ -30,26 +30,6 @@ export default {
 
   },
 
-  search(data) {
-    
-    const search = new Promise((resolve, reject) => {
-
-      const connector = new pg.Pool(Constants.CONNECTION_STRING);
-  
-      const result = connector.query('SELECT * FROM office WHERE "type"=($1) AND "name"=($2) AND "deleted"=false', [data.type.trim().toLowerCase(), data.name.trim().toLowerCase()]);
-  
-      result.then((result) => {
-        resolve(result);
-      }, (error) => {
-        reject(error);
-      }).catch(err => reject(err));
-  
-    });
-    
-    return search;
-
-  },
-
   read() {
     
     const readOffice = new Promise((resolve, reject) => {

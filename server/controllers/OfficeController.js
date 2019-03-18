@@ -17,12 +17,8 @@ class OfficeController {
       
       const createOffice = Office.create(data);
       createOffice.then((result) => {
-        if (result.rowCount <= 0) {
-          return res.status(400).json({ status: 400, error: 'Office already exist'});
-        } else {
           const output = result.rows.map(info => ({id: info.officeId, type: info.type, name: info.name, createdOn: info.createdOn}));
           return res.status(201).json({ status: 201, data: output[0]});
-        }
       }, (error) => {
         
         if (error.code === '23505') {
@@ -90,11 +86,9 @@ class OfficeController {
           }, (error) => {
             // Silence
           }).catch(err => {/** Silence */});
-          if (result.rowCount <= 0) {
-            return res.status(400).json({ status: 400, error: `The office has a candidate already`});
-          } else {
-            return res.status(201).json({ status: 201, data: data});
-          }
+            
+          return res.status(201).json({ status: 201, data: data});
+
         }, (error) => {
           if (error.code === '23503') {
 
@@ -138,11 +132,7 @@ class OfficeController {
       } else {
         const expressInterest = Interest.create(data);
         expressInterest.then((result) => {
-          if (result.rowCount <= 0) {
-            return res.status(400).json({ status: 400, error: `The interest has been expressed already`});
-          } else {
             return res.status(201).json({ status: 201, data: data});
-          }
         }, (error) => {
           if (error.code === '23503') {
 
@@ -151,9 +141,6 @@ class OfficeController {
             }
             if (error.detail.includes('partyId')) {
               return res.status(404).json({status: 404, error: `party not found`,});
-            }
-            if (error.detail.includes('accountId')) {
-              return res.status(404).json({status: 404, error: `user not found`,});
             }
 
           }

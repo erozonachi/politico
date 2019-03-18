@@ -20,11 +20,7 @@ class VoteController {
       } else {
         const voteCandidate = Vote.create(data);
         voteCandidate.then((result) => {
-          if (result.rowCount <= 0) {
-            return res.status(400).json({ status: 400, error: `You have already voted for this office`});
-          } else {
-            return res.status(201).json({ status: 201, data: data});
-          }
+          return res.status(201).json({ status: 201, data: data});
         }, (error) => {
           if (error.code === '23503') {
 
