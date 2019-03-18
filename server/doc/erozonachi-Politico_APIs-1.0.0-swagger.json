@@ -2,8 +2,8 @@
   "openapi" : "3.0.1",
   "info" : {
     "title" : "Politico API",
-    "description" : "This is an API documentation for the Politico App. The api is located at https://politico-ng.herokuapp.com",
-    "version" : "1.0.0",
+    "description" : "This is an API documentation for the Politico App. <br/><br/>Politico is an electoral platform for both politicians and citizens. Politico enables citizens to give their mandate to politicians running for different government offices as it builds trust in the process through transparency. <br/><br/>While an admin can create, update and delete political parties; also create government offices. A user can declare his/her interest to run for an office; view all political parties, view all candidates of a specific office; vote his/her choice candidates per political office, and view the list of candidates he/she voted. <br/><br/>The api is located at https://politico-ng.herokuapp.com",
+    "version" : "0.1",
     "contact" : {
       "email" : "erozonachieneh@gmail.com"
     }
@@ -12,135 +12,6 @@
     "url" : "https://politico-ng.herokuapp.com/api/v1"
   } ],
   "paths" : {
-    "/auth/login" : {
-      "post" : {
-        "tags" : [ "Auth" ],
-        "description" : "User login",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "required" : [ "username", "password" ],
-                "properties" : {
-                  "username" : {
-                    "type" : "string",
-                    "example" : "eneh"
-                  },
-                  "password" : {
-                    "type" : "string",
-                    "example" : "$$WakaNda2019$$"
-                  }
-                }
-              },
-              "examples" : {
-                "0" : {
-                  "value" : {
-                    "username" : "erozonachi.eneh@gmail.com",
-                    "password" : "abcde12345"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Login successful",
-            "content" : {
-              "application/json; charset=utf-8" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "status" : {
-                      "type" : "number",
-                      "example" : 200
-                    },
-                    "data" : {
-                      "type" : "array",
-                      "items" : {
-                        "type" : "object",
-                        "properties" : {
-                          "token" : {
-                            "type" : "string",
-                            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
-                          },
-                          "user" : {
-                            "type" : "object",
-                            "properties" : {
-                              "id" : {
-                                "type" : "number",
-                                "example" : 7
-                              },
-                              "firstName" : {
-                                "type" : "string",
-                                "example" : "James"
-                              },
-                              "lastName" : {
-                                "type" : "string",
-                                "example" : "Eneh"
-                              },
-                              "email" : {
-                                "type" : "string",
-                                "example" : "erozonachieneh@gmail.com"
-                              },
-                              "phoneNumber" : {
-                                "type" : "string",
-                                "example" : "09063912145"
-                              },
-                              "passportUrl" : {
-                                "type" : "string",
-                                "example" : "https://dp.io/eneh-dp.png"
-                              },
-                              "isAdmin" : {
-                                "type" : "boolean",
-                                "example" : false
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples" : { }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad request",
-            "content" : {
-              "application/json; charset=utf-8" : {
-                "schema" : {
-                  "type" : "object",
-                  "properties" : {
-                    "status" : {
-                      "type" : "number",
-                      "example" : 400
-                    },
-                    "error" : {
-                      "type" : "string",
-                      "example" : "username is required"
-                    }
-                  }
-                },
-                "examples" : {
-                  "0" : {
-                    "value" : "{\n    \"status\": 400,\n    \"error\": \"username is required\"\n}"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "servers" : [ {
-          "url" : "https://politico-ng.herokuapp.com/api/v1"
-        } ]
-      },
-      "servers" : [ {
-        "url" : "https://politico-ng.herokuapp.com/api/v1"
-      } ]
-    },
     "/auth/signup" : {
       "post" : {
         "tags" : [ "Auth" ],
@@ -271,6 +142,330 @@
                   }
                 },
                 "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/auth/login" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "description" : "User login",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "username", "password" ],
+                "properties" : {
+                  "username" : {
+                    "type" : "string",
+                    "example" : "eneh"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "example" : "$$WakaNda2019$$"
+                  }
+                }
+              },
+              "examples" : {
+                "0" : {
+                  "value" : {
+                    "username" : "erozonachi.eneh@gmail.com",
+                    "password" : "abcde12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Login successful",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "token" : {
+                            "type" : "string",
+                            "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+                          },
+                          "user" : {
+                            "type" : "object",
+                            "properties" : {
+                              "id" : {
+                                "type" : "number",
+                                "example" : 7
+                              },
+                              "firstName" : {
+                                "type" : "string",
+                                "example" : "James"
+                              },
+                              "lastName" : {
+                                "type" : "string",
+                                "example" : "Eneh"
+                              },
+                              "email" : {
+                                "type" : "string",
+                                "example" : "erozonachieneh@gmail.com"
+                              },
+                              "phoneNumber" : {
+                                "type" : "string",
+                                "example" : "09063912145"
+                              },
+                              "passportUrl" : {
+                                "type" : "string",
+                                "example" : "https://dp.io/eneh-dp.png"
+                              },
+                              "isAdmin" : {
+                                "type" : "boolean",
+                                "example" : false
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "username is required"
+                    }
+                  }
+                },
+                "examples" : {
+                  "0" : {
+                    "value" : "{\n    \"status\": 400,\n    \"error\": \"username is required\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/auth/reset" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "description" : "Request password reset OTP",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "email" ],
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "example" : "erozonachieneh@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "OTP request successful",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 201
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "message" : {
+                            "type" : "string",
+                            "example" : "Check your email for password reset OTP"
+                          },
+                          "email" : {
+                            "type" : "string",
+                            "example" : "erozonachieneh@gmail.com"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "200" : {
+            "description" : "OTP resent successful",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "message" : {
+                            "type" : "string",
+                            "example" : "Check your email for password reset OTP"
+                          },
+                          "email" : {
+                            "type" : "string",
+                            "example" : "erozonachieneh@gmail.com"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "email is required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Auth" ],
+        "description" : "Reset password",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "email", "otp", "password" ],
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "example" : "erozonachieneh@gmail.com"
+                  },
+                  "otp" : {
+                    "type" : "number",
+                    "example" : 382483933
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "example" : "$$viKKy4839"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OTP resent successful",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "message" : {
+                            "type" : "string",
+                            "example" : "success"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "otp is required"
+                    }
+                  }
+                }
               }
             }
           }
@@ -1831,6 +2026,231 @@
                     "error" : {
                       "type" : "string",
                       "example" : "No candidate found"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "https://politico-ng.herokuapp.com/api/v1"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "https://politico-ng.herokuapp.com/api/v1"
+      } ]
+    },
+    "/petitions" : {
+      "post" : {
+        "tags" : [ "Petitions" ],
+        "description" : "Write a petition against the outcome of voting for an office",
+        "parameters" : [ {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "office", "text", "evidence" ],
+                "properties" : {
+                  "office" : {
+                    "type" : "number",
+                    "example" : 5
+                  },
+                  "text" : {
+                    "type" : "string",
+                    "example" : "Rigging everywhere"
+                  },
+                  "evidence" : {
+                    "type" : "string",
+                    "example" : [ "res.cloudnary.com/pet1.png", "res.cloudnary.com/pet2.mp4" ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 201
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "number",
+                          "example" : 3
+                        },
+                        "office" : {
+                          "type" : "number",
+                          "example" : 5
+                        },
+                        "text" : {
+                          "type" : "string",
+                          "example" : "Rigging everywhere"
+                        },
+                        "evidence" : {
+                          "type" : "string",
+                          "example" : [ "res.cloudnary.com/pet1.png", "res.cloudnary.com/pet2.mp4" ]
+                        },
+                        "createdBy" : {
+                          "type" : "number",
+                          "example" : 7
+                        },
+                        "createdOn" : {
+                          "type" : "string",
+                          "format" : "date"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 400
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "evidence is required"
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "Petitions" ],
+        "description" : "Fetch all petitions (Requires admin role)",
+        "parameters" : [ {
+          "name" : "x-access-token",
+          "in" : "header",
+          "description" : "Token obtained on successful login",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImVtYWlsIjoiZXJvem9uYWNoaS5lbmVoQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE1NTIwNDQyMzAsImV4cCI6MTU1MjEzMDYzMH0.HeoT1vUTlsV7_nvFojzWrsLQ9IHL6Opa51SEmPjhtO4"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 200
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "id" : {
+                            "type" : "number",
+                            "example" : 1
+                          },
+                          "office" : {
+                            "type" : "number",
+                            "example" : 3
+                          },
+                          "candidate" : {
+                            "type" : "number",
+                            "example" : 5
+                          },
+                          "text" : {
+                            "type" : "string",
+                            "example" : "Rigging everywhere"
+                          },
+                          "evidence" : {
+                            "type" : "string",
+                            "example" : [ "res.cloudnary.com/pet1.png", "res.cloudnary.com/pet2.mp4" ]
+                          },
+                          "officeName" : {
+                            "type" : "string",
+                            "example" : "President"
+                          },
+                          "lastName" : {
+                            "type" : "string",
+                            "example" : "Eneh"
+                          },
+                          "firstName" : {
+                            "type" : "string",
+                            "example" : "James"
+                          },
+                          "partyName" : {
+                            "type" : "string",
+                            "example" : "Revolutionary Party"
+                          },
+                          "logoUrl" : {
+                            "type" : "string",
+                            "example" : "https://logo.io/rp.jpg"
+                          },
+                          "createdBy" : {
+                            "type" : "number",
+                            "example" : 7
+                          },
+                          "createdOn" : {
+                            "type" : "string",
+                            "format" : "date"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples" : { }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Access forbidden",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "number",
+                      "example" : 403
+                    },
+                    "error" : {
+                      "type" : "string",
+                      "example" : "Not authorized"
                     }
                   }
                 },
