@@ -7,6 +7,7 @@
         <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
         <meta name="description" content="Politico Application">
         <title>Welcome | Politico</title>
+        <script defer src="fontawesome/js/all.js"></script>
         <link rel = "stylesheet" type = "text/css" href = "css/style.css">
    </head>
    
@@ -19,7 +20,6 @@
                 <a href="javascript:void(0);" id="active">Home</a>
                 <a href="signin.html">Sign In</a>
                 <a href="javascript:void(0);" class="icon" onclick="toggleMenu(this)">
-                    <!--i class="fa fa-bars"></i-->
                     <div class="custom bar1"></div>
                     <div class="custom bar2"></div>
                     <div class="custom bar3"></div>
@@ -92,13 +92,12 @@
                     
                         <div class="form-row" id="navGroup">
                             <div class="form-col">
-                                <button type="button" id="btnPrev" class="big-btn" onclick="previous();" disabled>Previous</button>
+                                <button type="button" id="btnPrev" class="big-btn" onclick="previous();" disabled><i class="fas fa-angle-double-left"></i>&nbsp;Previous</button>
                             </div>
                             <div class="form-col">
-                                <button type="button" id="btnNext" class="big-btn" onclick="next();">Next</button>
+                                <button type="button" id="btnNext" class="big-btn" onclick="next();">Next&nbsp;<i class="fas fa-angle-double-right"></i></button>
                             </div>
                         </div>
-                        <button type="submit" id="btnSignUp" class="hidden"><i id="processing" class=""></i>&nbsp;Sign Up</button>
                         <div class="custom"><strong>Have an account? <a href="signin.html">Sign in</a></strong></div>
                 </div>
             </form>

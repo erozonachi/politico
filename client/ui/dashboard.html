@@ -7,6 +7,7 @@
         <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
         <meta name="description" content="Politico Application">
         <title>Welcome | Politico</title>
+        <script defer src="fontawesome/js/all.js"></script>
         <link rel="stylesheet" type="text/css" href="css/style.css">
    </head>
    
@@ -15,7 +16,7 @@
             <!-- Sidebar -->
             <div class="s-layout__sidebar">
               <a class="s-sidebar__trigger" href="javascript:void(0);">
-                 <i class="fa fa-bars" ><em id="bars"><img src="images/bars-solid.svg" width="15px"/><strong>&nbsp;Politico</strong></em></i>
+                 <i class="bars" ><em id="bars"><img src="images/bars-solid.svg" width="15px"/><strong>&nbsp;Politico</strong></em></i>
               </a>
             
               <nav class="s-sidebar__nav">
@@ -311,7 +312,7 @@
 
                   <!--Political office list-->
                   <table id="officeList" class="hidden">
-                     <caption>Political Offices<button class="btn" id="btnNewOffice" onclick="newOffice();">New Office</button></caption>
+                     <caption class="dp">Political Offices<button class="btn" id="btnNewOffice" onclick="newOffice();">New Office</button></caption>
                      <thead>
                        <tr>
                          <th scope="col">Type</th>
@@ -328,7 +329,7 @@
 
                   <!--Political party list-->
                   <table id="partyList" class="hidden">
-                     <caption>Political Parties<button class="btn" id="btnNewParty" onclick="newParty();">New Party</button></caption>
+                     <caption class="dp">Political Parties<button class="btn" id="btnNewParty" onclick="newParty();">New Party</button></caption>
                      <thead>
                        <tr>
                          <th scope="col">Logo</th>
@@ -344,7 +345,7 @@
 
                   <!--Candidate list for specific government office-->
                   <table id="candidateList" class="hidden">
-                     <caption>Candidate List
+                     <caption class="dp">Candidate List
                         <div class="custom">
                               <select name="voteOffice" id="voteOffice" required>
                                  <option value="">Choose Office</option>
@@ -365,7 +366,7 @@
 
                   <!--Vote results list for specific government office-->
                   <table id="resultList" class="hidden">
-                     <caption>Vote Result List
+                     <caption class="dp">Vote Result List
                         <div class="custom">
                               <select name="resultOffice" id="resultOffice" required>
                                  <option value="">Choose Office</option>
@@ -386,7 +387,7 @@
                   
                   <!--Petitions list-->
                   <table id="petitionsList" class="hidden">
-                     <caption>Petitions List</caption>
+                     <caption class="dp">Petitions List</caption>
                      <thead>
                        <tr>
                          <th scope="col">Office</th>

@@ -728,7 +728,7 @@ document.onreadystatechange = () => {
             return false;
           }
 
-          btnSignUp.innerHTML = '<i class="spinner spin"></i> Wait...';
+          btnSignUp.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wait...';
           
           const uploadResult = uploadImage(passport.files[0]);
           uploadResult.then((result) => {
@@ -757,7 +757,7 @@ document.onreadystatechange = () => {
             .then((resp) => resp.json(), (error) => {
               console.log(resp);
               console.error(error);
-              btnSignUp.innerHTML = 'Sign Up';
+              btnSignUp.innerHTML = '<i class="fas fa-user"></i>&nbsp;Sign Up';
               alert('SignUp cannot be completed at this time! Try again');
             })
             .then((res) => {
@@ -773,29 +773,29 @@ document.onreadystatechange = () => {
                   sessionStorage.setItem('token', res.data[0].token);
                 }
                 console.log(res);
-                btnSignUp.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Redirecting...';
+                btnSignUp.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting...';
                 alert('Sign up successful!');
                 window.location.replace("dashboard.html");
               } else {
                 console.log(res);
-                btnSignUp.innerHTML = 'Sign Up';
+                btnSignUp.innerHTML = '<i class="fas fa-user"></i>&nbsp;Sign Up';
                 alert(res.error);
               }
               //return data;
             }, (error) => {
               console.error(error);
-              btnSignUp.innerHTML = 'Sign Up';
+              btnSignUp.innerHTML = '<i class="fas fa-user"></i>&nbsp;Sign Up';
               alert('SignUp cannot be completed at this time! Try again');
             })
             .catch ((error) => {
               console.error(error);
-              btnSignUp.innerHTML = 'Sign Up';
+              btnSignUp.innerHTML = '<i class="fas fa-user"></i>&nbsp;Sign Up';
               alert('Unable to sign up, try again');
             });
           }, (error) => {
             console.error(`Error: ${error}`);
-            btnSignUp.innerHTML = 'Sign Up'
-          }).catch(error => {console.error(`Error: ${error}`); btnSignUp.innerHTML = 'Sign Up';});
+            btnSignUp.innerHTML = '<i class="fas fa-user"></i>&nbsp;Sign Up'
+          }).catch(error => {console.error(`Error: ${error}`); btnSignUp.innerHTML = '<i class="fas fa-user"></i>&nbsp;Sign Up';});
             
         };
       }
@@ -829,7 +829,7 @@ document.onreadystatechange = () => {
             return false;
           }
 
-          btnLogin.innerHTML = '<i class="spinner spin"></i> Authenticating...';
+          btnLogin.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
           
           const payload = {
             username: username,
@@ -850,7 +850,7 @@ document.onreadystatechange = () => {
           .then((resp) => resp.json(), (error) => {
             console.log(resp);
             console.error(error);
-            btnLogin.innerHTML = 'Sign Up';
+            btnLogin.innerHTML = '<i class="fas fa-sign-in-alt"></i>&nbsp;Sign Up';
             btnLogin.removeAttribute('disabled');
             alert('Something went wrong! Try again');
           })
@@ -867,23 +867,23 @@ document.onreadystatechange = () => {
                 sessionStorage.setItem('token', res.data[0].token);
               }
               console.log(res);
-              btnLogin.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Redirecting...';
+              btnLogin.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting...';
               window.location.replace("dashboard.html");
             } else {
               console.log(res);
-              btnLogin.innerHTML = 'Sign In';
+              btnLogin.innerHTML = '<i class="fas fa-sign-in-alt"></i>&nbsp;Sign In';
               btnLogin.removeAttribute('disabled');
               alert(res.error);
             }
           }, (error) => {
             console.error(error);
-            btnLogin.innerHTML = 'Sign In';
+            btnLogin.innerHTML = '<i class="fas fa-sign-in-alt"></i>&nbsp;Sign In';
             btnLogin.removeAttribute('disabled');
             alert('Something went wrong! Try again');
           })
           .catch ((error) => {
             console.error(error);
-            btnLogin.innerHTML = 'Sign In';
+            btnLogin.innerHTML = '<i class="fas fa-sign-in-alt"></i>&nbsp;Sign In';
             btnLogin.removeAttribute('disabled');
             alert('Something went wrong, try again');
           });
@@ -1000,7 +1000,7 @@ document.onreadystatechange = () => {
               return false;
             }
             
-            btnReset.innerHTML = '<i class="spinner spin"></i> Resetting Password...';
+            btnReset.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Resetting Password...';
             const payload = {
               email: email.value.trim(),
               otp: otp.value,
@@ -1021,7 +1021,7 @@ document.onreadystatechange = () => {
             .then((resp) => resp.json(), (error) => {
               console.log(resp);
               console.error(error);
-              btnReset.innerHTML = 'Reset Password';
+              btnReset.innerHTML = '<i class="fas fa-lock"></i>&nbsp;Reset Password';
               btnReset.removeAttribute('disabled');
               alert('Something went wrong! Try again');
               return;
@@ -1031,7 +1031,7 @@ document.onreadystatechange = () => {
               if (res.status === 200) {
                 console.log(res);
                 btnReset.removeAttribute('disabled');
-                btnReset.innerHTML ='<i id="resetSpin" class="lock"></i>&nbsp;Request OTP';
+                btnReset.innerHTML ='<i class="fas fa-lock"></i>&nbsp;Request OTP';
                 alert('Successful');
 
                 resetForm.setAttribute('class', 'hidden');
@@ -1051,34 +1051,34 @@ document.onreadystatechange = () => {
                 return;
               } else {
                 console.log(res);
-                btnReset.innerHTML = 'Reset Password';
+                btnReset.innerHTML = '<i class="fas fa-lock"></i>&nbsp;Reset Password';
                 btnReset.removeAttribute('disabled');
                 alert(res.error);
                 return;
               }
             }, (error) => {
               console.error(error);
-              btnReset.innerHTML = 'Reset Password';
+              btnReset.innerHTML = '<i class="fas fa-lock"></i>&nbsp;Reset Password';
               btnReset.removeAttribute('disabled');
               alert('Something went wrong! Try again');
               return;
             })
             .catch ((error) => {
               console.error(error);
-              btnReset.innerHTML = 'Reset Password';
+              btnReset.innerHTML = '<i class="fas fa-lock"></i>&nbsp;Reset Password';
               btnReset.removeAttribute('disabled');
               alert('Something went wrong, try again');
               return;
             });
             
           } else {
-            btnReset.innerHTML = '<i class="spinner spin"></i> Requesting OTP...';
+            btnReset.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp;Requesting OTP...';
 
             const getOtp = getResetOtp(email.value.trim());
             getOtp.then((res) => {
               if (res.status === 201 || res.status === 200) {
                 btnReset.removeAttribute('disabled');
-                btnReset.innerHTML ='Reset Password';
+                btnReset.innerHTML ='<i class="fas fa-lock"></i>&nbsp;Reset Password';
                 alert('Success! Check your email for an OTP!');
 
                 otp.setAttribute('required', 'required');
@@ -1125,21 +1125,21 @@ document.onreadystatechange = () => {
                 }, 1000);
               } else {
                 btnReset.removeAttribute('disabled');
-                btnReset.innerHTML = 'Request OTP';
+                btnReset.innerHTML = '<i class="fas fa-lock"></i>&nbsp;Request OTP';
                 alert(res.error);
                 return;
               }
             }, (error) => {
               console.error(`Error: ${error}`);
               btnReset.removeAttribute('disabled');
-              btnReset.innerHTML = 'Request OTP';
+              btnReset.innerHTML = '<i class="fas fa-lock"></i>&nbsp;Request OTP';
               alert('Unable to request OTP, try again!');
               return;
             })
             .catch(error => {
               console.error(`Error: ${error}`);
               btnReset.removeAttribute('disabled');
-              btnReset.innerHTML = 'Request OTP';
+              btnReset.innerHTML = '<i class="fas fa-lock"></i>&nbsp;Request OTP';
               alert('Unable to request OTP, try again!');
               return;
             });
@@ -1394,7 +1394,7 @@ document.onreadystatechange = () => {
       const resendOtp = document.getElementById('resend');
       if (resendOtp) {
         resendOtp.onclick = (e) => {
-          resendOtp.innerHTML = 'Resending...'
+          resendOtp.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp;Resending...'
           const email = document.getElementById('email');
           const getOtp = getResetOtp(email.value.trim());
             getOtp.then((res) => {
@@ -1498,13 +1498,13 @@ document.onreadystatechange = () => {
           if (partyLogo.value.trim() === '') {
             errLogo.innerHTML = 'Party Logo file cannot be empty';
             return;
-          } else if (!partyLogo.value.trim().match(/\.jpg$/) && !partyLogo.value.trim().match(/\.JPG$/) && !partyLogo.value.trim().match(/\.png$/) && !partyLogo.value.trim().match(/\.PNG$/)) {
+          } else if (!partyLogo.value.trim().match(/\.jpg$/) && !partyLogo.value.trim().match(/\.JPG$/) && !partyLogo.value.trim().match(/\.jpeg$/) && !partyLogo.value.trim().match(/\.JPEG$/) && !partyLogo.value.trim().match(/\.png$/) && !partyLogo.value.trim().match(/\.PNG$/)) {
             errLogo.innerHTML = ".jpg or .png extension required";
             return;
           }
 
           const btnAddParty = document.getElementById('btnAddParty');
-          btnAddParty.innerHTML = '<i class="spinner spin"></i> Creating...';
+          btnAddParty.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
           
           const uploadResult = uploadImage(partyLogo.files[0]);
           uploadResult.then((result) => {
@@ -1594,7 +1594,7 @@ document.onreadystatechange = () => {
           }
 
           const btnEditParty = document.getElementById('btnEditParty');
-          btnEditParty.innerHTML = '<i class="spinner spin"></i> Updating...';
+          btnEditParty.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp;Updating...';
           setTimeout(function () {
             partyName.value = '';
             btnEditParty.innerHTML ='Edit Party';
@@ -1676,7 +1676,7 @@ document.onreadystatechange = () => {
           }
 
           const btnAddOffice = document.getElementById('btnAddOffice');
-          btnAddOffice.innerHTML = '<i class="spinner spin"></i> Creating...';
+          btnAddOffice.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp;Creating...';
           
           const payload = {
             type: officeType.value.trim(),
@@ -1744,7 +1744,10 @@ document.onreadystatechange = () => {
           const candidateContainer = document.getElementById('candidateContainer');
           candidateContainer.innerHTML = '';
           const bold = document.createElement('b');
-          const txt = document.createTextNode('Loading...');
+          const i = document.createElement('i');
+          i.setAttribute('class', 'fas fa-spinner fa-spin');
+          const txt = document.createTextNode(' Loading...');
+          bold.appendChild(i);
           bold.appendChild(txt);
           const td = document.createElement('td');
           td.appendChild(bold);
@@ -1810,7 +1813,10 @@ document.onreadystatechange = () => {
           const resultContainer = document.getElementById('resultContainer');
           resultContainer.innerHTML = '';
           const bold = document.createElement('b');
-          const txt = document.createTextNode('Loading...');
+          const i = document.createElement('i');
+          i.setAttribute('class', 'fas fa-spinner fa-spin');
+          const txt = document.createTextNode(' Loading...');
+          bold.appendChild(i);
           bold.appendChild(txt);
           const td = document.createElement('td');
           td.appendChild(bold);
@@ -1882,7 +1888,7 @@ document.onreadystatechange = () => {
           candidate.appendChild(option);
 
           const infoCandidate = document.getElementById('info-candidateUser');
-          infoCandidate.innerHTML = 'Loading...';
+          infoCandidate.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp;Loading...';
 
           if (candidateOffice.value.trim() !== '') {
             const url = `${base_url}offices/${candidateOffice.value}/interests`;
@@ -1971,7 +1977,7 @@ document.onreadystatechange = () => {
             return;
           }
           const btnCandidate = document.getElementById('btnCandidate');
-          btnCandidate.innerHTML = '<i class="spinner spin"></i> Registering...';
+          btnCandidate.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp;Registering...';
           const idGroup = candidate.value.split('-');
           const payload = {
             office: idGroup[1].trim(),
@@ -2048,7 +2054,7 @@ document.onreadystatechange = () => {
           }
 
           const btnContest = document.getElementById('btnContest');
-          btnContest.innerHTML = '<i class="spinner spin"></i> Creating...';
+          btnContest.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp;Creating...';
           
           const payload = {
             office: office.value.trim(),
@@ -2159,7 +2165,7 @@ document.onreadystatechange = () => {
           }
 
           const btnPetition = document.getElementById('btnPetition');
-          btnPetition.innerHTML = '<i class="spinner spin"></i> Submitting...';
+          btnPetition.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp;Submitting...';
 
           const postPetition = (files) => {
             const payload = {
@@ -2359,7 +2365,7 @@ function previous() {
     contactGroup.setAttribute('class', 'hidden');
     nameGroup.removeAttribute('class');
     btnPrev.setAttribute('disabled', 'disabled');
-    btnNext.innerHTML = 'Next';
+    btnNext.innerHTML = 'Next&nbsp;<i class="fas fa-angle-double-right"></i>';
     btnNext.setAttribute('type', 'button');
     return;
     
@@ -2368,7 +2374,7 @@ function previous() {
     contactGroup.removeAttribute('class');
     nameGroup.setAttribute('class', 'hidden');
     btnPrev.removeAttribute('disabled');
-    btnNext.innerHTML = 'Next';
+    btnNext.innerHTML = 'Next&nbsp;<i class="fas fa-angle-double-right"></i>';
     btnNext.setAttribute('type', 'button');
     return;
   }
@@ -2431,7 +2437,7 @@ function next() {
     contactGroup.removeAttribute('class');
     nameGroup.setAttribute('class', 'hidden');
     btnPrev.removeAttribute('disabled');
-    btnNext.innerHTML = 'Next';
+    btnNext.innerHTML = 'Next&nbsp;<i class="fas fa-angle-double-right"></i>';
     btnNext.setAttribute('type', 'button');
     return;
     
@@ -2465,7 +2471,7 @@ function next() {
     contactGroup.setAttribute('class', 'hidden');
     nameGroup.setAttribute('class', 'hidden');
     btnPrev.removeAttribute('disabled');
-    btnNext.innerHTML = 'Sign Up';
+    btnNext.innerHTML = '<i class="fas fa-user"></i>&nbsp;Sign Up';
     btnNext.setAttribute('type', 'submit');
     return;
 
@@ -2503,7 +2509,7 @@ function editParty(id, name) {
 function removeParty(id) {
   if (confirm("Are you sure, you want to delete the party?\nClick 'OK' to continue")) {
     const btnRemove = document.getElementById(`btnRemove${id}`);
-    btnRemove.innerHTML = 'Removing';
+    btnRemove.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
     const url = `${base_url}parties/${id.trim()}`;
     const fetchData = { 
@@ -2556,7 +2562,7 @@ function removeParty(id) {
 function vote(id) {
   if (confirm("Confirm you want to vote for the candidate!\nClick 'OK' to continue")) {
     const btnVote = document.getElementById(`btnVote${id}`);
-    btnVote.innerHTML = 'Voting';
+    btnVote.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
     const payload = {
       office: document.getElementById('voteOffice').value.trim(),
